@@ -1,9 +1,6 @@
-var World,
-   EntityManager = require("./EntityManager.js"),
-   ComponentManager = require("./ComponentManager.js"),
-   ComponentMapper = require("./ComponentMapper.js");
+var ArtemiJS = ArtemiJS || {};
 
-module.exports = World = function() {
+ArtemiJS.World = function() {
     var entityManager;
     var componentManager;
     var managers = {};
@@ -19,10 +16,10 @@ module.exports = World = function() {
     
     var delta = 0;
     
-    componentManager = new ComponentManager();
+    componentManager = new ArtemiJS.ComponentManager();
     this.setManager(componentManager);
     
-    entityManager = new EntityManager();
+    entityManager = new ArtemiJS.EntityManager();
     this.setManager(entityManager);
     
     this.initialize = function() {
@@ -202,6 +199,6 @@ module.exports = World = function() {
     };
     
     this.getMapper = function(type) {
-        return ComponentMapper.getFor(type, this);
+        return ArtemiJS.ComponentMapper.getFor(type, this);
     };
 };
