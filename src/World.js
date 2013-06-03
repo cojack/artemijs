@@ -160,24 +160,34 @@ module.exports = World = function() {
     
     this.process = function() {
         
-        check(added, function(observer, entity) {
-            observer.added(entity);
+        check(added, {
+            perform: function(observer, entity) {
+                observer.added(entity);
+            }
         });
         
-        check(changed, function(observer, entity) {
-            observer.changed(entity);
+        check(changed, {
+            perform: function(observer, entity) {
+                observer.changed(entity);
+            }
         });
         
-        check(disable, function(observer, entity) {
-            observer.disabled(entity);
+        check(disable, {
+            perform: function(observer, entity) {
+                observer.disabled(entity);
+            }
         });
         
-        check(enable, function(observer, entity) {
-            observer.enabled(entity);
+        check(enable, {
+            perform: function(observer, entity) {
+                observer.enabled(entity);
+            }
         });
         
-        check(deleted, function(observer, entity) {
-            observer.deleted(entity);
+        check(deleted, {
+            perform: function (observer, entity) {
+                observer.deleted(entity);
+            }
         });        
         
         
