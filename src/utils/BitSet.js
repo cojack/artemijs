@@ -1,0 +1,3 @@
+var BitSet = function() {
+    
+};
