@@ -1,30 +1,14 @@
 var ArtemiJS = ArtemiJS || {};
 
 ArtemiJS.Entity = function(_world, _id) {
-    var uuid;
     
-    var id;
-    
-    /**
-     * @TODO
-     */
-    var componentBits;
-    
-    /**
-     * @TODO
-     */
-    var systemBits;
-    
-    var world;
-    var entityManager;
-    var componentManager;
-
-    world = _world;
-    id = _id;
-    entityManager = world.getEntityManager();
-    componentManager = world.getComponentManager();
-    systemBits = 0;
-    componentBits = 0;
+    var uuid,
+        componentBits = new ArtemiJS.BitSet(),
+        systemBits = new ArtemiJS.BitSet(),
+        world = _world,
+        id = _id,
+        entityManager = world.getEntityManager(),
+        componentManager = world.getComponentManager();
     
     reset();
     
@@ -41,8 +25,8 @@ ArtemiJS.Entity = function(_world, _id) {
     }
     
     function reset() {
-        systemBits = 0;
-        componentBits = 0;
+        systemBits.reset();
+        componentBits.reset();
         uuid = Math.uuid();
     }
     

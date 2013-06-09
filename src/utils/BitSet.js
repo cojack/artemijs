@@ -80,6 +80,86 @@
 
         return this;
     };
+    
+    /**
+     * Returns the number of bits set to true in this BitSet.
+     * @return {Number}
+     **/
+    Bits.prototype.cardinality = function() {
+        
+    };
+    
+    /**
+     * Sets the bits in this BitSet to false.
+     * 
+     * <code>
+     *  bitset.clear(1, 5); // will clear from index 1 to 5
+     * // or
+     *  bitset.clear(2); // will clear bit at index 2
+     * // or 
+     *  bitset.clear(); // will clear all of the bits
+     * </code>
+     * 
+     * @see Bits
+     * @param {Number} fromIndex
+     * @param {Number} toIndex
+     * @param {Number} bitIndex
+     **/
+    Bits.prototype.clear = function() {
+        if(arguments.length === 2) {
+            var fromIndex = arguments[0],
+                toIndex = arguments[1];
+            
+        } else if(arguments.length === 1) {
+            var bitIndex = arguments[0];
+            
+        } else {
+            return this.reset(false, 0);
+        }
+    };
+    
+    /**
+     * Sets the bit at the specified index to to the complement of its current value.
+     *
+     * <code>
+     *  bitset.flip(1, 5); // will flip from index 1 to 5
+     * // or
+     *  bitset.flip(2); // will flip bit at index 2
+     * </code>
+     * 
+     * @see Bits
+     * @param {Number} fromIndex
+     * @param {Number} toIndex
+     * @oaram {Number} bitIndex
+     **/
+    Bits.prototype.flip = function() {
+        if(arguments.length === 2) {
+            var fromIndex = arguments[0],
+                toIndex = arguments[1];
+            
+        } else if(arguments.length === 1) {
+            var bitIndex = arguments[0];
+            
+        }
+    };
+    
+    /**
+     * Returns the index of the first bit that is set to false that occurs on or after the specified starting index.
+     * @param {Number} fromIndex
+     * @return {Number}
+     **/
+    Bits.prototype.nextClearBit = function(fromIndex) {
+        
+    };
+    
+    /**
+     * Returns the index of the first bit that is set to true that occurs on or after the specified starting index.
+     * @param {Number} fromIndex
+     * @return {Number}
+     **/    
+    Bits.prototype.nextSetBit = function(fromIndex) {
+        
+    };
 
     /**
      * Check if the bit set has a fixed size
@@ -114,6 +194,10 @@
     Bits.prototype.set = function(ofs){
         if (this.fixed && ofs >= this.size) { return; }
         this.buckets[~~(ofs/32)] |= 1 << (ofs & 31);
+    };
+    
+    Bits.prototype.get = function(ofs){
+        return this.test(ofs);
     };
 
     /**
