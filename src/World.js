@@ -1,34 +1,32 @@
 var ArtemiJS = ArtemiJS || {};
 
 ArtemiJS.World = function() {
-    var entityManager;
-    var componentManager;
-    var managers = {};
-    var managersBag = [];
-    var systems = {};
-    var systemsBag = [];
+    var entityManager = new ArtemiJS.EntityManager(),
+        componentManager = new ArtemiJS.ComponentManager(),
+        managers = {},
+        managersBag = new ArtemiJS.Bag(),
+        systems = {},
+        systemsBag = new ArtemiJS.Bag(),
     
-    var added = [];
-    var changed = [];
-    var deleted = [];
-    var enable = [];
-    var disable = [];
+        added = new ArtemiJS.Bag(),
+        changed = new ArtemiJS.Bag(),
+        deleted = new ArtemiJS.Bag(),
+        enable = new ArtemiJS.Bag(),
+        disable = new ArtemiJS.Bag(),
     
-    var delta = 0;
-    
-    componentManager = new ArtemiJS.ComponentManager();
+        delta = 0;
+
     this.setManager(componentManager);
-    
-    entityManager = new ArtemiJS.EntityManager();
     this.setManager(entityManager);
     
     this.initialize = function() {
-        for(var i = 0; i < managersBag.length; i++) {
-            managersBag[i].initialize();
+        var i = managersBag.size();
+        while(i--) {
+            managersBag.get(i).initialize();
         }
-        
-        for(i = 0; i < systemsBag.length; i++) {
-            systemsBag[i].initialize();
+        i = systemsBag.size();
+        while(i--) {
+            systemsBag.get(i).initialize();
         }
     };
     
@@ -49,20 +47,13 @@ ArtemiJS.World = function() {
         return manager;
     };
     
-    this.getManager = function(managerType) {
-        if(managers[managerType]) {
-            return managers[managerType];
-        }
-        
-        return false;
+    this.getManager = function(managerType) {        
+        return managers[managerType] || false;
     };
     
     this.deleteManager = function(manager) {
-        var index = managersBag.indexOf(manager);
-        if(managers[manager.getClass()] && index !== -1) {
-            delete managers[manager.getClass()];
-            managersBag.splice(index, 1);
-        }
+        delete managers[manager.getClass()];
+        managersBag.remove(manager);
     };
     
     this.setDelta = function(d) {
@@ -74,34 +65,31 @@ ArtemiJS.World = function() {
     };
     
     this.addEntity = function(entity) {
-        added.push(entity);
+        added.add(entity);
     };
     
     this.deleteEntity = function(entity) {
-        var index = added.indexOf(entity);
-        if(index !== -1) {
-            added.slice(index, 1);
-        }
+        added.remove(entity);
     };
     
     this.changedEntity = function(entity) {
-        changed.push(entity);
+        changed.add(entity);
     };
     
     this.enableEntity = function(entity) {
-        enable.push(entity);
+        enable.add(entity);
     };
     
     this.disableEntity = function(entity) {
-        disable.push(entity);
+        disable.add(entity);
     };
     
     this.createEntity = function() {
-        entityManager.createEntityInstance();
+        return entityManager.createEntityInstance();
     };
     
     this.getEntity = function(id) {
-        entityManager.getEntity(id);
+        return entityManager.getEntity(id);
     };
     
     this.setSystem = function(system, passive) {
@@ -114,45 +102,41 @@ ArtemiJS.World = function() {
         return system;
     };
     
-    this.getSystem = function(systemType) {
-        if(systems[systemType]) {
-            return systems[systemType];
-        }
-        
-        return false;
+    this.getSystem = function(systemType) {        
+        return systems[systemType] || false;
     };
     
     this.deleteSystem = function(system) {
-        if(systems[system.getClass()] && systemsBag.indexOf(system) !== -1) {
-            delete systems[system.getClass()];
-            systemsBag.splice(systemsBag.indexOf(system), 1);
-        }
+        delete systems[system.getClass()];
+        systemsBag.remove(system);
     };
     
     function notifySystems(performer, entity) {
-        for(var i = 0; i < systemsBag.length(); i++) {
-            performer.perform(systemsBag[i], entity);
+        var i = systemsBag.size();
+        while(i--) {
+            performer.perform(systemsBag.get(i), entity);
         }        
     }
     
     function notifyManagers(performer, entity) {
-        for(var i = 0; i < managersBag.length(); i++) {
-            performer.perform(managersBag[i], entity);
+        var i = managersBag.size();
+        while(i--) {
+            performer.perform(managersBag.get(i), entity);
         }
     }
     
     function check(entities, performer) {
-        if(!entities.length) {
+        if(!entities.size()) {
             return;
         }
-        
-        for (var i = 0; i < entities.length; i++) {
-            var entity = entities[i];
+        var i = entities.size();
+        while(i--) {
+            var entity = entities.get(i);
             notifyManagers(performer, entity);
             notifySystems(performer, entity);
         }
         
-        entities = [];
+        entities.clear();
     }
     
     this.process = function() {
@@ -190,8 +174,9 @@ ArtemiJS.World = function() {
         
         componentManager.clean();
         
-        for(var i = 0; i < systemsBag.length; i++) {
-            var system = systemsBag[i];
+        var i = systemsBag.size();
+        while(i--) {
+            var system = systemsBag.get(i);
             if(!system.isPassive()) {
                 system.process();
             }
