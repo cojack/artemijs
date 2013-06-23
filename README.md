@@ -13,3 +13,14 @@ about Artemijs
 ========
 
 When I finish port Artemis to JavaScript, will create an examples and docs asap.
+
+how to build Artemijs
+========
+
+# Linux
+
+1. Download yuicompressor from https://github.com/yui/yuicompressor/downloads
+2. Check that you have java in your PATH
+3. chmod +x minify.sh
+4. set YUICOMP_PATH in minify.sh
+4. run ./minify.sh 
