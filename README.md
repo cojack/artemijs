@@ -17,7 +17,7 @@ When I finish port Artemis to JavaScript, will create an examples and docs asap.
 how to build Artemijs
 ========
 
-# Linux
+Linux:
 
 1. Download yuicompressor from https://github.com/yui/yuicompressor/downloads
 2. Check that you have java in your PATH
