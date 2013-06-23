@@ -1,8 +1,13 @@
 (function(ArtemiJS) {
     'use strict';
     
+/**
+ * @author inexplicable
+ * @see https://github.com/inexplicable/bitset
+ */
+    
 //constructor
-var BitSet = module.exports = function() {
+var BitSet = function() {
 
     //_words property is an array of 32bits integers, javascript doesn't really have integers separated from Number type
     //it's less performant because of that, number (by default float) would be internally converted to 32bits integer then accepts the bit operations
