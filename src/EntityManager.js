@@ -1,97 +1,95 @@
-var ArtemiJS = ArtemiJS || {};
+(function(ArtemiJS) {
+    'use strict';
 
-ArtemiJS.EntityManager = function(_world, _id) {
-    var entities = [];
-    
-    /**
-     * @TODO
-     */
-    var disabled;
-    
-    var active;
-    var added;
-    var created;
-    var deleted;  
-    var identifierPool = new IdentifierPool();
-    
-    this.initialize = function() {
+    var EntityManager = function(_world, _id) {
+        var entities = new ArtemiJS.Bag(),
+            disabled = new ArtemiJS.BitSet(),
+            active,
+            added,
+            created,
+            deleted,  
+            identifierPool = new IdentifierPool();
         
-    };
-    
-    this.createEntityInstance = function() {
-        var entity = new ArtemiJS.Entity(this.world, identifierPool.checkOut());
-        created++;
-        return entity;
-    };
-    
-    this.added = function(e) {
-        active++;
-        added++;
-        entities.set(e.getId(), e);
-    };
-    
-    this.enabled = function(e) {
-            disabled.clear(e.getId());
-    };
-    
-    this.disabled = function(e) {
-            disabled.set(e.getId());
-    };
-    
-    this.deleted = function(e) {
-        entities.set(e.getId(), null);
-        
-        disabled.clear(e.getId());
-        
-        identifierPool.checkIn(e.getId());
-        
-        active--;
-        deleted++;
-    };
-    
-    this.isActive = function(entityId) {
-        return entities.get(entityId) !== null;
-    };
-    
-    this.isEnabled = function(entityId) {
-        return !disabled.get(entityId);
-    };
-    
-    this.getEntity = function(entityId) {
-        return entities.get(entityId);
-    };
-    
-    this.getActiveEntityCount = function() {
-        return active;
-    };
-
-    this.getTotalCreated = function() {
-        return created;
-    };
-
-    this.getTotalAdded = function() {
-        return added;
-    };
-
-    this.getTotalDeleted = function() {
-        return deleted;
-    };
-  
-    function IdentifierPool() {
-        var ids = [];
-        var nextAvailableId = 0;
-        
-        this.checkOut = function() {
-            if(ids.length) {
-                return ids.removeLast();
-            }
-            return nextAvailableId++;
+        this.initialize = function() {
+            
         };
         
-        this.checkIn = function(id) {
-            ids.push(id);
+        this.createEntityInstance = function() {
+            var entity = new ArtemiJS.Entity(this.world, identifierPool.checkOut());
+            created++;
+            return entity;
         };
-    }
-};
-
-ArtemiJS.EntityManager.prototype = Object.create(ArtemiJS.Manager.prototype);
+        
+        this.added = function(entity) {
+            active++;
+            added++;
+            entities.set(entity.getId(), entity);
+        };
+        
+        this.enabled = function(entity) {
+            disabled.clear(entity.getId());
+        };
+        
+        this.disabled = function(entity) {
+            disabled.set(entity.getId());
+        };
+        
+        this.deleted = function(entity) {
+            entities.set(entity.getId(), null);
+            
+            disabled.clear(entity.getId());
+            
+            identifierPool.checkIn(entity.getId());
+            
+            active--;
+            deleted++;
+        };
+        
+        this.isActive = function(entityId) {
+            return entities.get(entityId) !== null;
+        };
+        
+        this.isEnabled = function(entityId) {
+            return !disabled.get(entityId);
+        };
+        
+        this.getEntity = function(entityId) {
+            return entities.get(entityId);
+        };
+        
+        this.getActiveEntityCount = function() {
+            return active;
+        };
+    
+        this.getTotalCreated = function() {
+            return created;
+        };
+    
+        this.getTotalAdded = function() {
+            return added;
+        };
+    
+        this.getTotalDeleted = function() {
+            return deleted;
+        };
+      
+        function IdentifierPool() {
+            var ids = new ArtemiJS.Bag(),
+                nextAvailableId = 0;
+            
+            this.checkOut = function() {
+                if(ids.size()) {
+                    return ids.removeLast();
+                }
+                return nextAvailableId++;
+            };
+            
+            this.checkIn = function(id) {
+                ids.push(id);
+            };
+        }
+    };
+    
+    ArtemiJS.EntityManager = EntityManager;
+    ArtemiJS.EntityManager.prototype = Object.create(ArtemiJS.Manager.prototype);
+})(window.ArtemiJS || {});
