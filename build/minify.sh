@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# path to the yui compressor
 YUICOMP_PATH="";
 
 cat ../utils/Array.js \
