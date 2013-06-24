@@ -105,7 +105,7 @@
 		if (Object.defineProperty) {
 			Object.defineProperty(obj, prop, {enumerable:false});
 		}
-	};
+	}
 
 	exports.HashMap = HashMap;
 
