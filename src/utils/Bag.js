@@ -1,4 +1,4 @@
-(function(ArtemiJS) {
+(function(exports) {
     'use strict';
 
     var Bag = function(capacity) {
@@ -90,5 +90,5 @@
         };
     };
     
-    ArtemiJS.Bag = Bag;
-})(window.ArtemiJS || {});
+    exports.Bag = Bag;
+})(window.ArtemiJS.Utils || {});
