@@ -5,9 +5,7 @@
         var entitiesByGroup = new ArtemiJS.Utils.HashMap(),
             groupsByEntity = new ArtemiJS.Utils.HashMap();
             
-        this.initialize = function() {
-    
-        };
+        this.initialize = function() {};
         
         this.add = function(entity, group) {
             var entities = entitiesByGroup.get(group);
