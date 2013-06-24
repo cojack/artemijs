@@ -79,6 +79,10 @@
                 }
             }
         };
+        
+        this.deleted = function(entity) {
+            this.removeFromAllGroups(entity);
+        };
     }; 
 
     ArtemiJS.Managers.GroupManager = GroupManager;
