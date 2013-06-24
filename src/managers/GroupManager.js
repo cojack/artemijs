@@ -1,4 +1,6 @@
 (function(ArtemiJS) {
+    'use strict';
+    
     var GroupManager = function() {
         var entitiesByGroup = new ArtemiJS.Utils.HashMap(),
             groupsByEntity = new ArtemiJS.Utils.HashMap();
