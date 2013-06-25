@@ -1,0 +1,3 @@
+[submodule "build/yuidoc/dana"]
+	path = build/yuidoc/dana
+	url = https://github.com/carlo/yuidoc-theme-dana.git
