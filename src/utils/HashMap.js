@@ -25,7 +25,7 @@
 			this._data[this.hash(key)] = [key, value];
 		},
 
-		has:function(key) {
+		containsKey:function(key) {
 			return this.hash(key) in this._data;
 		},
 
