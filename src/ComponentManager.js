@@ -2,6 +2,7 @@
     'use strict';
 
     /**
+     * Object to manage components
      * 
      * @module ArtemiJS
      * @class ComponentManager
@@ -12,14 +13,14 @@
         /**
          * @private
          * @property componentsByType
-         * @type {ArtemiJS.Utils.Bag}
+         * @type {Utils.Bag}
          */
         var componentsByType = new ArtemiJS.Utils.Bag(),
         
         /**
          * @private
          * @property deleted
-         * @type {ArtemiJS.Utils.Bag}
+         * @type {Utils.Bag}
          */
         deleted = new ArtemiJS.Utils.Bag();
             
@@ -31,7 +32,7 @@
         /**
          * @private
          * @method removeComponentsOfEntity
-         * @property {ArtemiJS.Entity} entity
+         * @param {Entity} entity
          */
         var removeComponentsOfEntity = function (entity) {
             var componentBits = entity.getComponentBits();
@@ -45,9 +46,9 @@
          * Add component by type
          * 
          * @method addComponent
-         * @property {ArtemiJS.Entity} entity
-         * @property {ArtemiJS.ComponentType} type
-         * @property {ArtemiJS.Component} component
+         * @param {Entity} entity
+         * @param {ComponentType} type
+         * @param {Component} component
          */
         this.addComponent = function(entity, type, component) {        
             var components = componentsByType.get(type.getIndex());
@@ -65,8 +66,8 @@
          * Remove component by type
          * 
          * @method removeComponent
-         * @property {ArtemiJS.Entity} entity
-         * @property {ArtemiJS.ComponentType} type
+         * @param {Entity} entity
+         * @param {ComponentType} type
          */
         this.removeComponent = function(entity, type) {
             if(entity.getComponentBits().get(type.getIndex())) {
@@ -79,8 +80,8 @@
          * Get component by type
          * 
          * @method getComponentsByType
-         * @property {ArtemiJS.ComponentType} type
-         * @return {ArtemiJS.Utils.Bag} Bag of components
+         * @param {ComponentType} type
+         * @return {Utils.Bag} Bag of components
          */        
         this.getComponentsByType = function(type) {
             var components = componentsByType.get(type.getIndex());
@@ -95,9 +96,9 @@
          * Get component
          * 
          * @method getComponent
-         * @property {ArtemiJS.Entity} entity
-         * @property {ArtemiJS.ComponentType} type
-         * @return {ArtemiJS.Component}|null
+         * @param {Entity} entity
+         * @param {ComponentType} type
+         * @return Mixed Component on success, null on false
          */
         this.getComponent = function(entity, type) {
             var components = componentsByType.get(type.getIndex());
@@ -111,9 +112,9 @@
          * Get component for
          * 
          * @method getComponentsFor
-         * @property {ArtemiJS.Entity} entity
-         * @property {ArtemiJS.Utils.Bag} Bag of components
-         * @return {ArtemiJS.Utils.Bag} Bag of components
+         * @param {Entity} entity
+         * @param {Utils.Bag} Bag of components
+         * @return {Utils.Bag} Bag of components
          */
         this.getComponentsFor = function(entity, fillBag) {
             var componentBits = entity.getComponentBits();
@@ -129,7 +130,7 @@
          * Add entity to delete componenets of them
          * 
          * @method deleted
-         * @property {ArtemiJS.Entity} entity
+         * @param {Entity} entity
          */
         this.deleted = function(entity) {
             deleted.add(entity);
