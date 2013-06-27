@@ -76,8 +76,7 @@
          * 
          * @method all
          * @chainable
-         * @param {String} type a required component type
-         * @param {String} ...types a required component types
+         * @param {String} type* a required component type
          */
         this.all = function(type) {
             allSet.set(ArtemiJS.ComponentType.getIndexFor(type));
@@ -94,8 +93,7 @@
          * 
          * @method exclude
          * @chainable
-         * @param {String} type component type to exclude
-         * @param {String} ...types components type to exclude
+         * @param {String} type* component type to exclude
          */
         this.exclude = function(type) {
             exclusionSet.set(ArtemiJS.ComponentType.getIndexFor(type));
@@ -111,8 +109,7 @@
          * 
          * @method one
          * @chainable
-         * @param {String} type one of the types the entity must possess
-         * @param {String} ...types one of the types the entity must possess
+         * @param {String} type* one of the types the entity must possess
          */
         this.one = function(type) {
             oneSet.set(ArtemiJS.ComponentType.getIndexFor(type));
@@ -127,8 +124,7 @@
          * Creates an aspect where an entity must possess all of the specified component types.
          * 
          * @method getAspectForAll
-         * @param {String} type a required component type
-         * @param {String} ...types a required component type
+         * @param {String} type* a required component type
          * @return {ArtemiJS.Aspect} an aspect that can be matched against entities
          */
         this.getAspectForAll = function(type) {
@@ -142,8 +138,7 @@
          * Creates an aspect where an entity must possess one of the specified component types.
          * 
          * @method getAspectForOne
-         * @param {String} type one of the types the entity must possess
-         * @param {String} ...types one of the types the entity must possess
+         * @param {String} type* one of the types the entity must possess
          * @return {ArtemiJS.Aspect} an aspect that can be matched against entities
          */
         this.getAspectForOne = function(type) {
