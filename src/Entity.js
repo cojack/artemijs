@@ -117,7 +117,7 @@
          */
         this.toString = function() {
             return "Entity [" + id + "]";
-        }
+        };
         
         /**
          * Add a component to this entity.
