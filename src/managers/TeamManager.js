@@ -14,21 +14,23 @@
      * @class TeamManager
      * @namespace Managers
      * @constructor
-     * @extends ArtemiJS.Manager
+     * @extends Manager
      */
     var TeamManager = function() {
         
         /**
+         * @private
          * @property playersByTeam
-         * @type {ArtemiJS.Utils.HashMap}
+         * @type {Utils.HashMap}
          */
         var playersByTeam = new ArtemiJS.Utils.HashMap(),
         
         /**
+         * @private
          * @property teamByPlayer
-         * @type {ArtemiJS.Utils.HashMap}
+         * @type {Utils.HashMap}
          */
-            teamByPlayer = new ArtemiJS.Utils.HashMap();
+        teamByPlayer = new ArtemiJS.Utils.HashMap();
         
         /**
          * @method initialize
@@ -67,7 +69,7 @@
         /**
          * @method getPlayers
          * @param {String} team Name of the team
-         * @return {ArtemiJS.Utils.Bag} Bag of players
+         * @return {Utils.Bag} Bag of players
          */
         this.getPlayers = function(team) {
             return playersByTeam.get(team);
