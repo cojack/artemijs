@@ -1,0 +1,3510 @@
+{
+    "project": {},
+    "files": {
+        "../src/managers/TeamManager.js": {
+            "name": "../src/managers/TeamManager.js",
+            "modules": {
+                "Managers": 1
+            },
+            "classes": {
+                "Managers.TeamManager": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "Managers": 1
+            }
+        },
+        "../src/utils/Bag.js": {
+            "name": "../src/utils/Bag.js",
+            "modules": {
+                "Utils": 1
+            },
+            "classes": {
+                "Utils.Bag": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "Utils": 1
+            }
+        },
+        "../src/utils/BitSet.js": {
+            "name": "../src/utils/BitSet.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/utils/HashMap.js": {
+            "name": "../src/utils/HashMap.js",
+            "modules": {},
+            "classes": {
+                "Utils.HashMap": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "Utils": 1
+            }
+        },
+        "../src/utils/Math.js": {
+            "name": "../src/utils/Math.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/Artemi.js": {
+            "name": "../src/Artemi.js",
+            "modules": {
+                "ArtemiJS": 1
+            },
+            "classes": {
+                "ArtemiJS": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/Aspect.js": {
+            "name": "../src/Aspect.js",
+            "modules": {},
+            "classes": {
+                "Aspect": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/Component.js": {
+            "name": "../src/Component.js",
+            "modules": {},
+            "classes": {
+                "Component": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/ComponentManager.js": {
+            "name": "../src/ComponentManager.js",
+            "modules": {},
+            "classes": {
+                "ComponentManager": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/ComponentMapper.js": {
+            "name": "../src/ComponentMapper.js",
+            "modules": {},
+            "classes": {
+                "ComponentMapper": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/ComponentType.js": {
+            "name": "../src/ComponentType.js",
+            "modules": {},
+            "classes": {
+                "ComponentType": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/Entity.js": {
+            "name": "../src/Entity.js",
+            "modules": {},
+            "classes": {
+                "Entity": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/EntityManager.js": {
+            "name": "../src/EntityManager.js",
+            "modules": {},
+            "classes": {
+                "EntityManager": 1,
+                "IdentifierPool": 1
+            },
+            "fors": {
+                "EntityManager": 1
+            },
+            "namespaces": {}
+        },
+        "../src/EntityObserver.js": {
+            "name": "../src/EntityObserver.js",
+            "modules": {},
+            "classes": {
+                "EntityObserver": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/EntitySystem.js": {
+            "name": "../src/EntitySystem.js",
+            "modules": {},
+            "classes": {
+                "SystemIndexManager": 1,
+                "EntitySystem": 1
+            },
+            "fors": {
+                "EntitySystem": 1
+            },
+            "namespaces": {}
+        },
+        "../src/Manager.js": {
+            "name": "../src/Manager.js",
+            "modules": {},
+            "classes": {
+                "Manager": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../src/World.js": {
+            "name": "../src/World.js",
+            "modules": {},
+            "classes": {
+                "World": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "ArtemiJS": {
+            "name": "ArtemiJS",
+            "submodules": {
+                "Managers": 1,
+                "Utils": 1
+            },
+            "classes": {
+                "Managers.TeamManager": 1,
+                "Utils.Bag": 1,
+                "Utils.HashMap": 1,
+                "ArtemiJS": 1,
+                "Aspect": 1,
+                "Component": 1,
+                "ComponentManager": 1,
+                "ComponentMapper": 1,
+                "ComponentType": 1,
+                "Entity": 1,
+                "EntityManager": 1,
+                "IdentifierPool": 1,
+                "EntityObserver": 1,
+                "SystemIndexManager": 1,
+                "EntitySystem": 1,
+                "Manager": 1,
+                "World": 1
+            },
+            "fors": {
+                "EntityManager": 1,
+                "EntitySystem": 1
+            },
+            "namespaces": {
+                "Managers": 1,
+                "Utils": 1
+            },
+            "tag": "main",
+            "file": "../src/World.js",
+            "line": 4,
+            "description": "Entity Framework",
+            "itemtype": "main",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "_type",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "_world",
+                    "description": "",
+                    "type": "ArtemiJS.World"
+                }
+            ],
+            "final": 1
+        },
+        "Managers": {
+            "name": "Managers",
+            "submodules": {},
+            "classes": {
+                "Managers.TeamManager": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {
+                "Managers": 1
+            },
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/managers/TeamManager.js",
+            "line": 4,
+            "description": "Use this class together with PlayerManager.\n\nYou may sometimes want to create teams in your game, so that\nsome players are team mates.\n\nA player can only belong to a single team.",
+            "is_constructor": 1,
+            "extends": "Manager"
+        },
+        "Utils": {
+            "name": "Utils",
+            "submodules": {},
+            "classes": {
+                "Utils.Bag": 1,
+                "Utils.HashMap": 1
+            },
+            "fors": {},
+            "is_submodule": 1,
+            "namespaces": {
+                "Utils": 1
+            },
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/utils/HashMap.js",
+            "line": 11,
+            "description": "Collection type a bit like ArrayList but does not preserve the order of its\nentities, speedwise it is very good, especially suited for games.",
+            "is_constructor": 1
+        }
+    },
+    "classes": {
+        "Managers.TeamManager": {
+            "name": "Managers.TeamManager",
+            "shortname": "Managers.TeamManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "submodule": "Managers",
+            "namespace": "Managers",
+            "file": "../src/managers/TeamManager.js",
+            "line": 4,
+            "description": "Use this class together with PlayerManager.\n\nYou may sometimes want to create teams in your game, so that\nsome players are team mates.\n\nA player can only belong to a single team."
+        },
+        "Utils.Bag": {
+            "name": "Utils.Bag",
+            "shortname": "Utils.Bag",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils",
+            "file": "../src/utils/Bag.js",
+            "line": 4,
+            "description": "Collection type a bit like ArrayList but does not preserve the order of its\nentities, speedwise it is very good, especially suited for games."
+        },
+        "Utils.HashMap": {
+            "name": "Utils.HashMap",
+            "shortname": "Utils.HashMap",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils",
+            "file": "../src/utils/HashMap.js",
+            "line": 11,
+            "description": "HashMap"
+        },
+        "ArtemiJS": {
+            "name": "ArtemiJS",
+            "shortname": "ArtemiJS",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/Artemi.js",
+            "line": 6,
+            "description": "Entity Framework"
+        },
+        "Aspect": {
+            "name": "Aspect",
+            "shortname": "Aspect",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/Aspect.js",
+            "line": 4,
+            "description": "An Aspects is used by systems as a matcher against entities, to check if a system is\ninterested in an entity. Aspects define what sort of component types an entity must\npossess, or not possess.\n\nThis creates an aspect where an entity must possess A and B and C:\nAspect.getAspectForAll(A.class, B.class, C.class)\n\nThis creates an aspect where an entity must possess A and B and C, but must not possess U or V.\nAspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class)\n\nThis creates an aspect where an entity must possess A and B and C, but must not possess U or V, but must possess one of X or Y or Z.\nAspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class).one(X.class, Y.class, Z.class)\n\nYou can create and compose aspects in many ways:\nAspect.getEmpty().one(X.class, Y.class, Z.class).all(A.class, B.class, C.class).exclude(U.class, V.class)\nis the same as:\nAspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class).one(X.class, Y.class, Z.class)"
+        },
+        "Component": {
+            "name": "Component",
+            "shortname": "Component",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/Component.js",
+            "line": 4,
+            "description": "A tag class. All components in the system must extend this class."
+        },
+        "ComponentManager": {
+            "name": "ComponentManager",
+            "shortname": "ComponentManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/ComponentManager.js",
+            "line": 4,
+            "description": "Object to manage components"
+        },
+        "ComponentMapper": {
+            "name": "ComponentMapper",
+            "shortname": "ComponentMapper",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/ComponentMapper.js",
+            "line": 4,
+            "description": "High performance component retrieval from entities. Use this wherever you\nneed to retrieve components from entities often and fast."
+        },
+        "ComponentType": {
+            "name": "ComponentType",
+            "shortname": "ComponentType",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/ComponentType.js",
+            "line": 4,
+            "static": 1
+        },
+        "Entity": {
+            "name": "Entity",
+            "shortname": "Entity",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/Entity.js",
+            "line": 4,
+            "description": "The entity class. Cannot be instantiated outside the framework, you must\ncreate new entities using World."
+        },
+        "EntityManager": {
+            "name": "EntityManager",
+            "shortname": "EntityManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/EntityManager.js",
+            "line": 4,
+            "description": "The entity manager class."
+        },
+        "IdentifierPool": {
+            "name": "IdentifierPool",
+            "shortname": "IdentifierPool",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/EntityManager.js",
+            "line": 208,
+            "description": "Used only internally in EntityManager to generate distinct ids for\nentities and reuse them"
+        },
+        "EntityObserver": {
+            "name": "EntityObserver",
+            "shortname": "EntityObserver",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/EntityObserver.js",
+            "line": 4,
+            "description": "The entity observer class."
+        },
+        "SystemIndexManager": {
+            "name": "SystemIndexManager",
+            "shortname": "SystemIndexManager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/EntitySystem.js",
+            "line": 4,
+            "description": "Used to generate a unique bit for each system.\nOnly used internally in EntitySystem."
+        },
+        "EntitySystem": {
+            "name": "EntitySystem",
+            "shortname": "EntitySystem",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/EntitySystem.js",
+            "line": 43,
+            "description": "The most raw entity system. It should not typically be used, but you can \ncreate your own entity system handling by extending this. It is \nrecommended that you use the other provided entity system implementations"
+        },
+        "Manager": {
+            "name": "Manager",
+            "shortname": "Manager",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/Manager.js",
+            "line": 4,
+            "description": "The entity class. Cannot be instantiated outside the framework, you must\ncreate new entities using World."
+        },
+        "World": {
+            "name": "World",
+            "shortname": "World",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "ArtemiJS",
+            "namespace": "",
+            "file": "../src/World.js",
+            "line": 4,
+            "description": "The primary instance for the framework. It contains all the managers.\nYou must use this to create, delete and retrieve entities.\nIt is also important to set the delta each game loop iteration, \nand initialize before game loop."
+        }
+    },
+    "classitems": [
+        {
+            "file": "../src/managers/TeamManager.js",
+            "line": 21,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "playersByTeam",
+            "type": "{Utils.HashMap}",
+            "class": "Managers.TeamManager",
+            "module": "ArtemiJS",
+            "submodule": "Managers",
+            "namespace": "Managers"
+        },
+        {
+            "file": "../src/managers/TeamManager.js",
+            "line": 28,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "teamByPlayer",
+            "type": "{Utils.HashMap}",
+            "class": "Managers.TeamManager",
+            "module": "ArtemiJS",
+            "submodule": "Managers",
+            "namespace": "Managers"
+        },
+        {
+            "file": "../src/managers/TeamManager.js",
+            "line": 35,
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "Managers.TeamManager",
+            "module": "ArtemiJS",
+            "submodule": "Managers",
+            "namespace": "Managers"
+        },
+        {
+            "file": "../src/managers/TeamManager.js",
+            "line": 40,
+            "itemtype": "method",
+            "name": "getTeam",
+            "params": [
+                {
+                    "name": "player",
+                    "description": "Name of the player",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "Managers.TeamManager",
+            "module": "ArtemiJS",
+            "submodule": "Managers",
+            "namespace": "Managers"
+        },
+        {
+            "file": "../src/managers/TeamManager.js",
+            "line": 49,
+            "description": "Set team to a player",
+            "itemtype": "method",
+            "name": "setTeam",
+            "params": [
+                {
+                    "name": "player",
+                    "description": "Name of the player",
+                    "type": "String"
+                },
+                {
+                    "name": "team",
+                    "description": "Name of the team",
+                    "type": "String"
+                }
+            ],
+            "class": "Managers.TeamManager",
+            "module": "ArtemiJS",
+            "submodule": "Managers",
+            "namespace": "Managers"
+        },
+        {
+            "file": "../src/managers/TeamManager.js",
+            "line": 69,
+            "itemtype": "method",
+            "name": "getPlayers",
+            "params": [
+                {
+                    "name": "team",
+                    "description": "Name of the team",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Bag of players",
+                "type": "Utils.Bag"
+            },
+            "class": "Managers.TeamManager",
+            "module": "ArtemiJS",
+            "submodule": "Managers",
+            "namespace": "Managers"
+        },
+        {
+            "file": "../src/managers/TeamManager.js",
+            "line": 78,
+            "itemtype": "method",
+            "name": "removeFromTeam",
+            "params": [
+                {
+                    "name": "player",
+                    "description": "Name of the player",
+                    "type": "String"
+                }
+            ],
+            "class": "Managers.TeamManager",
+            "module": "ArtemiJS",
+            "submodule": "Managers",
+            "namespace": "Managers"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 16,
+            "description": "Contains all of the elements",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "data",
+            "type": "{Array}",
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 25,
+            "description": "Removes the element at the specified position in this Bag. does this by\noverwriting it was last element then removing last element",
+            "itemtype": "method",
+            "name": "remove",
+            "params": [
+                {
+                    "name": "Mixed",
+                    "description": "index the index of element to be removed"
+                }
+            ],
+            "return": {
+                "description": "Mixed element that was removed from the Bag"
+            },
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 48,
+            "description": "Remove and return the last object in the bag.",
+            "itemtype": "method",
+            "name": "removeLast",
+            "return": {
+                "description": "Mixed the last object in the bag, null if empty."
+            },
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 63,
+            "description": "Check if bag contains this element.",
+            "itemtype": "method",
+            "name": "contains",
+            "params": [
+                {
+                    "name": "Mixed",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "Mixed"
+            },
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 74,
+            "description": "Removes from this Bag all of its elements that are contained in the\nspecified Bag.",
+            "itemtype": "method",
+            "name": "removeAll",
+            "params": [
+                {
+                    "name": "Bag",
+                    "description": "containing elements to be removed from this Bag",
+                    "type": "Bag"
+                }
+            ],
+            "return": {
+                "description": "true if this Bag changed as a result of the call, else false",
+                "type": "Boolean"
+            },
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 96,
+            "description": "Returns the element at the specified position in Bag.",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "index",
+                    "description": "index of the element to return",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "Mixed the element at the specified position in bag"
+            },
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 107,
+            "description": "Returns the number of elements in this bag.",
+            "itemtype": "method",
+            "name": "size",
+            "return": {
+                "description": "the number of elements in this bag",
+                "type": "Number"
+            },
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 117,
+            "description": "Returns the number of elements the bag can hold without growing.",
+            "itemtype": "method",
+            "name": "capacity",
+            "return": {
+                "description": "the number of elements the bag can hold without growing.",
+                "type": "Number"
+            },
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 127,
+            "description": "Checks if the internal storage supports this index.",
+            "itemtype": "method",
+            "name": "isIndexWithinBounds",
+            "params": [
+                {
+                    "name": "index",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 138,
+            "description": "Returns true if this list contains no elements.",
+            "itemtype": "method",
+            "name": "isEmpty",
+            "return": {
+                "description": "true if is empty, else false",
+                "type": "Boolean"
+            },
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 148,
+            "description": "Adds the specified element to the end of this bag. if needed also\nincreases the capacity of the bag.",
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "Mixed",
+                    "description": "element to be added to this list"
+                }
+            ],
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 159,
+            "description": "Set element at specified index in the bag.",
+            "itemtype": "method",
+            "name": "set",
+            "params": [
+                {
+                    "name": "index",
+                    "description": "position of element",
+                    "type": "Number"
+                },
+                {
+                    "name": "Mixed",
+                    "description": "the element"
+                }
+            ],
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 170,
+            "description": "Method verify the capacity of the bag",
+            "itemtype": "method",
+            "name": "ensureCapacity",
+            "params": [
+                {
+                    "name": "index",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 180,
+            "description": "Removes all of the elements from this bag. The bag will be empty after\nthis call returns.",
+            "itemtype": "method",
+            "name": "clear",
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Bag.js",
+            "line": 190,
+            "description": "Add all items into this bag.",
+            "itemtype": "method",
+            "name": "addAll",
+            "params": [
+                {
+                    "name": "bag",
+                    "description": "added",
+                    "type": "Bag"
+                }
+            ],
+            "class": "Utils.Bag",
+            "module": "ArtemiJS",
+            "submodule": "Utils",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/BitSet.js",
+            "line": 4,
+            "author": "inexplicable",
+            "see": [
+                "https://github.com/inexplicable/bitset"
+            ],
+            "class": "Utils.HashMap",
+            "module": "ArtemiJS",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/BitSet.js",
+            "line": 21,
+            "params": [
+                {
+                    "name": "pos",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "the index at the words array",
+                "type": "Number"
+            },
+            "class": "Utils.HashMap",
+            "module": "ArtemiJS",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/BitSet.js",
+            "line": 31,
+            "params": [
+                {
+                    "name": "pos",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "a bit mask of 32 bits, 1 bit set at pos % 32, the rest being 0",
+                "type": "Number"
+            },
+            "class": "Utils.HashMap",
+            "module": "ArtemiJS",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/BitSet.js",
+            "line": 71,
+            "description": "count all set bits",
+            "return": {
+                "description": "\n\nthis is much faster than BitSet lib of CoffeeScript, it fast skips 0 value words",
+                "type": "Number"
+            },
+            "class": "Utils.HashMap",
+            "module": "ArtemiJS",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/BitSet.js",
+            "line": 108,
+            "params": [
+                {
+                    "name": "set",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "this BitSet after and operation\nthis is much more performant than CoffeeScript's BitSet#and operation because we'll chop the zero value words at tail.",
+                "type": "BitSet"
+            },
+            "class": "Utils.HashMap",
+            "module": "ArtemiJS",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/BitSet.js",
+            "line": 151,
+            "description": "this is the critical piece missing from CoffeeScript's BitSet lib, we usually just need to know the next set bit if any.\nit fast skips 0 value word as #cardinality does, this is esp. important because of our usage, after series of #and operations\nit's highly likely that most of the words left are zero valued, and by skipping all of such, we could locate the actual bit set much faster.",
+            "params": [
+                {
+                    "name": "pos",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Utils.HashMap",
+            "module": "ArtemiJS",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/BitSet.js",
+            "line": 193,
+            "description": "An reversed lookup compared with #nextSetBit",
+            "params": [
+                {
+                    "name": "pos",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Utils.HashMap",
+            "module": "ArtemiJS",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/HashMap.js",
+            "line": 1,
+            "description": "HashMap",
+            "author": "Ariel Flesler <aflesler@gmail.com>",
+            "version": "0.9.3\nDate: 4/3/2013\nHomepage: https://github.com/flesler/hashmap",
+            "class": "Utils.HashMap",
+            "module": "ArtemiJS",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/utils/Math.js",
+            "line": 1,
+            "description": "For an rfc4122 version 4 compliant solution",
+            "see": [
+                "http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript"
+            ],
+            "author": "broofa",
+            "class": "ArtemiJS",
+            "module": "ArtemiJS",
+            "namespace": "Utils"
+        },
+        {
+            "file": "../src/Artemi.js",
+            "line": 15,
+            "itemtype": "property",
+            "name": "version",
+            "type": "Float",
+            "class": "ArtemiJS",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Artemi.js",
+            "line": 20,
+            "itemtype": "property",
+            "name": "source",
+            "type": "String",
+            "class": "ArtemiJS",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Artemi.js",
+            "line": 25,
+            "itemtype": "property",
+            "name": "license",
+            "type": "String",
+            "class": "ArtemiJS",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Artemi.js",
+            "line": 30,
+            "itemtype": "property",
+            "name": "env",
+            "type": "Number",
+            "class": "ArtemiJS",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 29,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "allSet",
+            "type": "{ArtemiJS.Utils.Bag}",
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 36,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "exclusionSet",
+            "type": "{ArtemiJS.Utils.Bag}",
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 43,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "exclusionSet",
+            "type": "{ArtemiJS.Utils.Bag}",
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 50,
+            "itemtype": "method",
+            "name": "getAllSet",
+            "return": {
+                "description": "",
+                "type": "ArtemiJS.Utils.Bag"
+            },
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 58,
+            "itemtype": "method",
+            "name": "getExclusionSet",
+            "return": {
+                "description": "",
+                "type": "ArtemiJS.Utils.Bag"
+            },
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 66,
+            "itemtype": "method",
+            "name": "getOneSet",
+            "return": {
+                "description": "",
+                "type": "ArtemiJS.Utils.Bag"
+            },
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 74,
+            "description": "Returns an aspect where an entity must possess all of the specified component types.",
+            "itemtype": "method",
+            "name": "all",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "type",
+                    "description": "a required component type",
+                    "type": "String",
+                    "multiple": true
+                }
+            ],
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 90,
+            "description": "Excludes all of the specified component types from the aspect. A system will not be\ninterested in an entity that possesses one of the specified exclusion component types.",
+            "itemtype": "method",
+            "name": "exclude",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "type",
+                    "description": "component type to exclude",
+                    "type": "String",
+                    "multiple": true
+                }
+            ],
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 107,
+            "description": "Returns an aspect where an entity must possess one of the specified component types.",
+            "itemtype": "method",
+            "name": "one",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "type",
+                    "description": "one of the types the entity must possess",
+                    "type": "String",
+                    "multiple": true
+                }
+            ],
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 123,
+            "description": "Creates an aspect where an entity must possess all of the specified component types.",
+            "itemtype": "method",
+            "name": "getAspectForAll",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "a required component type",
+                    "type": "String",
+                    "multiple": true
+                }
+            ],
+            "return": {
+                "description": "an aspect that can be matched against entities",
+                "type": "ArtemiJS.Aspect"
+            },
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 137,
+            "description": "Creates an aspect where an entity must possess one of the specified component types.",
+            "itemtype": "method",
+            "name": "getAspectForOne",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "one of the types the entity must possess",
+                    "type": "String",
+                    "multiple": true
+                }
+            ],
+            "return": {
+                "description": "an aspect that can be matched against entities",
+                "type": "ArtemiJS.Aspect"
+            },
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Aspect.js",
+            "line": 150,
+            "description": "Creates and returns an empty aspect. This can be used if you want a system that processes no entities, but\nstill gets invoked. Typical usages is when you need to create special purpose systems for debug rendering,\nlike rendering FPS, how many entities are active in the world, etc.\n\nYou can also use the all, one and exclude methods on this aspect, so if you wanted to create a system that\nprocesses only entities possessing just one of the components A or B or C, then you can do:\nAspect.getEmpty().one(A,B,C);",
+            "itemtype": "method",
+            "name": "getEmpty",
+            "return": {
+                "description": "an empty Aspect that will reject all entities.",
+                "type": "ArtemiJS.Aspect"
+            },
+            "class": "Aspect",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 13,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "componentsByType",
+            "type": "{Utils.Bag}",
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 20,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "deleted",
+            "type": "{Utils.Bag}",
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 27,
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 32,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "removeComponentsOfEntity",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 45,
+            "description": "Add component by type",
+            "itemtype": "method",
+            "name": "addComponent",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "ComponentType"
+                },
+                {
+                    "name": "component",
+                    "description": "",
+                    "type": "Component"
+                }
+            ],
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 65,
+            "description": "Remove component by type",
+            "itemtype": "method",
+            "name": "removeComponent",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "ComponentType"
+                }
+            ],
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 79,
+            "description": "Get component by type",
+            "itemtype": "method",
+            "name": "getComponentsByType",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "ComponentType"
+                }
+            ],
+            "return": {
+                "description": "Bag of components",
+                "type": "Utils.Bag"
+            },
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 95,
+            "description": "Get component",
+            "itemtype": "method",
+            "name": "getComponent",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "ComponentType"
+                }
+            ],
+            "return": {
+                "description": "Mixed Component on success, null on false"
+            },
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 111,
+            "description": "Get component for",
+            "itemtype": "method",
+            "name": "getComponentsFor",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                },
+                {
+                    "name": "Bag",
+                    "description": "of components",
+                    "type": "Utils.Bag"
+                }
+            ],
+            "return": {
+                "description": "Bag of components",
+                "type": "Utils.Bag"
+            },
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 129,
+            "description": "Add entity to delete componenets of them",
+            "itemtype": "method",
+            "name": "deleted",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentManager.js",
+            "line": 139,
+            "description": "Clean deleted componenets of entities",
+            "itemtype": "method",
+            "name": "clean",
+            "class": "ComponentManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentMapper.js",
+            "line": 16,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "type Type of component",
+            "type": "ArtemiJS.ComponentType",
+            "class": "ComponentMapper",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentMapper.js",
+            "line": 22,
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "components",
+                    "description": "Bag of components",
+                    "type": "ArtemiJS.Utils.Bag"
+                }
+            ],
+            "class": "ComponentMapper",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentMapper.js",
+            "line": 28,
+            "description": "Fast but unsafe retrieval of a component for this entity.\nNo bounding checks, so this could return null,\nhowever in most scenarios you already know the entity possesses this component.",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "ArtemiJS.Entity"
+                }
+            ],
+            "return": {
+                "description": "|null",
+                "type": "ArtemiJS.Component"
+            },
+            "class": "ComponentMapper",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentMapper.js",
+            "line": 41,
+            "description": "Fast and safe retrieval of a component for this entity.\nIf the entity does not have this component then null is returned.",
+            "itemtype": "method",
+            "name": "getSafe",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "ArtemiJS.Entity"
+                }
+            ],
+            "return": {
+                "description": "|null",
+                "type": "ArtemiJS.Component"
+            },
+            "class": "ComponentMapper",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentMapper.js",
+            "line": 56,
+            "description": "Checks if the entity has this type of component.",
+            "itemtype": "method",
+            "name": "has",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "ArtemiJS.Entity"
+                }
+            ],
+            "return": {
+                "description": "boolean true if the entity has this component type, false if it doesn't."
+            },
+            "class": "ComponentMapper",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentMapper.js",
+            "line": 68,
+            "description": "Returns a component mapper for this type of components.",
+            "itemtype": "method",
+            "name": "getFor",
+            "static": 1,
+            "params": [
+                {
+                    "name": "type",
+                    "description": "the type of components this mapper uses",
+                    "type": "Object"
+                },
+                {
+                    "name": "the",
+                    "description": "world that this component mapper should use",
+                    "type": "ArtemiJS.World"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ArtemiJS.ComponentMapper"
+            },
+            "class": "ComponentMapper",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentType.js",
+            "line": 11,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "type",
+            "type": "{ArtemiJS.Component}",
+            "class": "ComponentType",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentType.js",
+            "line": 18,
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "itemtype": "property",
+            "name": "INDEX",
+            "type": "{Integer}",
+            "class": "ComponentType",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentType.js",
+            "line": 26,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "index",
+            "type": "{Integer}",
+            "class": "ComponentType",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentType.js",
+            "line": 33,
+            "class": "ComponentType",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentType.js",
+            "line": 39,
+            "class": "ComponentType",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentType.js",
+            "line": 57,
+            "class": "ComponentType",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/ComponentType.js",
+            "line": 70,
+            "class": "ComponentType",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 16,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "uuid",
+            "type": "{String}",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 23,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "componentBits",
+            "type": "{Utils.BitSet}",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 30,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "systemBits",
+            "type": "{Utils.BitSet}",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 37,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "world",
+            "type": "{World}",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 44,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "id",
+            "type": "{Number}",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 51,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "entityManager",
+            "type": "{EntityManager}",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 58,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "componentManager",
+            "type": "{ComponentManager}",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 67,
+            "description": "The internal id for this entity within the framework. No other entity\nwill have the same ID, but ID's are however reused so another entity may\nacquire this ID if the previous entity was deleted.",
+            "itemtype": "method",
+            "name": "getId",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 79,
+            "description": "Returns a BitSet instance containing bits of the components the entity possesses.",
+            "itemtype": "method",
+            "name": "getComponentBits",
+            "return": {
+                "description": "",
+                "type": "Utils.BitSet"
+            },
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 89,
+            "description": "Returns a BitSet instance containing bits of the components the entity possesses.",
+            "itemtype": "method",
+            "name": "getSystemBits",
+            "return": {
+                "description": "",
+                "type": "Utils.BitSet"
+            },
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 99,
+            "description": "Get systems BitSet",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "reset",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 111,
+            "description": "Make entity ready for re-use.\nWill generate a new uuid for the entity.",
+            "itemtype": "method",
+            "name": "toString",
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 122,
+            "description": "Add a component to this entity.",
+            "itemtype": "method",
+            "name": "addComponent",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "component",
+                    "description": "",
+                    "type": "Component"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "ComponentType",
+                    "optional": true
+                }
+            ],
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 138,
+            "description": "Remove component by its type.",
+            "itemtype": "method",
+            "name": "removeComponent",
+            "params": [
+                {
+                    "name": "component",
+                    "description": "",
+                    "type": "Component",
+                    "optional": true
+                }
+            ],
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 154,
+            "description": "Checks if the entity has been added to the world and has not been deleted from it.\nIf the entity has been disabled this will still return true.",
+            "itemtype": "method",
+            "name": "isActive",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 165,
+            "itemtype": "method",
+            "name": "isEnabled",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 173,
+            "description": "This is the preferred method to use when retrieving a component from a\nentity. It will provide good performance.\nBut the recommended way to retrieve components from an entity is using\nthe ComponentMapper.",
+            "itemtype": "method",
+            "name": "getComponent",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "in order to retrieve the component fast you must provide a\n     ComponentType instance for the expected component.",
+                    "type": "ComponentType",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "ArtemiJS.Component"
+            },
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 195,
+            "description": "Returns a bag of all components this entity has.\nYou need to reset the bag yourself if you intend to fill it more than once.",
+            "itemtype": "method",
+            "name": "getComponents",
+            "params": [
+                {
+                    "name": "fillBag",
+                    "description": "the bag to put the components into.",
+                    "type": "Utils.Bag"
+                }
+            ],
+            "return": {
+                "description": "the fillBag with the components in.",
+                "type": "Utils.Bag"
+            },
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 207,
+            "description": "Refresh all changes to components for this entity. After adding or\nremoving components, you must call this method. It will update all\nrelevant systems. It is typical to call this after adding components to a\nnewly created entity.",
+            "itemtype": "method",
+            "name": "addToWorld",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 219,
+            "description": "This entity has changed, a component added or deleted.",
+            "itemtype": "method",
+            "name": "changedInWorld",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 228,
+            "description": "Delete this entity from the world.",
+            "itemtype": "method",
+            "name": "deleteFromWorl",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 237,
+            "description": "(Re)enable the entity in the world, after it having being disabled.\nWon't do anything unless it was already disabled.",
+            "itemtype": "method",
+            "name": "enable",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 247,
+            "description": "Disable the entity from being processed. Won't delete it, it will\ncontinue to exist but won't get processed.",
+            "itemtype": "method",
+            "name": "disable",
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 257,
+            "description": "Get the UUID for this entity.\nThis UUID is unique per entity (re-used entities get a new UUID).",
+            "itemtype": "method",
+            "name": "getUuid",
+            "return": {
+                "description": "uuid instance for this entity.",
+                "type": "String"
+            },
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Entity.js",
+            "line": 268,
+            "description": "Returns the world this entity belongs to.",
+            "itemtype": "method",
+            "name": "getWorld",
+            "return": {
+                "description": "world of entity.",
+                "type": "ArtemiJS.World"
+            },
+            "class": "Entity",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 13,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "entities",
+            "type": "{Utils.Bag}",
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 20,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "disabled",
+            "type": "{Utils.BitSet}",
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 27,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "active",
+            "type": "{Number}",
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 34,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "added",
+            "type": "{Number}",
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 41,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "created",
+            "type": "{Number}",
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 48,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "deleted",
+            "type": "{Number}",
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 55,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "identifierPool",
+            "type": "{IdentifierPool}",
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 62,
+            "description": "Initialize",
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 71,
+            "description": "Create new entity instance",
+            "itemtype": "method",
+            "name": "createEntityInstance",
+            "return": {
+                "description": "",
+                "type": "Entity"
+            },
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 83,
+            "description": "Set entity as added for future process",
+            "itemtype": "method",
+            "name": "added",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 95,
+            "description": "Set entity as enabled for future process",
+            "itemtype": "method",
+            "name": "enabled",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 105,
+            "description": "Set entity as disabled for future process",
+            "itemtype": "method",
+            "name": "disabled",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 115,
+            "description": "Set entity as deleted for future process",
+            "itemtype": "method",
+            "name": "deleted",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 132,
+            "description": "Check if this entity is active.\nActive means the entity is being actively processed.",
+            "itemtype": "method",
+            "name": "isActive",
+            "params": [
+                {
+                    "name": "entityId",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "true if active, false if not",
+                "type": "Boolean"
+            },
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 144,
+            "description": "Check if the specified entityId is enabled.",
+            "itemtype": "method",
+            "name": "isEnabled",
+            "params": [
+                {
+                    "name": "entityId",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "true if enabled, false if it is disabled",
+                "type": "Boolean"
+            },
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 155,
+            "description": "Get a entity with this id.",
+            "params": [
+                {
+                    "name": "getEntity",
+                    "description": ""
+                },
+                {
+                    "name": "entityId",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Entity"
+            },
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 166,
+            "description": "Get how many entities are active in this world.",
+            "itemtype": "method",
+            "name": "getActiveEntityCount",
+            "return": {
+                "description": "how many entities are currently active.",
+                "type": "Number"
+            },
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 176,
+            "description": "Get how many entities have been created in the world since start.\nNote: A created entity may not have been added to the world, thus\ncreated count is always equal or larger than added count.",
+            "itemtype": "method",
+            "name": "getTotalCreated",
+            "return": {
+                "description": "how many entities have been created since start.",
+                "type": "Number"
+            },
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 188,
+            "description": "Get how many entities have been added to the world since start.",
+            "itemtype": "method",
+            "name": "getTotalAdded",
+            "return": {
+                "description": "how many entities have been added.",
+                "type": "Number"
+            },
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 198,
+            "description": "Get how many entities have been deleted from the world since start.",
+            "itemtype": "method",
+            "name": "getTotalDeleted",
+            "return": {
+                "description": "how many entities have been deleted since start.",
+                "type": "Number"
+            },
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 220,
+            "itemtype": "property",
+            "name": "ids",
+            "type": "{Utils.Bag}",
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 226,
+            "itemtype": "property",
+            "name": "nextAvailableId",
+            "type": "{Number}",
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 232,
+            "description": "Check an available id",
+            "itemtype": "method",
+            "name": "checkOut",
+            "return": {
+                "description": "next available id",
+                "type": "Number"
+            },
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityManager.js",
+            "line": 245,
+            "description": "Add new id in ids {Bag}",
+            "itemtype": "method",
+            "name": "checkIn",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "EntityManager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityObserver.js",
+            "line": 13,
+            "description": "Abstract method added",
+            "abstract": "",
+            "itemtype": "method",
+            "name": "added",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityObserver",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityObserver.js",
+            "line": 24,
+            "description": "Abstract method changed",
+            "abstract": "",
+            "itemtype": "method",
+            "name": "changed",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityObserver",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityObserver.js",
+            "line": 35,
+            "description": "Abstract method deleted",
+            "abstract": "",
+            "itemtype": "method",
+            "name": "deleted",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityObserver",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityObserver.js",
+            "line": 46,
+            "description": "Abstract method enabled",
+            "abstract": "",
+            "itemtype": "method",
+            "name": "enabled",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityObserver",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntityObserver.js",
+            "line": 57,
+            "description": "Abstract method disabled",
+            "abstract": "",
+            "itemtype": "method",
+            "name": "disabled",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntityObserver",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 16,
+            "itemtype": "property",
+            "name": "INDEX",
+            "type": "{Number}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 22,
+            "itemtype": "property",
+            "name": "indices",
+            "type": "{Array}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 28,
+            "itemtype": "method",
+            "name": "getIndexFor",
+            "params": [
+                {
+                    "name": "entitySystem",
+                    "description": "",
+                    "type": "EntitySystem"
+                }
+            ],
+            "return": {
+                "description": "index",
+                "type": "Number"
+            },
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 56,
+            "itemtype": "property",
+            "name": "world",
+            "type": "{World}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 62,
+            "access": "private",
+            "tagname": "",
+            "final": 1,
+            "itemtype": "property",
+            "name": "systemIndex",
+            "type": "{Number}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 70,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "actives",
+            "type": "{Utils.Bag}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 77,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "aspect",
+            "type": "{Aspect}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 84,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "allSet",
+            "type": "{Utils.BitSet}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 91,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "exclusionSet",
+            "type": "{Utils.BitSet}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 98,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "oneSet",
+            "type": "{Utils.BitSet}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 105,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "passive",
+            "type": "{Boolean}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 112,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "dummy",
+            "type": "{Boolean}",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 121,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "removeFromSystem",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 132,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "insertToSystem",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 143,
+            "description": "Called before processing of entities begins",
+            "itemtype": "method",
+            "name": "begin",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 150,
+            "description": "Process the entities",
+            "itemtype": "method",
+            "name": "process",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 163,
+            "description": "Called after the processing of entities ends",
+            "itemtype": "method",
+            "name": "end",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 170,
+            "description": "Any implementing entity system must implement this method and the \nlogic to process the given entities of the system.",
+            "itemtype": "method",
+            "name": "processEntities",
+            "params": [
+                {
+                    "name": "entities",
+                    "description": "athe entities this system contains",
+                    "type": "Bag"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 179,
+            "description": "Check the system should processing",
+            "itemtype": "method",
+            "name": "checkProcessing",
+            "return": {
+                "description": "true if the system should be processed, false if not",
+                "type": "Boolean"
+            },
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 187,
+            "description": "Override to implement code that gets executed when systems are \ninitialized.",
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 195,
+            "description": "Called if the system has received a entity it is interested in, \ne.g. created or a component was added to it.",
+            "itemtype": "method",
+            "name": "inserted",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "the entity that was added to this system",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 204,
+            "description": "Called if a entity was removed from this system, e.g. deleted \nor had one of it's components removed.",
+            "itemtype": "method",
+            "name": "removed",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "the entity that was removed from this system.",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 213,
+            "description": "Will check if the entity is of interest to this system.",
+            "itemtype": "method",
+            "name": "check",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "the entity to check",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 251,
+            "itemtype": "method",
+            "name": "added",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 259,
+            "itemtype": "method",
+            "name": "changed",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 267,
+            "itemtype": "method",
+            "name": "deleted",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 277,
+            "itemtype": "method",
+            "name": "disabled",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 287,
+            "itemtype": "method",
+            "name": "enabled",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 295,
+            "itemtype": "method",
+            "name": "setWorld",
+            "params": [
+                {
+                    "name": "world",
+                    "description": "",
+                    "type": "World"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 303,
+            "itemtype": "method",
+            "name": "isPassive",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 311,
+            "itemtype": "method",
+            "name": "setPassive",
+            "params": [
+                {
+                    "name": "passive",
+                    "description": "",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/EntitySystem.js",
+            "line": 319,
+            "itemtype": "method",
+            "name": "getActives",
+            "return": {
+                "description": "actives",
+                "type": "Utils.Bag"
+            },
+            "class": "EntitySystem",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Manager.js",
+            "line": 14,
+            "itemtype": "property",
+            "name": "world",
+            "type": "{World}",
+            "class": "Manager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Manager.js",
+            "line": 20,
+            "description": "Override to implement code that gets executed when systems are \ninitialized.",
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "Manager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Manager.js",
+            "line": 28,
+            "itemtype": "method",
+            "name": "setWorld",
+            "params": [
+                {
+                    "name": "world",
+                    "description": "",
+                    "type": "World"
+                }
+            ],
+            "class": "Manager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Manager.js",
+            "line": 36,
+            "itemtype": "method",
+            "name": "getWorld",
+            "return": {
+                "description": "world",
+                "type": "World"
+            },
+            "class": "Manager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Manager.js",
+            "line": 44,
+            "description": "Abstract method added",
+            "abstract": "",
+            "itemtype": "method",
+            "name": "added",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "Manager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Manager.js",
+            "line": 53,
+            "description": "Abstract method changed",
+            "abstract": "",
+            "itemtype": "method",
+            "name": "changed",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "Manager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Manager.js",
+            "line": 62,
+            "description": "Abstract method deleted",
+            "abstract": "",
+            "itemtype": "method",
+            "name": "deleted",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "Manager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Manager.js",
+            "line": 71,
+            "description": "Abstract method enabled",
+            "abstract": "",
+            "itemtype": "method",
+            "name": "enabled",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "Manager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/Manager.js",
+            "line": 80,
+            "description": "Abstract method disabled",
+            "abstract": "",
+            "itemtype": "method",
+            "name": "disabled",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "Manager",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 16,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "entityManager",
+            "type": "{EntityManager}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 23,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "componentManager",
+            "type": "{ComponentManager}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 30,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "manager",
+            "type": "{Object}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 37,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "managersBag",
+            "type": "{Utils.Bag}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 44,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "systems",
+            "type": "{Object}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 51,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "systemsBag",
+            "type": "{Utils.Bag}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 58,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "added",
+            "type": "{Utils.Bag}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 65,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "changed",
+            "type": "{Utils.Bag}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 72,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "deleted",
+            "type": "{Utils.Bag}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 79,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "enable",
+            "type": "{Utils.Bag}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 86,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "disable",
+            "type": "{Utils.Bag}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 93,
+            "access": "private",
+            "tagname": "",
+            "itemtype": "property",
+            "name": "delta",
+            "type": "{Number}",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 103,
+            "description": "Makes sure all managers systems are initialized in the order \nthey were added",
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 120,
+            "description": "Returns a manager that takes care of all the entities in the world.\nentities of this world",
+            "itemtype": "method",
+            "name": "getEntityManager",
+            "return": {
+                "description": "entityManager",
+                "type": "EntityManager"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 131,
+            "description": "Returns a manager that takes care of all the components in the world.",
+            "itemtype": "method",
+            "name": "getComponentManager",
+            "return": {
+                "description": "componentManager",
+                "type": "ComponentManager"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 141,
+            "description": "Add a manager into this world. It can be retrieved later.\nWorld will notify this manager of changes to entity.",
+            "itemtype": "method",
+            "name": "setManager",
+            "params": [
+                {
+                    "name": "manager",
+                    "description": "manager to be added",
+                    "type": "Manager"
+                }
+            ],
+            "return": {
+                "description": "manager",
+                "type": "Manager"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 158,
+            "description": "Returns a manager of the specified type.",
+            "params": [
+                {
+                    "name": "managerType",
+                    "description": "class type of the manager",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "manager",
+                "type": "Manager"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 168,
+            "description": "Deletes the manager from this world.",
+            "itemtype": "method",
+            "name": "deleteManager",
+            "params": [
+                {
+                    "name": "manager",
+                    "description": "manager to delete.",
+                    "type": "Manager"
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 179,
+            "description": "You must specify the delta for the game here.",
+            "itemtype": "method",
+            "name": "setDelta",
+            "params": [
+                {
+                    "name": "d",
+                    "description": "time since last game loop.",
+                    "type": "Number"
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 189,
+            "itemtype": "method",
+            "name": "getDelta",
+            "return": {
+                "description": "delta time since last game loop.",
+                "type": "Number"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 198,
+            "description": "Adds a entity to this world.",
+            "itemtype": "method",
+            "name": "addEntity",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 208,
+            "description": "Ensure all systems are notified of changes to this entity.\nIf you're adding a component to an entity after it's been\nadded to the world, then you need to invoke this method.",
+            "itemtype": "method",
+            "name": "changedEntity",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 220,
+            "description": "Delete the entity from the world.",
+            "itemtype": "method",
+            "name": "deleteEntity",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 230,
+            "description": "(Re)enable the entity in the world, after it having being disabled.\nWon't do anything unless it was already disabled.",
+            "itemtype": "method",
+            "name": "enableEntity",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 241,
+            "description": "Disable the entity from being processed. Won't delete it, it will\ncontinue to exist but won't get processed.",
+            "itemtype": "method",
+            "name": "disableEntity",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 252,
+            "description": "Create and return a new or reused entity instance.\nWill NOT add the entity to the world, use World.addEntity(Entity) for that.",
+            "itemtype": "method",
+            "name": "createEntity",
+            "return": {
+                "description": "entity",
+                "type": "Entity"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 263,
+            "description": "Get a entity having the specified id.",
+            "itemtype": "method",
+            "name": "getEntity",
+            "params": [
+                {
+                    "name": "entityId",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "entity",
+                "type": "Entity"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 274,
+            "description": "Gives you all the systems in this world for possible iteration.",
+            "itemtype": "method",
+            "name": "getSystems",
+            "return": {
+                "description": "all entity systems in world, other false",
+                "type": "Mixed"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 284,
+            "description": "Adds a system to this world that will be processed by World.process()",
+            "itemtype": "method",
+            "name": "setSystem",
+            "params": [
+                {
+                    "name": "system",
+                    "description": "the system to add.",
+                    "type": "EntitySystem"
+                },
+                {
+                    "name": "passive",
+                    "description": "wether or not this system will be processed by World.process()",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "the added system.",
+                "type": "EntitySystem"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 304,
+            "description": "Retrieve a system for specified system type.",
+            "itemtype": "method",
+            "name": "getSystem",
+            "params": [
+                {
+                    "name": "systemType",
+                    "description": "type of system.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "instance of the system in this world.",
+                "type": "EntitySystem"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 315,
+            "description": "Removed the specified system from the world.",
+            "itemtype": "method",
+            "name": "deleteSystem",
+            "params": [
+                {
+                    "name": "system",
+                    "description": "to be deleted from world."
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 326,
+            "description": "Notify all the systems",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "notifySystems",
+            "params": [
+                {
+                    "name": "performer",
+                    "description": "Object with callback perform",
+                    "type": "Object"
+                },
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 341,
+            "description": "Notify all the managers",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "notifySystems",
+            "params": [
+                {
+                    "name": "performer",
+                    "description": "Object with callback perform",
+                    "type": "Object"
+                },
+                {
+                    "name": "entity",
+                    "description": "",
+                    "type": "Entity"
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 356,
+            "description": "Performs an action on each entity.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "check",
+            "params": [
+                {
+                    "name": "entities",
+                    "description": "",
+                    "type": "Utils.Bag"
+                },
+                {
+                    "name": "performer",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 378,
+            "description": "Process all non-passive systems.",
+            "itemtype": "method",
+            "name": "process",
+            "class": "World",
+            "module": "ArtemiJS"
+        },
+        {
+            "file": "../src/World.js",
+            "line": 426,
+            "description": "Retrieves a ComponentMapper instance for fast retrieval \nof components from entities.",
+            "itemtype": "method",
+            "name": "getMapper",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "of component to get mapper for.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "mapper for specified component type.",
+                "type": "ComponentMapper"
+            },
+            "class": "World",
+            "module": "ArtemiJS"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " ../src/utils/BitSet.js:193"
+        },
+        {
+            "message": "unknown tag: version",
+            "line": " ../src/utils/HashMap.js:1"
+        },
+        {
+            "message": "unknown tag: abstract",
+            "line": " ../src/EntityObserver.js:13"
+        },
+        {
+            "message": "unknown tag: abstract",
+            "line": " ../src/EntityObserver.js:24"
+        },
+        {
+            "message": "unknown tag: abstract",
+            "line": " ../src/EntityObserver.js:35"
+        },
+        {
+            "message": "unknown tag: abstract",
+            "line": " ../src/EntityObserver.js:46"
+        },
+        {
+            "message": "unknown tag: abstract",
+            "line": " ../src/EntityObserver.js:57"
+        },
+        {
+            "message": "unknown tag: abstract",
+            "line": " ../src/Manager.js:44"
+        },
+        {
+            "message": "unknown tag: abstract",
+            "line": " ../src/Manager.js:53"
+        },
+        {
+            "message": "unknown tag: abstract",
+            "line": " ../src/Manager.js:62"
+        },
+        {
+            "message": "unknown tag: abstract",
+            "line": " ../src/Manager.js:71"
+        },
+        {
+            "message": "unknown tag: abstract",
+            "line": " ../src/Manager.js:80"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ../src/utils/BitSet.js:4"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ../src/utils/BitSet.js:21"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ../src/utils/BitSet.js:31"
+        },
+        {
+            "message": "Missing item type\ncount all set bits",
+            "line": " ../src/utils/BitSet.js:71"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ../src/utils/BitSet.js:108"
+        },
+        {
+            "message": "Missing item type\nthis is the critical piece missing from CoffeeScript's BitSet lib, we usually just need to know the next set bit if any.\nit fast skips 0 value word as #cardinality does, this is esp. important because of our usage, after series of #and operations\nit's highly likely that most of the words left are zero valued, and by skipping all of such, we could locate the actual bit set much faster.",
+            "line": " ../src/utils/BitSet.js:151"
+        },
+        {
+            "message": "Missing item type\nAn reversed lookup compared with #nextSetBit",
+            "line": " ../src/utils/BitSet.js:193"
+        },
+        {
+            "message": "Missing item type\nHashMap",
+            "line": " ../src/utils/HashMap.js:1"
+        },
+        {
+            "message": "Missing item type\nFor an rfc4122 version 4 compliant solution",
+            "line": " ../src/utils/Math.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ../src/ComponentMapper.js:22"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ../src/ComponentType.js:33"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ../src/ComponentType.js:39"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ../src/ComponentType.js:57"
+        },
+        {
+            "message": "Missing item type",
+            "line": " ../src/ComponentType.js:70"
+        },
+        {
+            "message": "Missing item type\nGet a entity with this id.",
+            "line": " ../src/EntityManager.js:155"
+        },
+        {
+            "message": "Missing item type\nReturns a manager of the specified type.",
+            "line": " ../src/World.js:158"
+        }
+    ]
+}
