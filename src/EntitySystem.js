@@ -1,9 +1,35 @@
 (function(ArtemiJS) {
     'use strict';
     
+    /**
+     * Used to generate a unique bit for each system.
+     * Only used internally in EntitySystem.
+     * 
+     * @module ArtemiJS
+     * @class SystemIndexManager
+     * @for EntitySystem
+     * @final
+     * @constructor
+     */
     var SystemIndexManager = {
+        
+        /**
+         * @property INDEX
+         * @type {Number}
+         */
         INDEX: 0,
+        
+        /**
+         * @property indices
+         * @type {Array}
+         */
         indices: {},
+        
+        /**
+         * @method getIndexFor
+         * @param {EntitySystem} entitySystem
+         * @return {Number} index
+         */
         getIndexFor: function(entitySystem) {
             var index = this.indices[entitySystem];
             if(!index) {
@@ -14,32 +40,118 @@
         }
     };
     
+    /**
+     * The most raw entity system. It should not typically be used, but you can 
+     * create your own entity system handling by extending this. It is 
+     * recommended that you use the other provided entity system implementations
+     * 
+     * @module ArtemiJS
+     * @class EntitySystem
+     * @constructor
+     * @param {Aspect} _aspect Creates an entity system that uses the specified 
+     *      aspect as a matcher against entities.
+     */
     var EntitySystem = function(_aspect) {
-        this.world;
         
+        /**
+         * @property world
+         * @type {World}
+         */
+        this.world = null;
+        
+        /**
+         * @private
+         * @final
+         * @property systemIndex
+         * @type {Number}
+         */
         var systemIndex = SystemIndexManager.getIndexFor(this.getClass()),
-            actives = new ArtemiJS.Bag(),
-            aspect = _aspect,
-            allSet = aspect.getAllSet(),
-            exclusionSet = aspect.getExclusionSet(),
-            oneSet = aspect.getOneSet(),
-            passive,
-            dummy = allSet.isEmpty() && oneSet.isEmpty();
         
-        var removeFromSystem = function(entity) {
+        /**
+         * @private
+         * @property actives
+         * @type {Utils.Bag}
+         */
+        actives = new ArtemiJS.Utils.Bag(),
+        
+        /**
+         * @private
+         * @property aspect
+         * @type {Aspect}
+         */
+        aspect = _aspect,
+        
+        /**
+         * @private
+         * @property allSet
+         * @type {Utils.BitSet}
+         */
+        allSet = aspect.getAllSet(),
+        
+        /**
+         * @private
+         * @property exclusionSet
+         * @type {Utils.BitSet}
+         */
+        exclusionSet = aspect.getExclusionSet(),
+        
+        /**
+         * @private
+         * @property oneSet
+         * @type {Utils.BitSet}
+         */
+        oneSet = aspect.getOneSet(),
+        
+        /**
+         * @private
+         * @property passive
+         * @type {Boolean}
+         */
+        passive,
+        
+        /**
+         * @private
+         * @property dummy
+         * @type {Boolean}
+         */
+        dummy = allSet.isEmpty() && oneSet.isEmpty(),
+        
+        me = this;
+        
+        /**
+         * @private
+         * @method removeFromSystem
+         * @param {Entity} entity
+         */
+        function removeFromSystem(entity) {
             actives.remove(entity);
             entity.getSystemBits().clear(systemIndex);
-            this.removed(entity);
-        };
+            me.removed(entity);
+        }
     
-        var insertToSystem = function(entity) {
+        /**
+         * @private
+         * @method insertToSystem
+         * @param {Entity} entity
+         */
+        function insertToSystem(entity) {
             actives.add(entity);
             entity.getSystemBits().set(systemIndex);
-            this.inserted(entity);
-        };
+            me.inserted(entity);
+        }
         
+        /**
+         * Called before processing of entities begins
+         *
+         * @method begin
+         */
         this.begin = function() {};
         
+        /**
+         * Process the entities
+         * 
+         * @method process
+         */
         this.process = function() {
             if(this.checkProcessing()) {
                 this.begin();
@@ -48,16 +160,62 @@
             }
         };
         
+        /**
+         * Called after the processing of entities ends
+         * 
+         * @method end
+         */
         this.end = function() {};
         
+        /**
+         * Any implementing entity system must implement this method and the 
+         * logic to process the given entities of the system.
+         * 
+         * @method processEntities
+         * @param {Bag} entities athe entities this system contains
+         */
         this.processEntities = function(entities) {};
         
+        /**
+         * Check the system should processing
+         * 
+         * @method checkProcessing
+         * @return {Boolean} true if the system should be processed, false if not
+         */
         this.checkProcessing = function() {};
         
+        /**
+         * Override to implement code that gets executed when systems are 
+         * initialized.
+         * 
+         * @method initialize
+         */
+        this.initialize = function() {};
+        
+        /**
+         * Called if the system has received a entity it is interested in, 
+         * e.g. created or a component was added to it.
+         * 
+         * @method inserted
+         * @param {Entity} entity the entity that was added to this system
+         */
         this.inserted = function(entity) {};
         
+        /**
+         * Called if a entity was removed from this system, e.g. deleted 
+         * or had one of it's components removed.
+         * 
+         * @method removed
+         * @param {Entity} entity the entity that was removed from this system.
+         */
         this.removed = function(entity) {};
         
+        /**
+         * Will check if the entity is of interest to this system.
+         * 
+         * @method check
+         * @param {Entity} entity the entity to check
+         */
         this.check = function(entity) {
             if(dummy) {
                 return;
@@ -90,43 +248,78 @@
             }
         };
         
+        /**
+         * @method added
+         * @param {Entity} entity
+         */
         this.added = function(entity) {
                 this.check(entity);
         };
         
+        /**
+         * @method changed
+         * @param {Entity} entity
+         */
         this.changed = function(entity) {
             this.check(entity);
         };
         
+        /**
+         * @method deleted
+         * @param {Entity} entity
+         */
         this.deleted = function(entity) {
             if(entity.getSystemBits().get(systemIndex)) {
                 removeFromSystem(entity);
             }
         };
         
+        /**
+         * @method disabled
+         * @param {Entity} entity
+         */
         this.disabled = function(entity) {
             if(entity.getSystemBits().get(systemIndex)) {
                 removeFromSystem(entity);
             }
         };
         
+        /**
+         * @method enabled
+         * @param {Entity} entity
+         */
         this.enabled = function(entity) {
             this.check(entity);
         };
         
-    
+        /**
+         * @method setWorld
+         * @param {World} world
+         */
         this.setWorld = function(world) {
             this.world = world;
         };
         
+        /**
+         * @method isPassive
+         * @return {Boolean}
+         */
         this.isPassive = function() {
             return passive;
         };
     
+        /**
+         * @method setPassive
+         * @param {Boolean} passive
+         */
         this.setPassive = function(passive) {
             this.passive = passive;
         };
         
+        /**
+         * @method getActives
+         * @return {Utils.Bag} actives
+         */
         this.getActives = function() {
             return actives;
         };

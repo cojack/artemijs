@@ -8,6 +8,15 @@
 (function(exports){
     'use strict';
     
+    /**
+     * HashMap
+     * 
+     * @module ArtemiJS
+     * @submodule Utils
+     * @class HashMap
+     * @namespace Utils
+     * @constructor
+     */    
     function HashMap() {
 		this.clear();
 	}
