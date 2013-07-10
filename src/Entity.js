@@ -8,7 +8,7 @@
      * @module ArtemiJS
      * @class Entity
      * @constructor
-     * @param {ArtemiJS.World} _world
+     * @param {World} _world
      * @param {Number} _id
      */ 
     var Entity = function(_world, _id) {
@@ -23,21 +23,21 @@
         /**
          * @private
          * @property componentBits
-         * @type {ArtemiJS.BitSet}
+         * @type {Utils.BitSet}
          */
-        componentBits = new ArtemiJS.BitSet(),
+        componentBits = new ArtemiJS.Utils.BitSet(),
 
         /**
          * @private
          * @property systemBits
-         * @type {ArtemiJS.BitSet}
+         * @type {Utils.BitSet}
          */
-        systemBits = new ArtemiJS.BitSet(),
+        systemBits = new ArtemiJS.Utils.BitSet(),
         
         /**
          * @private
          * @property world
-         * @type {ArtemiJS.World}
+         * @type {World}
          */
         world = _world,
         
@@ -51,14 +51,14 @@
         /**
          * @private
          * @property entityManager
-         * @type {ArtemiJS.EntityManager}
+         * @type {EntityManager}
          */
         entityManager = world.getEntityManager(),
         
         /**
          * @private
          * @property componentManager
-         * @type {ArtemiJS.ComponentManager}
+         * @type {ComponentManager}
          */
         componentManager = world.getComponentManager();
         
@@ -80,7 +80,7 @@
          * Returns a BitSet instance containing bits of the components the entity possesses.
          * 
          * @method getComponentBits
-         * @return {ArtemiJS.Utils.BitSet}
+         * @return {Utils.BitSet}
          */
         this.getComponentBits = function() {
             return componentBits;
@@ -90,7 +90,7 @@
          * Returns a BitSet instance containing bits of the components the entity possesses.
          * 
          * @method getSystemBits
-         * @return {ArtemiJS.Utils.BitSet}
+         * @return {Utils.BitSet}
          */
         this.getSystemBits = function() {
             return systemBits;
@@ -124,8 +124,8 @@
          * 
          * @method addComponent
          * @chainable
-         * @param {ArtemiJS.Component} component
-         * @param {Component.Type} type
+         * @param {Component} component
+         * @param {ComponentType} [type]
          */
         this.addComponent = function(component, type) {
             if(!(type instanceof ArtemiJS.ComponentType)) {
@@ -139,7 +139,7 @@
          * Remove component by its type.
          * 
          * @method removeComponent
-         * @param {ArtemiJS.Component}
+         * @param {Component} [component]
          */
         this.removeComponent = function(component) {
             var componentType;
@@ -177,7 +177,7 @@
          * the ComponentMapper.
          * 
          * @method getComponent
-         * @param {ArtemiJS.ComponentType} 
+         * @param {ComponentType} [type]
          *      in order to retrieve the component fast you must provide a
          *      ComponentType instance for the expected component.
          * @return {ArtemiJS.Component}
@@ -197,8 +197,8 @@
          * You need to reset the bag yourself if you intend to fill it more than once.
          * 
          * @method getComponents
-         * @param {ArtemiJS.Utils.Bag} fillBag the bag to put the components into.
-         * @return {ArtemiJS.Utils.Bag} the fillBag with the components in.
+         * @param {Utils.Bag} fillBag the bag to put the components into.
+         * @return {Utils.Bag} the fillBag with the components in.
          */
         this.getComponents = function(fillBag) {
             return componentManager.getComponentsFor(this, fillBag);
