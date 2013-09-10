@@ -1,4 +1,4 @@
-(function(exports) {
+(function() {
     'use strict';
 
     /**
@@ -11,7 +11,7 @@
      * @namespace Utils
      * @constructor
      */
-    var Bag = function(capacity) {
+    var Bag = function Bag() {
         
         /**
          * Contains all of the elements
@@ -171,9 +171,8 @@
          * Method verify the capacity of the bag
          * 
          * @method ensureCapacity
-         * @param {Number} index
          */
-        this.ensureCapacity = function(index) {
+        this.ensureCapacity = function() {
             // just for compatibility with oryginal idee
         };
         
@@ -201,5 +200,5 @@
         };
     };
     
-    exports.Bag = Bag;
-})(window.ArtemiJS.Utils || {});
+    module.exports = Bag;
+})();

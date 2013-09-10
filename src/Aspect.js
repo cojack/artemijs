@@ -1,5 +1,8 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
+
+    var Bag = require('./utils/Bag'),
+        ComponentType = require('./ComponentType');
 
     /**
      * An Aspects is used by systems as a matcher against entities, to check if a system is
@@ -24,28 +27,28 @@
      * @class Aspect
      * @constructor
      */
-    var Aspect = function() {
+    var Aspect = function Aspect() {
         
         /**
          * @private
          * @property allSet
          * @type {ArtemiJS.Utils.Bag}
          */
-        var allSet = new ArtemiJS.Utils.Bag(),
+        var allSet = new Bag(),
         
         /**
          * @private
          * @property exclusionSet
          * @type {ArtemiJS.Utils.Bag}
          */        
-        exclusionSet = new ArtemiJS.Utils.Bag(),
+        exclusionSet = new Bag(),
             
         /**
          * @private
          * @property exclusionSet
          * @type {ArtemiJS.Utils.Bag}
          */                
-        oneSet = new ArtemiJS.Utils.Bag();
+        oneSet = new Bag();
             
         /**
          * @method getAllSet
@@ -79,10 +82,10 @@
          * @param {String} type* a required component type
          */
         this.all = function(type) {
-            allSet.set(ArtemiJS.ComponentType.getIndexFor(type));
+            allSet.set(ComponentType.getIndexFor(type));
             var len = arguments.length;
             while(len--) {
-                allSet.set(ArtemiJS.ComponentType.getIndexFor(arguments[len]));
+                allSet.set(ComponentType.getIndexFor(arguments[len]));
             }
             return this;
         };
@@ -96,10 +99,10 @@
          * @param {String} type* component type to exclude
          */
         this.exclude = function(type) {
-            exclusionSet.set(ArtemiJS.ComponentType.getIndexFor(type));
+            exclusionSet.set(ComponentType.getIndexFor(type));
             var len = arguments.length;
             while(len--) {
-                exclusionSet.set(ArtemiJS.ComponentType.getIndexFor(arguments[len]));
+                exclusionSet.set(ComponentType.getIndexFor(arguments[len]));
             }
             return this;
         };
@@ -112,10 +115,10 @@
          * @param {String} type* one of the types the entity must possess
          */
         this.one = function(type) {
-            oneSet.set(ArtemiJS.ComponentType.getIndexFor(type));
+            oneSet.set(ComponentType.getIndexFor(type));
             var len = arguments.length;
             while(len--) {
-                oneSet.set(ArtemiJS.ComponentType.getIndexFor(arguments[len]));
+                oneSet.set(ComponentType.getIndexFor(arguments[len]));
             }
             return this;
         };
@@ -164,5 +167,5 @@
         };
     };
     
-    ArtemiJS.Aspect = Aspect;
-})(window.ArtemiJS || {});
+    module.exports = Aspect;
+})();

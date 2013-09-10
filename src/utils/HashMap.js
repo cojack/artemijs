@@ -5,7 +5,7 @@
  * Date: 4/3/2013
  * Homepage: https://github.com/flesler/hashmap
  */
-(function(exports){
+(function(){
     'use strict';
     
     /**
@@ -116,6 +116,5 @@
 		}
 	}
 
-	exports.HashMap = HashMap;
-
-})(window.ArtemiJS.Utils || {});
+	module.exports = HashMap;
+})();

@@ -1,5 +1,8 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
+
+    var Component = require('./Component'),
+        ComponentType = require('./ComponentType');
 
     /**
      * High performance component retrieval from entities. Use this wherever you
@@ -11,13 +14,14 @@
      * @param {Object} _type
      * @param {ArtemiJS.World} _world
      */
-    var ComponentMapper = function(_type, _world) {
+    var ComponentMapper = function ComponentMapper(_type, _world) {
+        Component.call(this);
         
         /**
          * @private
          * @property {ArtemiJS.ComponentType} type Type of component
          */
-        var type = ArtemiJS.ComponentType.getTypeFor(_type),
+        var type = ComponentType.getTypeFor(_type),
         
         /**
          * @private
@@ -78,6 +82,6 @@
         return new ComponentMapper(type, world);
     };
     
-    ArtemiJS.ComponentMapper = ComponentMapper;
-    ArtemiJS.ComponentMapper.prototype = Object.create(ArtemiJS.Component.prototype);
-})(window.ArtemiJS || {});
+    ComponentMapper.prototype = Object.create(Component.prototype);
+    module.exports.ComponentMapper = ComponentMapper;
+})();

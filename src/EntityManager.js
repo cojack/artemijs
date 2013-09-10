@@ -1,5 +1,10 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
+
+    var Bag = require('./utils/Bag'),
+        BitSet = require('./utils/BitSet'),
+        Entity = require('./Entity'),
+        Manager = require('./Manager');
 
     /**
      * The entity manager class.
@@ -8,21 +13,22 @@
      * @class EntityManager
      * @constructor
      */ 
-    var EntityManager = function() {
+    var EntityManager = function EntityManager() {
+        Manager.call(this);
         
         /**
          * @private
          * @property entities
          * @type {Utils.Bag}
          */
-        var entities = new ArtemiJS.Utils.Bag(),
+        var entities = new Bag(),
         
         /**
          * @private
          * @property disabled
          * @type {Utils.BitSet}
          */
-        disabled = new ArtemiJS.Utils.BitSet(),
+        disabled = new BitSet(),
         
         /**
          * @private
@@ -75,7 +81,7 @@
          * @return {Entity}
          */
         this.createEntityInstance = function() {
-            var entity = new ArtemiJS.Entity(this.world, identifierPool.checkOut());
+            var entity = new Entity(this.world, identifierPool.checkOut());
             created++;
             return entity;
         };
@@ -221,7 +227,7 @@
              * @property ids
              * @type {Utils.Bag}
              */
-            var ids = new ArtemiJS.Utils.Bag(),
+            var ids = new Bag(),
             
             /**
              * @property nextAvailableId
@@ -254,6 +260,6 @@
         }
     };
     
-    ArtemiJS.EntityManager = EntityManager;
-    ArtemiJS.EntityManager.prototype = Object.create(ArtemiJS.Manager.prototype);
-})(window.ArtemiJS || {});
+    EntityManager.prototype = Object.create(Manager.prototype);
+    module.exports = EntityManager;
+})();

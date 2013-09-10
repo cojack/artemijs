@@ -1,5 +1,8 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
+    
+    var Bag = require('./utils/Bag'),
+        EntityObserver = require('./EntityObserver');
     
     /**
      * Used to generate a unique bit for each system.
@@ -51,7 +54,8 @@
      * @param {Aspect} _aspect Creates an entity system that uses the specified 
      *      aspect as a matcher against entities.
      */
-    var EntitySystem = function(_aspect) {
+    var EntitySystem = function EntitySystem(_aspect) {
+        EntityObserver.call(this);
         
         /**
          * @property world
@@ -72,7 +76,7 @@
          * @property actives
          * @type {Utils.Bag}
          */
-        actives = new ArtemiJS.Utils.Bag(),
+        actives = new Bag(),
         
         /**
          * @private
@@ -325,6 +329,6 @@
         };
     };
     
-    ArtemiJS.EntitySystem = EntitySystem;
-    ArtemiJS.EntitySystem.prototype = Object.create(ArtemiJS.EntityObserver.prototype);
-})(window.ArtemiJS || {});
+    EntitySystem.prototype = Object.create(EntityObserver.prototype);
+    module.exports = EntitySystem;
+})();

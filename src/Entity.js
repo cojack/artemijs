@@ -1,5 +1,8 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
+    
+    var BitSet = require('./utils/BitSet'),
+        ComponentType = require('./ComponentType');
 
     /**
      * The entity class. Cannot be instantiated outside the framework, you must
@@ -11,7 +14,7 @@
      * @param {World} _world
      * @param {Number} _id
      */ 
-    var Entity = function(_world, _id) {
+    var Entity = function Entity(_world, _id) {
         
         /**
          * @private
@@ -25,14 +28,14 @@
          * @property componentBits
          * @type {Utils.BitSet}
          */
-        componentBits = new ArtemiJS.Utils.BitSet(),
+        componentBits = new BitSet(),
 
         /**
          * @private
          * @property systemBits
          * @type {Utils.BitSet}
          */
-        systemBits = new ArtemiJS.Utils.BitSet(),
+        systemBits = new BitSet(),
         
         /**
          * @private
@@ -128,8 +131,8 @@
          * @param {ComponentType} [type]
          */
         this.addComponent = function(component, type) {
-            if(!(type instanceof ArtemiJS.ComponentType)) {
-                type = ArtemiJS.ComponentType.getTypeFor(component.getClass());
+            if(!(type instanceof ComponentType)) {
+                type = ComponentType.getTypeFor(component.getClass());
             }
             componentManager.addComponent(this, type, component);
             return this;
@@ -143,8 +146,8 @@
          */
         this.removeComponent = function(component) {
             var componentType;
-            if(!(component instanceof ArtemiJS.ComponentType)) {
-                componentType = ArtemiJS.ComponentType.getTypeFor(component);
+            if(!(component instanceof ComponentType)) {
+                componentType = ComponentType.getTypeFor(component);
             } else {
                 componentType = component;
             }
@@ -184,8 +187,8 @@
          */
         this.getComponent = function(type) {
             var componentType;
-            if(!(type instanceof ArtemiJS.ComponentType)) {
-                componentType = ArtemiJS.ComponentType.getTypeFor(type);
+            if(!(type instanceof ComponentType)) {
+                componentType = ComponentType.getTypeFor(type);
             } else {
                 componentType = type;
             }
@@ -276,5 +279,5 @@
         };
     };
 
-    ArtemiJS.Entity = Entity;
-})(window.ArtemiJS || {});
+    module.exports = Entity;
+})();

@@ -1,6 +1,9 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
-
+    
+    var Bag = require('./utils/Bag'),
+        Manager = require('./Manager');
+    
     /**
      * Object to manage components
      * 
@@ -8,21 +11,22 @@
      * @class ComponentManager
      * @constructor
      */
-    var ComponentManager = function() {
+    var ComponentManager = function ComponentManager() {
+        Manager.call(this);
         
         /**
          * @private
          * @property componentsByType
          * @type {Utils.Bag}
          */
-        var componentsByType = new ArtemiJS.Utils.Bag(),
+        var componentsByType = new Bag(),
         
         /**
          * @private
          * @property deleted
          * @type {Utils.Bag}
          */
-        deleted = new ArtemiJS.Utils.Bag();
+        deleted = new Bag();
             
         /**
          * @method initialize
@@ -86,7 +90,7 @@
         this.getComponentsByType = function(type) {
             var components = componentsByType.get(type.getIndex());
             if(components === null) {
-                components = new ArtemiJS.Utils.Bag();
+                components = new Bag();
                 componentsByType.set(type.getIndex(), components);
             }
             return components;
@@ -151,6 +155,6 @@
         };
     };
     
-    ArtemiJS.ComponentManager = ComponentManager;
-    ArtemiJS.ComponentManager.prototype = Object.create(ArtemiJS.Manager.prototype);
-})(window.ArtemiJS || {});
+    ComponentManager.prototype = Object.create(Manager.prototype);
+    module.exports = ComponentManager;
+})();

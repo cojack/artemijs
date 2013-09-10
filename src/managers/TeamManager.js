@@ -1,5 +1,9 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
+    
+    var HashMap = require('./../utils/HashMap'),
+        Bag = require('./../utils/Bag'),
+        Manager = require('./../Manager');
     
     /**
      * Use this class together with PlayerManager.
@@ -16,21 +20,22 @@
      * @constructor
      * @extends Manager
      */
-    var TeamManager = function() {
+    var TeamManager = function TeamManager() {
+        Manager.call(this);
         
         /**
          * @private
          * @property playersByTeam
          * @type {Utils.HashMap}
          */
-        var playersByTeam = new ArtemiJS.Utils.HashMap(),
+        var playersByTeam = new HashMap(),
         
         /**
          * @private
          * @property teamByPlayer
          * @type {Utils.HashMap}
          */
-        teamByPlayer = new ArtemiJS.Utils.HashMap();
+        teamByPlayer = new HashMap();
         
         /**
          * @method initialize
@@ -60,7 +65,7 @@
             
             var players = playersByTeam.get(team);
             if(players === null) {
-                players = new ArtemiJS.Utils.Bag();
+                players = new Bag();
                 playersByTeam.put(team, players);
             }
             players.add(player);
@@ -90,6 +95,6 @@
         };
     }; 
 
-    ArtemiJS.Managers.TeamManager = TeamManager;
-    ArtemiJS.Managers.TeamManager.prototype = Object.create(ArtemiJS.Manager.prototype);
-})(window.ArtemiJS || {});
+    TeamManager.prototype = Object.create(Manager.prototype);
+    module.exports = TeamManager;
+})();

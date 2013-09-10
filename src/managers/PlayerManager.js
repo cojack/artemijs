@@ -1,15 +1,21 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
     
-    var PlayerManager = function() {
-        var playerByEntity = new ArtemiJS.Utils.HashMap(),
-            entitiesByPlayer = new ArtemiJS.Utils.HashMap();
+    var HashMap = require('./../utils/HashMap'),
+        Bag = require('./../utils/Bag'),
+        Manager = require("./../Manager");
+    
+    var PlayerManager = function PlayerManager() {
+        Manager.call(this);
+        
+        var playerByEntity = new HashMap(),
+            entitiesByPlayer = new HashMap();
             
         this.setPlayer = function(entity, player) {
             playerByEntity.put(entity, player);
             var entities = entitiesByPlayer.get(player);
             if(entities === null) {
-                entities = new ArtemiJS.Utils.Bag();
+                entities = new Bag();
                 entitiesByPlayer.put(player, entities);
             }
             entities.add(entity);
@@ -18,7 +24,7 @@
         this.getEntitiesOfPlayer = function(player) {
             var entities = entitiesByPlayer.get(player);
             if(entities === null) {
-                entities = new ArtemiJS.Utils.Bag();
+                entities = new Bag();
             }
             return entities;
         };
@@ -45,6 +51,6 @@
 
     };
     
-    ArtemiJS.Managers.PlayerManager = PlayerManager;
-    ArtemiJS.Managers.PlayerManager.prototype = Object.create(ArtemiJS.Manager.prototype);
-})(window.ArtemiJS || {});
+    PlayerManager.prototype = Object.create(Manager.prototype);
+    module.exports = PlayerManager;
+})();

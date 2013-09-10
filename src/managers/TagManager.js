@@ -1,9 +1,14 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
     
-    var TagManager = function() {
-        var entitiesByTag = new ArtemiJS.Utils.HashMap(),
-            tagsByEntity = new ArtemiJS.Utils.HashMap();
+    var HashMap = require('./../utils/HashMap'),
+        Manager = require('./../Manager');
+    
+    var TagManager = function TagManager() {
+        Manager.call(this);
+        
+        var entitiesByTag = new HashMap(),
+            tagsByEntity = new HashMap();
 
         this.register = function(tag, entity) {
             entitiesByTag.put(tag, entity);
@@ -36,6 +41,6 @@
         this.initialize = function() {}
     }; 
 
-    ArtemiJS.Managers.TagManager = TagManager;
-    ArtemiJS.Managers.TagManager.prototype = Object.create(ArtemiJS.Manager.prototype);
-})(window.ArtemiJS || {});
+    TagManager.prototype = Object.create(Manager.prototype);
+    module.exports = TagManager;
+})();

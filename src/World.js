@@ -1,5 +1,10 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
+
+    var EntityManager = require('./EntityManager'),
+        ComponentManager = require('./ComponentManager'),
+        ComponentMapper = require('./ComponentMapper'),
+        Bag = require('./utils/Bag');
 
     /**
      * The primary instance for the framework. It contains all the managers.
@@ -11,21 +16,21 @@
      * @class World
      * @constructor
      */
-    var World = function() {
+    var World = function World() {
         
         /**
          * @private
          * @property entityManager
          * @type {EntityManager}
          */
-        var entityManager = new ArtemiJS.EntityManager(),
+        var entityManager = new EntityManager(),
         
         /**
          * @private
          * @property componentManager
          * @type {ComponentManager}
          */
-        componentManager = new ArtemiJS.ComponentManager(),
+        componentManager = new ComponentManager(),
         
         /**
          * @private
@@ -39,7 +44,7 @@
          * @property managersBag
          * @type {Utils.Bag}
          */
-        managersBag = new ArtemiJS.Utils.Bag(),
+        managersBag = new Bag(),
         
         /**
          * @private
@@ -53,42 +58,42 @@
          * @property systemsBag
          * @type {Utils.Bag}
          */
-        systemsBag = new ArtemiJS.Utils.Bag(),
+        systemsBag = new Bag(),
     
         /**
          * @private
          * @property added
          * @type {Utils.Bag}
          */
-        added = new ArtemiJS.Utils.Bag(),
+        added = new Bag(),
         
         /**
          * @private
          * @property changed
          * @type {Utils.Bag}
          */
-        changed = new ArtemiJS.Utils.Bag(),
+        changed = new Bag(),
         
         /**
          * @private
          * @property deleted
          * @type {Utils.Bag}
          */
-        deleted = new ArtemiJS.Utils.Bag(),
+        deleted = new Bag(),
         
         /**
          * @private
          * @property enable
          * @type {Utils.Bag}
          */
-        enable = new ArtemiJS.Utils.Bag(),
+        enable = new Bag(),
         
         /**
          * @private
          * @property disable
          * @type {Utils.Bag}
          */
-        disable = new ArtemiJS.Utils.Bag(),
+        disable = new Bag(),
     
         /**
          * @private
@@ -96,10 +101,7 @@
          * @type {Number}
          */
         delta = 0;
-    
-        this.setManager(componentManager);
-        this.setManager(entityManager);
-        
+
         /**
          * Makes sure all managers systems are initialized in the order 
          * they were added
@@ -279,7 +281,7 @@
          */
         this.getSystems = function() {
             return systemsBag;
-        }
+        };
         
         /**
          * Adds a system to this world that will be processed by World.process()
@@ -432,9 +434,12 @@
          * @return {ComponentMapper} mapper for specified component type.
          */
         this.getMapper = function(type) {
-            return ArtemiJS.ComponentMapper.getFor(type, this);
+            return ComponentMapper.getFor(type, this);
         };
+        
+        this.setManager(componentManager);
+        this.setManager(entityManager);
     };
     
-    ArtemiJS.World = World;
-})(window.ArtemiJS || {});
+    module.exports = World;
+})();

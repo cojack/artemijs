@@ -1,4 +1,4 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
     
     /**
@@ -8,7 +8,7 @@
      * @class Component
      * @constructor
      */
-    var Component = function() {};
+    var Component = function Component() {};
 
-    ArtemiJS.Component = Component;
-})(window.ArtemiJS || {});
+    module.exports = Component;
+})();

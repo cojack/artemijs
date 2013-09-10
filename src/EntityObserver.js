@@ -1,4 +1,4 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
     
     /**
@@ -8,7 +8,7 @@
      * @class EntityObserver
      * @constructor
      */ 
-    var EntityObserver = function() {
+    var EntityObserver = function EntityObserver() {
         
         /**
          * Abstract method added
@@ -66,5 +66,5 @@
         };
     };
     
-    ArtemiJS.EntityObserver = EntityObserver;
-})(window.ArtemiJS || {});
+    module.exports = EntityObserver;
+})();

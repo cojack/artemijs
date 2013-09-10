@@ -1,12 +1,14 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
+    
+    var HashMap = require('./utils/HashMap');
     
     /**
      * 
      * @static
      * @class ComponentType
      */
-    var ComponentType = (function() {
+    var ComponentType = (function ComponentType() {
         
         /**
          * @private
@@ -34,7 +36,7 @@
          * 
          *
          */
-        componentTypes = new ArtemiJS.Utils.HashMap();
+        componentTypes = new HashMap();
            
         /**
          * 
@@ -62,7 +64,7 @@
                 var _type = componentTypes.get(component);
                 if(_type === null) {
                     _type = Constructor.call(this, _type);
-                    componentTypes.put(component, _type)
+                    componentTypes.put(component, _type);
                 }
                 return _type;
             },
@@ -80,5 +82,5 @@
         };
     })();
     
-    ArtemiJS.ComponentType = ComponentType;
-})(window.ArtemiJS || {});
+    module.exports = ComponentType;
+})();

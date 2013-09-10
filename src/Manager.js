@@ -1,5 +1,7 @@
-(function(ArtemiJS) {
+(function() {
     'use strict';
+    
+    var EntityObserver = require('./EntityObserver');
     
     /**
      * The entity class. Cannot be instantiated outside the framework, you must
@@ -9,7 +11,8 @@
      * @class Manager
      * @constructor
      */ 
-    var Manager = function() {
+    var Manager = function Manager() {
+        EntityObserver.call(this);
         
         /**
          * @property world
@@ -87,6 +90,6 @@
         this.disabled = function(entity)  {}; 
     };
     
-    ArtemiJS.Manager = Manager;
-    ArtemiJS.Manager.prototype = Object.create(ArtemiJS.EntityObserver.prototype);
-})(window.ArtemiJS || {});
+    Manager.prototype = Object.create(EntityObserver.prototype);
+    module.exports = Manager;
+})();
