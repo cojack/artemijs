@@ -7,7 +7,7 @@ var bag = new Bag();
 
 function testFunc(name) {
     this.name = name;    
-};
+}
 
 var testObj = new testFunc('testObj'),
     testObj1 = new testFunc('testObj1'),
