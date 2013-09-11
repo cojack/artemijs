@@ -33,7 +33,7 @@
         this.remove = function(index) {
             var response = true;
             if(typeof index === 'object') {
-                index = this.indexOf(index);
+                index = data.indexOf(index);
             } else if(index !== -1) {
                 response = data[index];
             }
@@ -80,13 +80,14 @@
          * @return {Boolean} true if this Bag changed as a result of the call, else false
          */
         this.removeAll = function(bag) {
-            var modified = false;
-            for (var i = bag.size() - 1; i !== 0; --i) {
+            var modified = false,
+                n = bag.size();
+            for (var i = 0; i !== n; ++i) {
                 var obj = bag.get(i),
                     index = data.indexOf(obj);
-                    
+
                 if(index !== -1) {
-                    this.remove(obj);
+                    this.remove(index);
                     modified = true;
                 }
             }
