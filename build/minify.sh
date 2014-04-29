@@ -10,6 +10,10 @@ if [ ! -d "$MY_PATH/../lib/" ]; then
     $(mkdir "$MY_PATH/../lib/")
 fi
 
+if [ -f "$MY_PATH/../lib/artemijs.dev.js" ]; then
+    $(rm "$MY_PATH/../lib/artemijs.dev.js")
+fi
+
 cat "$MY_PATH/../src/native/Array.js" \
     "$MY_PATH/../src/native/Math.js" \
     "$MY_PATH/../src/native/Object.js" > "$MY_PATH/../lib/artemijs.dev.js"

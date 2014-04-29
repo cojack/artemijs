@@ -69,7 +69,7 @@
          * @property systemIndex
          * @type {Number}
          */
-        var systemIndex = SystemIndexManager.getIndexFor(this.getClass()),
+        var systemIndex = 1;// SystemIndexManager.getIndexFor(this.getClass()),
         
         /**
          * @private

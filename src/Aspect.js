@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var Bag = require('./utils/Bag'),
+    var BitSet = require('./utils/BitSet'),
         ComponentType = require('./ComponentType');
 
     /**
@@ -32,27 +32,27 @@
         /**
          * @private
          * @property allSet
-         * @type {ArtemiJS.Utils.Bag}
+         * @type {Utils.BitSet}
          */
-        var allSet = new Bag(),
+        var allSet = new BitSet(),
         
         /**
          * @private
          * @property exclusionSet
-         * @type {ArtemiJS.Utils.Bag}
+         * @type {Utils.BitSet}
          */        
-        exclusionSet = new Bag(),
+        exclusionSet = new BitSet(),
             
         /**
          * @private
          * @property exclusionSet
-         * @type {ArtemiJS.Utils.Bag}
+         * @type {Utils.BitSet}
          */                
-        oneSet = new Bag();
+        oneSet = new BitSet();
             
         /**
          * @method getAllSet
-         * @return {ArtemiJS.Utils.Bag}
+         * @return {Utils.BitSet}
          */
         this.getAllSet = function() {
             return allSet;
@@ -60,7 +60,7 @@
         
         /**
          * @method getExclusionSet
-         * @return {ArtemiJS.Utils.Bag}
+         * @return {Utils.BitSet}
          */
         this.getExclusionSet = function() {
             return exclusionSet;
@@ -68,7 +68,7 @@
         
         /**
          * @method getOneSet
-         * @return {ArtemiJS.Utils.Bag}
+         * @return {Utils.BitSet}
          */
         this.getOneSet = function() {
             return oneSet;
@@ -149,23 +149,23 @@
             aspect.one(type, arguments);
             return aspect;
         };
-        
-        /**
-         * Creates and returns an empty aspect. This can be used if you want a system that processes no entities, but
-         * still gets invoked. Typical usages is when you need to create special purpose systems for debug rendering,
-         * like rendering FPS, how many entities are active in the world, etc.
-         * 
-         * You can also use the all, one and exclude methods on this aspect, so if you wanted to create a system that
-         * processes only entities possessing just one of the components A or B or C, then you can do:
-         * Aspect.getEmpty().one(A,B,C);
-         * 
-         * @method getEmpty
-         * @return {ArtemiJS.Aspect} an empty Aspect that will reject all entities.
-         */
-        this.getEmpty = function() {
-            return new Aspect();
-        };
     };
     
+    /**
+     * Creates and returns an empty aspect. This can be used if you want a system that processes no entities, but
+     * still gets invoked. Typical usages is when you need to create special purpose systems for debug rendering,
+     * like rendering FPS, how many entities are active in the world, etc.
+     * 
+     * You can also use the all, one and exclude methods on this aspect, so if you wanted to create a system that
+     * processes only entities possessing just one of the components A or B or C, then you can do:
+     * Aspect.getEmpty().one(A,B,C);
+     * 
+     * @method getEmpty
+     * @return {ArtemiJS.Aspect} an empty Aspect that will reject all entities.
+     */
+    Aspect.getEmpty = function() {
+        return new Aspect();
+    };
+
     module.exports = Aspect;
 })();

@@ -1,5 +1,7 @@
 /*global it,describe*/
 
+require('./../src/native/Object');
+
 var assert = require('assert'),
     ArtemiJS = require('./../src/Artemi');
     

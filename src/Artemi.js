@@ -40,7 +40,13 @@
         TeamManager: require('./managers/TeamManager')
     };
     
-    ArtemiJS.Systems = {};
+    ArtemiJS.Systems = {
+        DelayedEntityProcessingSystem: require('./systems/DelayedEntityProcessingSystem'),
+        EntityProcessingSystem: require('./systems/EntityProcessingSystem'),
+        IntervalEntityProcessingSystem: require('./systems/IntervalEntityProcessingSystem'),
+        IntervalEntitySystem: require('./systems/IntervalEntitySystem'),
+        VoidEntitySystem: require('./systems/VoidEntitySystem')
+    };
     
     ArtemiJS.Utils = {
         Bag: require('./utils/Bag'),
