@@ -42,5 +42,6 @@
     }; 
 
     TagManager.prototype = Object.create(Manager.prototype);
+    TagManager.prototype.constructor = TagManager;
     module.exports = TagManager;
 })();

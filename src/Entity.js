@@ -14,7 +14,7 @@
      * @param {World} _world
      * @param {Number} _id
      */ 
-    var Entity = function Entity(_world, _id) {
+    function Entity(_world, _id) {
         
         /**
          * @private
@@ -106,8 +106,8 @@
          * @method reset
          */
         function reset() {
-            systemBits.reset();
-            componentBits.reset();
+            systemBits.clear();
+            componentBits.clear();
             uuid = Math.uuid();
         }
         
@@ -231,7 +231,7 @@
         /**
          * Delete this entity from the world.
          * 
-         * @method deleteFromWorl
+         * @method deleteFromWorld
          */
         this.deleteFromWorld = function() {
             world.deleteEntity(this);
@@ -244,7 +244,7 @@
          * @method enable
          */
         this.enable = function() {
-            world.enable(this);
+            world.enableEntity(this);
         };
         
         /**
@@ -254,7 +254,7 @@
          * @method disable
          */
         this.disable = function() {
-            world.disable(this);
+            world.disableEntity(this);
         };
         
         /**
@@ -272,12 +272,12 @@
          * Returns the world this entity belongs to.
          * 
          * @method getWorld
-         * @return {ArtemiJS.World} world of entity.
+         * @return {World} world of entities.
          */
         this.getWorld = function() {
             return world;
         };
-    };
+    }
 
     module.exports = Entity;
 })();

@@ -51,10 +51,10 @@
      * @module ArtemiJS
      * @class EntitySystem
      * @constructor
-     * @param {Aspect} _aspect Creates an entity system that uses the specified 
+     * @param {Aspect} aspect Creates an entity system that uses the specified
      *      aspect as a matcher against entities.
      */
-    var EntitySystem = function EntitySystem(_aspect) {
+    var EntitySystem = function EntitySystem(aspect) {
         EntityObserver.call(this);
         
         /**
@@ -69,58 +69,51 @@
          * @property systemIndex
          * @type {Number}
          */
-        var systemIndex = 1;// SystemIndexManager.getIndexFor(this.getClass()),
+        var systemIndex = SystemIndexManager.getIndexFor(this.getClass());
         
         /**
          * @private
          * @property actives
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
-        actives = new Bag(),
-        
-        /**
-         * @private
-         * @property aspect
-         * @type {Aspect}
-         */
-        aspect = _aspect,
+        var actives = new Bag();
         
         /**
          * @private
          * @property allSet
          * @type {Utils.BitSet}
          */
-        allSet = aspect.getAllSet(),
+        var allSet = aspect.getAllSet();
         
         /**
          * @private
          * @property exclusionSet
          * @type {Utils.BitSet}
          */
-        exclusionSet = aspect.getExclusionSet(),
+        var exclusionSet = aspect.getExclusionSet();
         
         /**
          * @private
          * @property oneSet
          * @type {Utils.BitSet}
          */
-        oneSet = aspect.getOneSet(),
+        var oneSet = aspect.getOneSet();
         
         /**
          * @private
          * @property passive
          * @type {Boolean}
          */
-        passive,
+        var passive;
         
         /**
          * @private
          * @property dummy
          * @type {Boolean}
          */
-        dummy = allSet.isEmpty() && oneSet.isEmpty(),
-        
-        me = this;
+        var dummy = allSet.isEmpty() && oneSet.isEmpty();
+
+        var me = this;
         
         /**
          * @private
@@ -316,8 +309,8 @@
          * @method setPassive
          * @param {Boolean} passive
          */
-        this.setPassive = function(passive) {
-            this.passive = passive;
+        this.setPassive = function(_passive) {
+            passive = _passive;
         };
         
         /**
@@ -330,5 +323,6 @@
     };
     
     EntitySystem.prototype = Object.create(EntityObserver.prototype);
+    EntitySystem.prototype.constructor = EntitySystem;
     module.exports = EntitySystem;
 })();

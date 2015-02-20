@@ -1,3 +1,8 @@
+require('./native/Object');
+require('./native/Array');
+require('./native/Math');
+require('./native/Number');
+
 (function() {
     'use strict';
     
@@ -13,7 +18,7 @@
     var ArtemiJS = {
         
         /**
-         * @property {Float} version
+         * @property {Number} version
          */
         version: 0.1,
         
@@ -51,7 +56,8 @@
     ArtemiJS.Utils = {
         Bag: require('./utils/Bag'),
         BitSet: require('./utils/BitSet'),
-        HashMap: require('./utils/HashMap')
+        HashMap: require('./utils/HashMap'),
+        Timer: require('./utils/Timer')
     };
     
     ArtemiJS.Aspect = require('./Aspect');
@@ -62,7 +68,7 @@
     ArtemiJS.Entity = require('./Entity');
     ArtemiJS.EntityManager = require('./EntityManager');
     ArtemiJS.EntityObserver = require('./EntityObserver');
-    ArtemiJS.EntitySystem = require('./EntityObserver');
+    ArtemiJS.EntitySystem = require('./EntitySystem');
     ArtemiJS.Manager = require('./Manager');
     ArtemiJS.World = require('./World');
     

@@ -8,7 +8,7 @@
      * @class Component
      * @constructor
      */
-    var Component = function Component() {};
+    function Component() {}
 
     module.exports = Component;
 })();

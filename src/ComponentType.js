@@ -1,86 +1,60 @@
 (function() {
     'use strict';
     
-    var HashMap = require('./utils/HashMap');
+    var HashMap = require('./utils/HashMap'),
+        INDEX = 0,
+        componentTypes = new HashMap();
     
     /**
      * 
      * @static
      * @class ComponentType
      */
-    var ComponentType = (function ComponentType() {
+    var ComponentType = function ComponentType(_type) {
         
         /**
          * @private
          * @property type
          * @type {ArtemiJS.Component}
          */
-        var type,
-        
-        /**
-         * @private
-         * @static
-         * @property INDEX
-         * @type {Integer}
-         */
-        INDEX = 0,
+        var type = _type,
         
         /**
          * @private
          * @property index
-         * @type {Integer}
+         * @type {Number}
          */
-        index,
-        
-        /**
-         * 
-         *
-         */
-        componentTypes = new HashMap();
-           
-        /**
-         * 
-         *
-         */
-        function Constructor(_type) {
-            this.index = INDEX++;
-            this.type = _type;
-        };
+        index = INDEX++;
 
-        return {
-            
-            index: 0,
-            type: null,
-            
-            getIndex: function() {
-                return this.index;
-            },
-            
-            /**
-             * 
-             *
-             */
-            getFor: function(component) {
-                var _type = componentTypes.get(component);
-                if(_type === null) {
-                    _type = Constructor.call(this, _type);
-                    componentTypes.put(component, _type);
-                }
-                return _type;
-            },
-            
-            /**
-             * 
-             */
-            getIndexFor: function(component) {
-                return this.getTypeFor(component).getIndex();
-            },
-            
-            toString: function() {
-                return "ComponentType["+type.getSimpleName()+"] ("+index+")";
-            }
-        };
-    })();
+        this.getIndex = function() {
+            return index;
+        }
+
+        this.toString = function() {
+            return "ComponentType["+type.getSimpleName()+"] ("+index+")";
+        }
+    };
+
+    /**
+     *
+     *
+     */
+    ComponentType.getTypeFor = function(component) {
+        var _type = componentTypes.get(component);
+        if(!_type) {
+            _type =  new ComponentType(_type);
+            componentTypes.put(component, _type);
+        }
+        return _type;
+    };
+
+    /**
+     *
+     */
+    ComponentType.getIndexFor = function(component) {
+        return this.getTypeFor(component).getIndex();
+    };
+
     
     module.exports = ComponentType;
 })();

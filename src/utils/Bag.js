@@ -11,7 +11,7 @@
      * @namespace Utils
      * @constructor
      */
-    var Bag = function Bag() {
+    function Bag() {
         
         /**
          * Contains all of the elements
@@ -21,27 +21,29 @@
          * @type {Array}
          */
         var data = [];
+
+        var length = 0;
             
         /**
          * Removes the element at the specified position in this Bag. does this by
          * overwriting it was last element then removing last element
          * 
          * @method remove
-         * @param Mixed index the index of element to be removed
-         * @return Mixed element that was removed from the Bag
+         * @param  {*} index the index of element to be removed
+         * @return {*} element that was removed from the Bag
          */
         this.remove = function(index) {
             var response = true;
             if(typeof index === 'object') {
                 index = data.indexOf(index);
-            } else if(index !== -1) {
-                response = data[index];
             }
-            if(index !== -1) {
-                data.splice(index, 1);
+            if(typeof index === 'number' && index !== -1) {
+                response = data.splice(index, 1)[0] || null;
+                --length;
             } else {
-                response = false;
+                response = null;
             }
+            console.assert(response !== null, "Are you sure there wasn't an element in the bag?");
             return response;
         };
         
@@ -49,13 +51,11 @@
          * Remove and return the last object in the bag.
          * 
          * @method removeLast
-         * @return Mixed the last object in the bag, null if empty.
+         * @return {*} the last object in the bag, null if empty.
          */
         this.removeLast = function() {
-            if(data.length > 0) {
-                var obj = data[data.length-1];
-                data.splice(data.length-1, 1);
-                return obj;
+            if(length > 0) {
+                return this.remove(length-1);
             }
             return null;
         };
@@ -64,8 +64,8 @@
          * Check if bag contains this element.
          *
          * @method contains
-         * @param Mixed
-         * @return Mixed
+         * @param {*} obj
+         * @return {boolean}
          */
         this.contains = function(obj) {
             return data.indexOf(obj) !== -1;
@@ -76,18 +76,16 @@
          * specified Bag.
          * 
          * @method removeAll
-         * @param {Bag} Bag containing elements to be removed from this Bag
-         * @return {Boolean} true if this Bag changed as a result of the call, else false
+         * @param {Bag} bag containing elements to be removed from this Bag
+         * @return {boolean} true if this Bag changed as a result of the call, else false
          */
         this.removeAll = function(bag) {
             var modified = false,
                 n = bag.size();
             for (var i = 0; i !== n; ++i) {
-                var obj = bag.get(i),
-                    index = data.indexOf(obj);
+                var obj = bag.get(i);
 
-                if(index !== -1) {
-                    this.remove(index);
+                if(this.remove(obj)) {
                     modified = true;
                 }
             }
@@ -121,7 +119,7 @@
          * @method capacity
          * @return {Number} the number of elements the bag can hold without growing.
          */
-        this.capacity = function() {
+        this.getCapacity = function() {
             return Number.MAX_VALUE; // slightly fixed ^^
         };
         
@@ -143,7 +141,7 @@
          * @return {Boolean} true if is empty, else false
          */
         this.isEmpty = function() {
-            return data.length === 0;
+            return length === 0;
         };
         
         /**
@@ -151,21 +149,23 @@
          * increases the capacity of the bag.
          * 
          * @method add
-         * @param Mixed element to be added to this list
+         * @param {*} obj element to be added to this list
          */
         this.add = function(obj) {
             data.push(obj);
+            ++length;
         };
         
         /**
-         * Set element at specified index in the bag.
+         * Set element at specified index in the bag. New index will destroy size
          * 
          * @method set
-         * @param {Number} index position of element
-         * @param Mixed the element
+         * @param {Number} index index position of element
+         * @param {*} obj the element
          */
         this.set = function(index, obj) {
             data[index] = obj;
+            ++length;
         };
         
         /**
@@ -184,7 +184,9 @@
          * @method clear
          */
         this.clear = function() {
+            data.length = 0;
             data = [];
+            length = 0;
         };
         
         /**
@@ -199,7 +201,7 @@
                 this.add(bag.get(i));
             }
         };
-    };
+    }
     
     module.exports = Bag;
-})();
+}());

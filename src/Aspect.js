@@ -10,18 +10,18 @@
      * possess, or not possess.
      * 
      * This creates an aspect where an entity must possess A and B and C:
-     * Aspect.getAspectForAll(A.class, B.class, C.class)
+     * Aspect.getAspectForAll(A.klass, B.klass, C.klass)
      * 
      * This creates an aspect where an entity must possess A and B and C, but must not possess U or V.
-     * Aspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class)
+     * Aspect.getAspectForAll(A.klass, B.klass, C.klass).exclude(U.klass, V.klass)
      * 
      * This creates an aspect where an entity must possess A and B and C, but must not possess U or V, but must possess one of X or Y or Z.
-     * Aspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class).one(X.class, Y.class, Z.class)
+     * Aspect.getAspectForAll(A.klass, B.klass, C.klass).exclude(U.klass, V.klass).one(X.klass, Y.klass, Z.klass)
      *
      * You can create and compose aspects in many ways:
-     * Aspect.getEmpty().one(X.class, Y.class, Z.class).all(A.class, B.class, C.class).exclude(U.class, V.class)
+     * Aspect.getEmpty().one(X.klass, Y.klass, Z.klass).all(A.klass, B.klass, C.klass).exclude(U.klass, V.klass)
      * is the same as:
-     * Aspect.getAspectForAll(A.class, B.class, C.class).exclude(U.class, V.class).one(X.class, Y.class, Z.class)
+     * Aspect.getAspectForAll(A.klass, B.klass, C.klass).exclude(U.klass, V.klass).one(X.klass, Y.klass, Z.klass)
      * 
      * @module ArtemiJS
      * @class Aspect
@@ -81,8 +81,7 @@
          * @chainable
          * @param {String} type* a required component type
          */
-        this.all = function(type) {
-            allSet.set(ComponentType.getIndexFor(type));
+        this.all = function() {
             var len = arguments.length;
             while(len--) {
                 allSet.set(ComponentType.getIndexFor(arguments[len]));
@@ -98,8 +97,7 @@
          * @chainable
          * @param {String} type* component type to exclude
          */
-        this.exclude = function(type) {
-            exclusionSet.set(ComponentType.getIndexFor(type));
+        this.exclude = function() {
             var len = arguments.length;
             while(len--) {
                 exclusionSet.set(ComponentType.getIndexFor(arguments[len]));
@@ -115,40 +113,39 @@
          * @param {String} type* one of the types the entity must possess
          */
         this.one = function(type) {
-            oneSet.set(ComponentType.getIndexFor(type));
             var len = arguments.length;
             while(len--) {
                 oneSet.set(ComponentType.getIndexFor(arguments[len]));
             }
             return this;
         };
-        
-        /**
-         * Creates an aspect where an entity must possess all of the specified component types.
-         * 
-         * @method getAspectForAll
-         * @param {String} type* a required component type
-         * @return {ArtemiJS.Aspect} an aspect that can be matched against entities
-         */
-        this.getAspectForAll = function(type) {
-            var aspect = new Aspect();
-            aspect.all(type, arguments);
-            return aspect;
-        };
-        
-        
-        /**
-         * Creates an aspect where an entity must possess one of the specified component types.
-         * 
-         * @method getAspectForOne
-         * @param {String} type* one of the types the entity must possess
-         * @return {ArtemiJS.Aspect} an aspect that can be matched against entities
-         */
-        this.getAspectForOne = function(type) {
-            var aspect = new Aspect();
-            aspect.one(type, arguments);
-            return aspect;
-        };
+    };
+
+    /**
+     * Creates an aspect where an entity must possess all of the specified component types.
+     *
+     * @method getAspectForAll
+     * @param {String} type* a required component type
+     * @return {ArtemiJS.Aspect} an aspect that can be matched against entities
+     */
+    Aspect.getAspectForAll = function() {
+        var aspect = new Aspect();
+        aspect.all(arguments);
+        return aspect;
+    };
+
+
+    /**
+     * Creates an aspect where an entity must possess one of the specified component types.
+     *
+     * @method getAspectForOne
+     * @param {String} type* one of the types the entity must possess
+     * @return {ArtemiJS.Aspect} an aspect that can be matched against entities
+     */
+    Aspect.getAspectForOne = function() {
+        var aspect = new Aspect();
+        aspect.one(arguments);
+        return aspect;
     };
     
     /**

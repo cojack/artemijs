@@ -19,7 +19,7 @@
         /**
          * @private
          * @property entities
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
         var entities = new Bag(),
         
@@ -35,28 +35,28 @@
          * @property active
          * @type {Number}
          */
-        active,
+        active = 0,
         
         /**
          * @private
          * @property added
          * @type {Number}
          */
-        added,
+        added = 0,
         
         /**
          * @private
          * @property created
          * @type {Number}
          */
-        created,
+        created = 0,
         
         /**
          * @private
          * @property deleted
          * @type {Number}
          */
-        deleted,
+        deleted = 0,
         
         /**
          * @private
@@ -70,9 +70,7 @@
          * 
          * @method initialize
          */
-        this.initialize = function() {
-            
-        };
+        this.initialize = function() {};
         
         /**
          * Create new entity instance
@@ -82,7 +80,7 @@
          */
         this.createEntityInstance = function() {
             var entity = new Entity(this.world, identifierPool.checkOut());
-            created++;
+            ++created;
             return entity;
         };
         
@@ -93,8 +91,8 @@
          * @param {Entity} entity
          */
         this.added = function(entity) {
-            active++;
-            added++;
+            ++active;
+            ++added;
             entities.set(entity.getId(), entity);
         };
         
@@ -130,9 +128,9 @@
             disabled.clear(entity.getId());
             
             identifierPool.checkIn(entity.getId());
-            
-            active--;
-            deleted++;
+
+            --active;
+            ++deleted;
         };
         
         /**
@@ -161,7 +159,7 @@
         /**
          * Get a entity with this id.
          * 
-         * @param getEntity
+         * @method getEntity
          * @param {Number} entityId
          * @return {Entity}
          */
@@ -245,7 +243,7 @@
                 if(ids.size()) {
                     return ids.removeLast();
                 }
-                return nextAvailableId++;
+                return ++nextAvailableId;
             };
             
             /**
@@ -261,5 +259,6 @@
     };
     
     EntityManager.prototype = Object.create(Manager.prototype);
+    EntityManager.prototype.constructor = EntityManager;
     module.exports = EntityManager;
 })();

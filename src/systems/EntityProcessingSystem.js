@@ -14,15 +14,23 @@
      */
     var EntityProcessingSystem = function EntityProcessingSystem(_aspect) {
         EntitySystem.call(this, _aspect);
-        
-        this.process = function() {
-            
+
+        /**
+         *
+         * @param {Entity} entity
+         */
+        this.innerProcess = function(entity) {
+            // litle difference between original framework, js doesn't allow to overload methods :<
         };
-        
+
+        /**
+         *
+         * @param {Bag} entities
+         */
         this.processEntities = function(entities) {
             var i = entities.size();
-            while(--i) {
-                process(entities.get(i));
+            while(i--) {
+                this.innerProcess(entities.get(i));
             }
         };
         
@@ -32,5 +40,6 @@
     };
     
     EntityProcessingSystem.prototype = Object.create(EntitySystem.prototype);
+    EntityProcessingSystem.prototype.constructor = EntityProcessingSystem;
     module.exports = EntityProcessingSystem;
 })();

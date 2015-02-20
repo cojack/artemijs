@@ -17,14 +17,14 @@
         /**
          * @private
          * @property componentsByType
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
         var componentsByType = new Bag(),
         
         /**
          * @private
          * @property deleted
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
         deleted = new Bag();
             
@@ -117,8 +117,8 @@
          * 
          * @method getComponentsFor
          * @param {Entity} entity
-         * @param {Utils.Bag} Bag of components
-         * @return {Utils.Bag} Bag of components
+         * @param {Bag} fillBag Bag of components
+         * @return {Bag} Bag of components
          */
         this.getComponentsFor = function(entity, fillBag) {
             var componentBits = entity.getComponentBits();
@@ -156,5 +156,6 @@
     };
     
     ComponentManager.prototype = Object.create(Manager.prototype);
+    ComponentManager.prototype.constructor = ComponentManager;
     module.exports = ComponentManager;
 })();

@@ -8,7 +8,7 @@
      * @class EntityObserver
      * @constructor
      */ 
-    var EntityObserver = function EntityObserver() {
+    function EntityObserver() {
         
         /**
          * Abstract method added
@@ -64,7 +64,7 @@
         this.disabled = function(entity)  {
             throw new Error('EntityObserver function disabled not implemented');
         };
-    };
+    }
     
     module.exports = EntityObserver;
 })();

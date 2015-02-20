@@ -52,5 +52,6 @@
     };
     
     PlayerManager.prototype = Object.create(Manager.prototype);
+    PlayerManager.prototype.constructor = PlayerManager;
     module.exports = PlayerManager;
 })();

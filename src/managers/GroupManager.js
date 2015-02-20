@@ -25,14 +25,14 @@
         /**
          * @private
          * @property entitiesByGroup
-         * @type {Utils.HashMap}
+         * @type {HashMap}
          */
         var entitiesByGroup = new HashMap(),
         
         /**
          * @private
          * @property groupsByEntity
-         * @type {Utils.HashMap}
+         * @type {HashMap}
          */
         groupsByEntity = new HashMap();
             
@@ -49,6 +49,8 @@
          * @param {String} group to add the entity into
          */
         this.add = function(entity, group) {
+            console.assert(!!entity, "Entity is null or undefined");
+            console.assert(group.length > 0, "Group is empty");
             var entities = entitiesByGroup.get(group);
             if(entities === null) {
                 entities = new Bag();
@@ -72,6 +74,8 @@
          * @param {String} group to remove from them entity
          */
         this.remove = function(entity, group) {
+            console.assert(!!entity, "Entity is null or undefined");
+            console.assert(group.length > 0, "Group is empty");
             var entities = entitiesByGroup.get(group);
             if(entities !== null) {
                 entities.remove(entity);
@@ -90,6 +94,7 @@
          * @param {Entity} entity to remove from the group
          */
         this.removeFromAllGroups = function(entity) {
+            console.assert(!!entity, "Entity is null or undefined");
             var groups = groupsByEntity.get(entity);
             if(groups !== null) {
                 var i = groups.size();
@@ -107,10 +112,11 @@
          * Get all entities that belong to the provided group.
          * 
          * @method getEntities
-         * @param {String} name of the group
-         * @return {Utils.Bag} entities
+         * @param {String} group name of the group
+         * @return {Bag} entities
          */
         this.getEntities = function(group) {
+            console.assert(group.length > 0, "Group is empty");
             var entities = entitiesByGroup.get(group);
             if(entities === null) {
                 entities = new Bag();
@@ -126,16 +132,31 @@
          * @param {Entity} entity
          */
         this.getGroups = function(entity) {
+            console.assert(!!entity, "Entity is null or undefined");
             return groupsByEntity.get(entity);
         };
-        
+
+        /**
+         * Check is Entity in any group
+         *
+         * @param {Entity} entity
+         * @returns {boolean}
+         */
         this.isInAnyGroup = function(entity) {
+            console.assert(!!entity, "Entity is null or undefined");
             return this.getGroups(entity) !== null;
         };
-        
+
+        /**
+         * Check is entity in group
+         *
+         * @param {Entity} entity
+         * @param {String} group
+         * @returns {boolean}
+         */
         this.isInGroup = function(entity, group) {
-            group = group || null;
-            if(group === null) {
+            console.assert(!!entity, "Entity is null or undefined");
+            if(!group) {
                 return false;   
             }
             var groups = groupsByEntity.get(entity);
@@ -145,13 +166,21 @@
                     return true;
                 }
             }
+            return false;
         };
-        
+
+        /**
+         * Remove entity from all groups related to
+         *
+         * @param entity
+         */
         this.deleted = function(entity) {
+            console.assert(!!entity, "Entity is null or undefined");
             this.removeFromAllGroups(entity);
         };
     }; 
 
     GroupManager.prototype = Object.create(Manager.prototype);
+    GroupManager.prototype.constructor = GroupManager;
     module.exports = GroupManager;
 })();

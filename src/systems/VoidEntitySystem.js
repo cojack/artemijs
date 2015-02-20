@@ -28,5 +28,6 @@
     };
     
     VoidEntitySystem.prototype = Object.create(EntitySystem.prototype);
+    VoidEntitySystem.prototype.constructor = VoidEntitySystem;
     module.exports = VoidEntitySystem;
 })();

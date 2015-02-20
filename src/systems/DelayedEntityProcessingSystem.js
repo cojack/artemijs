@@ -17,5 +17,6 @@
     };
     
     DelayedEntityProcessingSystem.prototype = Object.create(EntitySystem.prototype);
+    DelayedEntityProcessingSystem.prototype.constructor = DelayedEntityProcessingSystem;
     module.exports = DelayedEntityProcessingSystem;
 })();

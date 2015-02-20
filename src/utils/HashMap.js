@@ -1,119 +1,131 @@
-/**
- * HashMap
- * @author Ariel Flesler <aflesler@gmail.com>
- * @version 0.9.3
- * Date: 4/3/2013
- * Homepage: https://github.com/flesler/hashmap
- */
 (function(){
     'use strict';
-    
+
+    function makeCRCTable(){
+        var c;
+        var crcTable = [];
+        for(var n =0; n < 256; n++){
+            c = n;
+            for(var k =0; k < 8; k++){
+                c = ((c&1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
+            }
+            crcTable[n] = c;
+        }
+        return crcTable;
+    }
+
     /**
      * HashMap
-     * 
+     *
      * @module ArtemiJS
      * @submodule Utils
      * @class HashMap
      * @namespace Utils
      * @constructor
-     */    
+     *
+     * @see http://stackoverflow.com/questions/18638900/javascript-crc32/18639999#18639999
+     */
     function HashMap() {
-		this.clear();
-	}
 
-	HashMap.prototype = {
-		constructor:HashMap,
+        var data = [];
 
-		get:function(key) {
-			var data = this._data[this.hash(key)];
-			return data && data[1];
-		},
+        var _length = 0;
 
-		put:function(key, value) {
-			// Store original key as well (for iteration)
-			this._data[this.hash(key)] = [key, value];
-		},
+        Object.defineProperty(this, "length", {
+            get: function() { return _length; }
+        });
 
-		containsKey:function(key) {
-			return this.hash(key) in this._data;
-		},
+        if(!self.crcTable) {
+            self.crcTable = makeCRCTable()
+        }
 
-		remove:function(key) {
-			delete this._data[this.hash(key)];
-		},
+        /**
+         * This method generate crc32 exactly from string
+         *
+         * @param key
+         * @returns {number}
+         */
+        function hash(key) {
+            var str = JSON.stringify(key);
+            var crc = 0 ^ (-1);
 
-		type:function(key) {
-			var str = Object.prototype.toString.call(key);
-			var type = str.slice(8, -1).toLowerCase();
-			// Some browsers yield DOMWindow for null and undefined, works fine on Node
-			if (type === 'domwindow' && !key) {
-				return key + '';
-			}
-			return type;
-		},
+            for (var i = 0; i < str.length; i++ ) {
+                crc = (crc >>> 8) ^ self.crcTable[(crc ^ str.charCodeAt(i)) & 0xFF];
+            }
 
-		count:function() {
-			var n = 0;
-			for (var key in this._data) {
-				n++;
-			}
-			return n;
-		},
+            return (crc ^ (-1)) >>> 0;
+        }
 
-		clear:function() {
-			// TODO: Would Object.create(null) make any difference
-			this._data = {};
-		},
+        /**
+         * Get value for a key
+         *
+         * @param key
+         * @returns {*|null} For false returns null
+         */
+        this.get = function(key) {
+            return data[hash(key)] || null;
+        };
 
-		hash:function(key) {
-			switch (this.type(key)) {
-				case 'undefined':
-				case 'null':
-				case 'boolean':
-				case 'number':
-				case 'regexp':
-					return key + '';
-
-				case 'date':
-					return ':' + key.getTime();
-
-				case 'string':
-					return '"' + key;
-
-				case 'array':
-					var hashes = [];
-					for (var i = 0; i < key.length; i++)
-						hashes[i] = this.hash(key[i]);
-					return '[' + hashes.join('|');
-
-				case 'object':
-				default:
-					// TODO: Don't use expandos when Object.defineProperty is not available?
-					if (!key._hmuid_) {
-						key._hmuid_ = ++HashMap.uid;
-						hide(key, '_hmuid_');
-					}
-
-					return '{' + key._hmuid_;
-			}
-		},
-
-		forEach:function(func) {
-			for (var key in this._data) {
-				var data = this._data[key];
-				func(data[1], data[0]);
-			}
-		}
-	};
-
-	HashMap.uid = 0;
+        /**
+         * Set value for a specific key
+         *
+         * @param {*} key
+         * @param {*} value
+         * @returns {HashMap}
+         */
+        this.put = function(key, value) {
+            console.assert(!!key, "key is null or undefined");
+            data[hash(key)] = value;
+            ++_length;
+            return this;
+        };
 
 
-	function hide(obj, prop) {
-		// Make non iterable if supported
-		if (Object.defineProperty) {
-			Object.defineProperty(obj, prop, {enumerable:false});
-		}
+        /**
+         * Check that key exist
+         *
+         * @param {*} key
+         * @returns {boolean}
+         */
+        this.containsKey = function(key) {
+            return data.indexOf(hash(key)) !== -1;
+        };
+
+        /**
+         * Remove value from specific key
+         *
+         * @param {*} key
+         * @returns {HashMap}
+         */
+        this.remove = function(key) {
+            var idx = data.indexOf(hash(key));
+            if(idx !== -1) {
+                data.splice(idx, 1);
+                --_length;
+            }
+            return this;
+        };
+
+        /**
+         * Get size
+         *
+         * @returns {number}
+         */
+        this.count = function() {
+            return _length;
+        };
+
+        /**
+         * Remove all data
+         *
+         * @returns {HashMap}
+         */
+        this.clear = function() {
+            data.length = 0;
+            data = [];
+            _length = 0;
+            return this;
+        };
 	}
 
 	module.exports = HashMap;

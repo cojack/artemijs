@@ -8,9 +8,16 @@
     "dependencies": {},
     "devDependencies": {
         "mocha": "1.12.0",
-        "should": "1.2.2"
+        "should": "1.2.2",
+        "browserify": "",
+        "watchify": "",
+        "uglifyjs": ""
     },
     "scripts": {
-        "test": "mocha --recursive"
+        "test": "mocha --recursive",
+        "build-debug": "browserify src/Artemi.js -d -s ArtemiJS > lib/artemijs.dev.js",
+        "build-min": "browserify src/Artemi.js -s ArtemiJS | uglifyjs -c > lib/artemijs.min.js",
+        "build": "npm run build-debug && npm run build-min",
+        "watch": "watchify src/Artemi.js -d -s ArtemiJS -o lib/artemi.js -v"
     }
 }

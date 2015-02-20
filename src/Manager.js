@@ -91,5 +91,6 @@
     };
     
     Manager.prototype = Object.create(EntityObserver.prototype);
+    Manager.prototype.constructor = Manager;
     module.exports = Manager;
 })();

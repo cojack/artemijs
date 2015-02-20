@@ -13,10 +13,6 @@ fi
 if [ -f "$MY_PATH/../lib/artemijs.dev.js" ]; then
     $(rm "$MY_PATH/../lib/artemijs.dev.js")
 fi
-
-cat "$MY_PATH/../src/native/Array.js" \
-    "$MY_PATH/../src/native/Math.js" \
-    "$MY_PATH/../src/native/Object.js" > "$MY_PATH/../lib/artemijs.dev.js"
     
 browserify "$MY_PATH/../src/Artemi.js" >> "$MY_PATH/../lib/artemijs.dev.js" -s ArtemiJS -d
 

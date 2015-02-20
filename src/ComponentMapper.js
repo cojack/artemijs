@@ -2,6 +2,10 @@
     'use strict';
 
     var Component = require('./Component'),
+        /**
+         *
+         * @var ComponentType ComponentType
+         */
         ComponentType = require('./ComponentType');
 
     /**
@@ -12,20 +16,20 @@
      * @class ComponentMapper
      * @constructor
      * @param {Object} _type
-     * @param {ArtemiJS.World} _world
+     * @param {World} _world
      */
     var ComponentMapper = function ComponentMapper(_type, _world) {
         Component.call(this);
         
         /**
          * @private
-         * @property {ArtemiJS.ComponentType} type Type of component
+         * @property {ComponentType} type Type of component
          */
         var type = ComponentType.getTypeFor(_type),
         
         /**
          * @private
-         * @param {ArtemiJS.Utils.Bag} components Bag of components
+         * @param {Bag} components Bag of components
          */
         components = _world.getComponentManager().getComponentsByType(type);
             
@@ -35,7 +39,7 @@
          * however in most scenarios you already know the entity possesses this component.
          * 
          * @method get
-         * @param {ArtemiJS.Entity} entity
+         * @param entity Entity
          * @return {ArtemiJS.Component}|null
          */
         this.get = function(entity) {
@@ -47,7 +51,7 @@
          * If the entity does not have this component then null is returned.
          * 
          * @method getSafe
-         * @param {ArtemiJS.Entity} entity
+         * @param entity Entity
          * @return {ArtemiJS.Component}|null
          */
         this.getSafe = function(entity) {
@@ -75,13 +79,14 @@
      * @method getFor
      * @static
      * @param {Object} type the type of components this mapper uses
-     * @param {ArtemiJS.World} the world that this component mapper should use
-     * @return {ArtemiJS.ComponentMapper}
+     * @param {World} world the world that this component mapper should use
+     * @return {ComponentMapper}
      */
     ComponentMapper.getFor = function(type, world) {
         return new ComponentMapper(type, world);
     };
     
     ComponentMapper.prototype = Object.create(Component.prototype);
-    module.exports.ComponentMapper = ComponentMapper;
+    ComponentMapper.prototype.constructor = ComponentMapper;
+    module.exports = ComponentMapper;
 })();

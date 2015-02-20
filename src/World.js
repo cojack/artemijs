@@ -16,7 +16,9 @@
      * @class World
      * @constructor
      */
-    var World = function World() {
+    function World() {
+
+        console.info("Welcome to ArtemiJS, component oriented framework!")
         
         /**
          * @private
@@ -42,7 +44,7 @@
         /**
          * @private
          * @property managersBag
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
         managersBag = new Bag(),
         
@@ -56,42 +58,42 @@
         /**
          * @private
          * @property systemsBag
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
         systemsBag = new Bag(),
     
         /**
          * @private
          * @property added
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
         added = new Bag(),
         
         /**
          * @private
          * @property changed
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
         changed = new Bag(),
         
         /**
          * @private
          * @property deleted
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
         deleted = new Bag(),
         
         /**
          * @private
          * @property enable
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
         enable = new Bag(),
         
         /**
          * @private
          * @property disable
-         * @type {Utils.Bag}
+         * @type {Bag}
          */
         disable = new Bag(),
     
@@ -109,14 +111,18 @@
          * @method initialize
          */
         this.initialize = function() {
+            console.timeStamp("Managers initialization");
+            console.groupCollapsed("Managers initialization");
             var i = managersBag.size();
             while(i--) {
                 managersBag.get(i).initialize();
+
             }
             i = systemsBag.size();
             while(i--) {
                 systemsBag.get(i).initialize();
             }
+            console.groupEnd();
         };
         
         /**
@@ -149,6 +155,7 @@
          * @return {Manager} manager
          */
         this.setManager = function(manager) {
+            console.timeStamp("set manager");
             manager.setWorld(this);
             
             managers[manager.getClass()] = manager;
@@ -259,6 +266,7 @@
          * @return {Entity} entity
          */
         this.createEntity = function() {
+            console.timeStamp("create entity");
             return entityManager.createEntityInstance();
         };
         
@@ -266,7 +274,7 @@
          * Get a entity having the specified id.
          * 
          * @method getEntity
-         * @param {Number} entityId
+         * @param {Number} id entity id
          * @return {Entity} entity
          */
         this.getEntity = function(id) {
@@ -277,7 +285,7 @@
          * Gives you all the systems in this world for possible iteration.
          * 
          * @method getSystems
-         * @return {Mixed} all entity systems in world, other false
+         * @return {*} all entity systems in world, other false
          */
         this.getSystems = function() {
             return systemsBag;
@@ -288,10 +296,11 @@
          * 
          * @method setSystem
          * @param {EntitySystem} system the system to add.
-         * @param {Boolean} [passive] wether or not this system will be processed by World.process()
+         * @param {Boolean} [passive] whether or not this system will be processed by World.process()
          * @return {EntitySystem} the added system.
          */
         this.setSystem = function(system, passive) {
+            console.timeStamp("set system");
             passive = passive || false;
             
             system.setWorld(this);
@@ -334,6 +343,7 @@
          * @param {Entity} entity
          */
         function notifySystems(performer, entity) {
+            console.timeStamp("notify systems");
             var i = systemsBag.size();
             while(i--) {
                 performer.perform(systemsBag.get(i), entity);
@@ -349,6 +359,7 @@
          * @param {Entity} entity
          */
         function notifyManagers(performer, entity) {
+            console.timeStamp("notify managers");
             var i = managersBag.size();
             while(i--) {
                 performer.perform(managersBag.get(i), entity);
@@ -360,7 +371,7 @@
          * 
          * @private
          * @method check
-         * @param {Utils.Bag} entities
+         * @param {Bag} entities
          * @param {Object} performer
          */
         function check(entities, performer) {
@@ -383,7 +394,7 @@
          * @method process
          */
         this.process = function() {
-            
+            console.timeStamp("process everything");
             check(added, {
                 perform: function(observer, entity) {
                     observer.added(entity);
@@ -439,7 +450,7 @@
         
         this.setManager(componentManager);
         this.setManager(entityManager);
-    };
+    }
     
     module.exports = World;
 })();

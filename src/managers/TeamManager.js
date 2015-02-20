@@ -96,5 +96,6 @@
     }; 
 
     TeamManager.prototype = Object.create(Manager.prototype);
+    TeamManager.prototype.constructor = TeamManager;
     module.exports = TeamManager;
 })();
