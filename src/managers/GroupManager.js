@@ -1,8 +1,7 @@
 (function() {
     'use strict';
     
-    var HashMap = require('./../utils/HashMap'),
-        Bag = require('./../utils/Bag'),
+    var Bag = require('./../utils/Bag'),
         Manager = require('./../Manager');
     
     /**
@@ -25,16 +24,16 @@
         /**
          * @private
          * @property entitiesByGroup
-         * @type {HashMap}
+         * @type {Map}
          */
-        var entitiesByGroup = new HashMap(),
+        var entitiesByGroup = new Map(),
         
         /**
          * @private
          * @property groupsByEntity
-         * @type {HashMap}
+         * @type {Map}
          */
-        groupsByEntity = new HashMap();
+        groupsByEntity = new Map();
             
         /**
          * @method initialize
@@ -51,17 +50,18 @@
         this.add = function(entity, group) {
             console.assert(!!entity, "Entity is null or undefined");
             console.assert(group.length > 0, "Group is empty");
+            
             var entities = entitiesByGroup.get(group);
-            if(entities === null) {
+            if(!entities) {
                 entities = new Bag();
-                entitiesByGroup.put(group, entities);
+                entitiesByGroup.set(group, entities);
             }
             entities.add(entity);
             
             var groups = groupsByEntity.get(entity);
-            if(groups === null) {
+            if(!groups) {
                 groups = new Bag();
-                groupsByEntity.put(entity, groups);
+                groupsByEntity.set(entity, groups);
             }
             groups.add(group);
         };
@@ -77,13 +77,13 @@
             console.assert(!!entity, "Entity is null or undefined");
             console.assert(group.length > 0, "Group is empty");
             var entities = entitiesByGroup.get(group);
-            if(entities !== null) {
-                entities.remove(entity);
+            if(entities) {
+                entities.delete(entity);
             }
             
             var groups = groupsByEntity.get(entity);
-            if(groups !== null) {
-                groups.remove(group);
+            if(groups) {
+                groups.delete(group);
             }
         };
         
@@ -96,16 +96,17 @@
         this.removeFromAllGroups = function(entity) {
             console.assert(!!entity, "Entity is null or undefined");
             var groups = groupsByEntity.get(entity);
-            if(groups !== null) {
-                var i = groups.size();
-                while(i--) {
-                    var entities = entitiesByGroup.get(groups.get(i));
-                    if(entities !== null) {
-                        entities.remove(entity);
-                    }
-                }
-                groups.clear();
+            if(!groups) {
+                return;
             }
+            var i = groups.size();
+            while(i--) {
+                var entities = entitiesByGroup.get(groups.get(i));
+                if(entities) {
+                    entities.remove(entity);
+                }
+            }
+            groups.clear();
         };
         
         /**
@@ -118,7 +119,7 @@
         this.getEntities = function(group) {
             console.assert(group.length > 0, "Group is empty");
             var entities = entitiesByGroup.get(group);
-            if(entities === null) {
+            if(!entities) {
                 entities = new Bag();
                 entitiesByGroup.put(group, entities);
             }
@@ -144,11 +145,11 @@
          */
         this.isInAnyGroup = function(entity) {
             console.assert(!!entity, "Entity is null or undefined");
-            return this.getGroups(entity) !== null;
+            return groupsByEntity.has(entity);
         };
 
         /**
-         * Check is entity in group
+         * Check if entity is in group
          *
          * @param {Entity} entity
          * @param {String} group
