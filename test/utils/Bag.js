@@ -81,7 +81,7 @@ describe('Bag', function() {
     });
     describe('#remove()', function() {
         it('should remove testObj', function() {
-            assert.equal(true, bag.remove(testObj));
+            assert.equal(testObj, bag.remove(testObj));
         });
         it('should not have testObj after remove it', function() {
             assert.equal(false, bag.contains(testObj));

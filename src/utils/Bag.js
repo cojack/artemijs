@@ -21,8 +21,6 @@
          * @type {Array}
          */
         var data = [];
-
-        var length = 0;
             
         /**
          * Removes the element at the specified position in this Bag. does this by
@@ -39,7 +37,6 @@
             }
             if(typeof index === 'number' && index !== -1) {
                 response = data.splice(index, 1)[0] || null;
-                --length;
             } else {
                 response = null;
             }
@@ -51,11 +48,11 @@
          * Remove and return the last object in the bag.
          * 
          * @method removeLast
-         * @return {*} the last object in the bag, null if empty.
+         * @return {*|null} the last object in the bag, null if empty.
          */
         this.removeLast = function() {
-            if(length > 0) {
-                return this.remove(length-1);
+            if(data.length) {
+                return data.pop();
             }
             return null;
         };
@@ -97,7 +94,7 @@
          * 
          * @method get
          * @param {Number} index index of the element to return
-         * @return Mixed the element at the specified position in bag
+         * @return {*|null} the element at the specified position in bag or null
          */
         this.get = function(index) {
             return data[index] ? data[index] : null;
@@ -141,7 +138,7 @@
          * @return {Boolean} true if is empty, else false
          */
         this.isEmpty = function() {
-            return length === 0;
+            return data.length === 0;
         };
         
         /**
@@ -153,7 +150,6 @@
          */
         this.add = function(obj) {
             data.push(obj);
-            ++length;
         };
         
         /**
@@ -165,7 +161,6 @@
          */
         this.set = function(index, obj) {
             data[index] = obj;
-            ++length;
         };
         
         /**
@@ -186,7 +181,6 @@
         this.clear = function() {
             data.length = 0;
             data = [];
-            length = 0;
         };
         
         /**

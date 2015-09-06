@@ -67,13 +67,13 @@ describe('ArtemiJS', function() {
         });
     });
     describe('ComponentMapper', function() {
-        it('should be a object', function() {
-            assert.equal('object', typeof ArtemiJS.ComponentMapper);
+        it('should be a function', function() {
+            assert.equal('function', typeof ArtemiJS.ComponentMapper);
         });
     });
     describe('ComponentType', function() {
-        it('should be a object', function() {
-            assert.equal('object', typeof ArtemiJS.ComponentType);
+        it('should be a function', function() {
+            assert.equal('function', typeof ArtemiJS.ComponentType);
         });
     });
     describe('Entity', function() {
