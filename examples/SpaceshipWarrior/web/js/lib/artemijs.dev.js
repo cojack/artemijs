@@ -1,1 +1,0 @@
-../../../../../lib/artemijs.dev.js
