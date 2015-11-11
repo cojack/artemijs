@@ -1,19 +1,6 @@
 (function(){
     'use strict';
 
-    function makeCRCTable(){
-        var c;
-        var crcTable = [];
-        for(var n =0; n < 256; n++){
-            c = n;
-            for(var k =0; k < 8; k++){
-                c = ((c&1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
-            }
-            crcTable[n] = c;
-        }
-        return crcTable;
-    }
-
     /**
      * HashMap
      *
@@ -27,16 +14,24 @@
      */
     function HashMap() {
 
-        var data = [];
-
-        var _length = 0;
+        var data = [],
+            _length = 0;
 
         Object.defineProperty(this, "length", {
             get: function() { return _length; }
         });
 
-        if(!self.crcTable) {
-            self.crcTable = makeCRCTable();
+        function crcTable(){
+            var c;
+            var crc = [];
+            for(var n =0; n < 256; n++){
+                c = n;
+                for(var k =0; k < 8; k++){
+                    c = ((c&1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
+                }
+                crc[n] = c;
+            }
+            return crc;
         }
 
         /**
@@ -50,7 +45,7 @@
             var crc = 0 ^ (-1);
 
             for (var i = 0; i < str.length; i++ ) {
-                crc = (crc >>> 8) ^ self.crcTable[(crc ^ str.charCodeAt(i)) & 0xFF];
+                crc = (crc >>> 8) ^ crcTable[(crc ^ str.charCodeAt(i)) & 0xFF];
             }
 
             return (crc ^ (-1)) >>> 0;
