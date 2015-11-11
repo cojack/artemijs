@@ -1,94 +1,214 @@
 (function() {
     'use strict';
 
+    /**
+     * @author inexplicable
+     * @see https://github.com/inexplicable/bitset
+     */
+
+    //constructor
     var BitSet = function BitSet() {
 
-        /*
-         * BitSets are packed into arrays of "words."  Currently a word is
-         * a long, which consists of 64 bits, requiring 6 address bits.
-         * The choice of word size is determined purely by performance concerns.
-         */
-        var ADDRESS_BITS_PER_WORD = 6;
-        var BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
+        //_words property is an array of 32bits integers, javascript doesn't really have integers separated from Number type
+        //it's less performant because of that, number (by default float) would be internally converted to 32bits integer then accepts the bit operations
+        //checked Buffer type, but needs to handle expansion/downsize by application, compromised to use number array for now.
+        this._words = [];
+    };
 
-        /* Used to shift left or right for a partial word mask */
-        var WORD_MASK = 0xffffffffffffffff;
+    var BITS_OF_A_WORD = 32,
+        SHIFTS_OF_A_WORD = 5;
 
-        var _words = [];
+    /**
+     *
+     * @param pos
+     * @return {Number} the index at the words array
+     */
+    var whichWord = function(pos){
+        //assumed pos is non-negative, guarded by #set, #clear, #get etc.
+        return pos >> SHIFTS_OF_A_WORD;
+    };
 
-        var _wordsInUse = 0;
+    /**
+     *
+     * @param pos
+     * @return {Number} a bit mask of 32 bits, 1 bit set at pos % 32, the rest being 0
+     */
+    var mask = function(pos){
+        return 1 << (pos & 31);
+    };
 
-        function expandTo(wordIndex) {
-            var wordsRequired = wordIndex+1;
-            if (_wordsInUse < wordsRequired) {
-                _wordsInUse = wordsRequired;
+    BitSet.prototype.set = function(pos) {
+        return this._words[whichWord(pos)] |= mask(pos);
+    };
+
+    BitSet.prototype.clear = function(pos) {
+        return this._words[whichWord(pos)] &= ~mask(pos);
+    };
+
+    BitSet.prototype.get = function(pos) {
+        return this._words[whichWord(pos)] & mask(pos);
+    };
+
+    BitSet.prototype.words = function() {
+        return this._words.length;
+    };
+
+    /**
+     * count all set bits
+     * @return {Number}
+     *
+     * this is much faster than BitSet lib of CoffeeScript, it fast skips 0 value words
+     */
+    BitSet.prototype.cardinality = function() {
+        var next, sum = 0, arrOfWords = this._words, maxWords = this.words();
+        for(next = 0; next < maxWords; ++next){
+            var nextWord = arrOfWords[next] || 0;
+            //this loops only the number of set bits, not 32 constant all the time!
+            for(var bits = nextWord; bits !== 0; bits &= (bits - 1)){
+                ++sum;
             }
         }
+        return sum;
+    };
 
-        function wordIndex(bitIndex) {
-            return bitIndex >> ADDRESS_BITS_PER_WORD;
+    BitSet.prototype.reset = function() {
+        this._words = [];
+    };
+
+    BitSet.prototype.or = function(set) {
+        if (this === set){
+            return this;
         }
 
-        Object.defineProperties(this, {
-            "wordsInUse": {
-                get: function() { return _wordsInUse; }
-            },
-            "words": {
-                get: function() { return _words; }
+        var next, commons = Math.min(this.words(), set.words());
+        for (next = 0; next < commons; next++) {
+            this._words[next] |= set._words[next];
+        }
+        if (commons < set.words()) {
+            this._words = this._words.concat(set._words.slice(commons, set.words()));
+        }
+        return this;
+    };
+
+    /**
+     *
+     * @param set
+     * @return {BitSet} this BitSet after and operation
+     *
+     * this is much more performant than CoffeeScript's BitSet#and operation because we'll chop the zero value words at tail.
+     */
+    BitSet.prototype.and = function(set) {
+        if (this === set) {
+            return this;
+        }
+
+        var next,
+            commons = Math.min(this.words(), set.words()),
+            words = this._words;
+
+        for (next = 0; next < commons; next++) {
+            words[next] &= set._words[next];
+        }
+        if(commons > set.words()){
+            var len = commons - set.words();
+            while(len--) {
+                words.pop();//using pop instead of assign zero to reduce the length of the array, and fasten the subsequent #and operations.
             }
-        });
+        }
+        return this;
+    };
 
-        this.set = function(bitIndex) {
-            var _wordIndex = wordIndex(bitIndex);
-            _words[_wordIndex] |= (1 << bitIndex);
-            expandTo(_wordIndex);
-        };
+    BitSet.prototype.xor = function(set) {
+        if (this === set){
+            return this;
+        }
 
-        this.get = function(bitIndex) {
-            var _wordIndex = wordIndex(bitIndex);
-            return (_wordIndex < _wordsInUse) && ((_words[_wordIndex] & (1 << bitIndex)) !== 0);
-        };
+        var next, commons = Math.min(this.words(), set.words());
+        for (next = 0; next < commons; next++) {
+            this._words[next] ^= set._words[next];
+        }
+        if (commons < set.words()) {
+            this._words = this._words.concat(set._words.slice(commons, set.words()));
+        }
+        return this;
+    };
 
-        this.clear = function() {
-            _words = [];
-        };
-
-        this.isEmpty = function() {
-            return _wordsInUse === 0;
-        };
-
-        /**
-         *
-         * @param {BitSet} bitSet
-         * @returns {boolean}
-         */
-        this.intersects = function(bitSet) {
-            for (var i = Math.min(_wordsInUse, bitSet.wordsInUse) - 1; i >= 0; i--)
-                if ((_words[i] & bitSet.words[i]) !== 0)
-                    return true;
-            return false;
-        };
-
-        /**
-         *
-         * @param {Number} fromIndex
-         * @returns {*}
-         */
-        this.nextSetBit = function(fromIndex) {
-            var u = wordIndex(fromIndex);
-            if (u >= _wordsInUse)
-                return -1;
-
-            var word = _words[u] & (WORD_MASK << fromIndex);
-
-            while (true) {
-                if (word !== 0)
-                    return (u * BITS_PER_WORD) + Number.numberOfTrailingZeros(word);
-                if (++u === _wordsInUse)
-                    return -1;
-                word = _words[u];
+    /**
+     * this is the critical piece missing from CoffeeScript's BitSet lib, we usually just need to know the next set bit if any.
+     * it fast skips 0 value word as #cardinality does, this is esp. important because of our usage, after series of #and operations
+     * it's highly likely that most of the words left are zero valued, and by skipping all of such, we could locate the actual bit set much faster.
+     * @param pos
+     * @return {number}
+     */
+    BitSet.prototype.nextSetBit = function(pos){
+        var next = whichWord(pos),
+            words = this._words;
+        //beyond max words
+        if(next >= words.length){
+            return -1;
+        }
+        //the very first word
+        var firstWord = words[next],
+            maxWords = this.words(),
+            bit;
+        if(firstWord){
+            for(bit = pos & 31; bit < BITS_OF_A_WORD; bit += 1){
+                if((firstWord & mask(bit))){
+                    return (next << SHIFTS_OF_A_WORD) + bit;
+                }
             }
-        };
+        }
+        for(next = next + 1; next < maxWords; next += 1){
+            var nextWord = words[next];
+            if(nextWord){
+                for(bit = 0; bit < BITS_OF_A_WORD; bit += 1){
+                    if((nextWord & mask(bit)) !== 0){
+                        return (next << SHIFTS_OF_A_WORD) + bit;
+                    }
+                }
+            }
+        }
+        return -1;
+    };
+
+    /**
+     * An reversed lookup compared with #nextSetBit
+     * @param pos
+     * @returns {number}
+     */
+    BitSet.prototype.prevSetBit = function(pos){
+        var prev = whichWord(pos),
+            words = this._words;
+        //beyond max words
+        if(prev >= words.length){
+            return -1;
+        }
+        //the very last word
+        var lastWord = words[prev],
+            bit;
+        if(lastWord){
+            for(bit = pos & 31; bit >=0; bit--){
+                if((lastWord & mask(bit))){
+                    return (prev << SHIFTS_OF_A_WORD) + bit;
+                }
+            }
+        }
+        for(prev = prev - 1; prev >= 0; prev--){
+            var prevWord = words[prev];
+            if(prevWord){
+                for(bit = BITS_OF_A_WORD - 1; bit >= 0; bit--){
+                    if((prevWord & mask(bit)) !== 0){
+                        return (prev << SHIFTS_OF_A_WORD) + bit;
+                    }
+                }
+            }
+        }
+        return -1;
+    };
+
+    BitSet.prototype.toString = function(radix){
+        radix = radix || 10;
+        return '[' +this._words.toString() + ']';
     };
 
     module.exports = BitSet;
