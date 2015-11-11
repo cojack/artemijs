@@ -10,7 +10,7 @@ describe('Object', function() {
             assert.ok(typeof Object.prototype.getClass === 'function');
         });
         it('with object named TestObject should return his name', function() {
-            function TestObject() {};
+            function TestObject() {}
             var test = new TestObject();
             assert.equal('TestObject', test.getClass());
         });

@@ -1,6 +1,6 @@
-/*global it,describe*/
+/*global it,describe
 
-return;
+@TODO Travis-CI is to slow for BitSet tests
 
 var assert = require('assert'),
     should = require('should'),
@@ -205,4 +205,4 @@ describe('BitSet', function() {
             done();
         });
     });
-});
+});*/
