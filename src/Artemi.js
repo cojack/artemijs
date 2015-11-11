@@ -30,7 +30,7 @@ require('./native/Number');
         /**
          * @property {String} license
          */
-        license: 'GPLv2',
+        license: 'AGPL-3.0',
         
         /**
          * @property {Number} env
