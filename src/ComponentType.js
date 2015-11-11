@@ -28,11 +28,11 @@
 
         this.getIndex = function() {
             return index;
-        }
+        };
 
         this.toString = function() {
             return "ComponentType["+type.getSimpleName()+"] ("+index+")";
-        }
+        };
     };
 
     /**

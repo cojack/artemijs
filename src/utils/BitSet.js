@@ -46,7 +46,7 @@
 
         this.get = function(bitIndex) {
             var _wordIndex = wordIndex(bitIndex);
-            return (_wordIndex < _wordsInUse) && ((_words[_wordIndex] & (1 << bitIndex)) != 0);
+            return (_wordIndex < _wordsInUse) && ((_words[_wordIndex] & (1 << bitIndex)) !== 0);
         };
 
         this.clear = function() {
@@ -54,7 +54,7 @@
         };
 
         this.isEmpty = function() {
-            return _wordsInUse == 0;
+            return _wordsInUse === 0;
         };
 
         /**
@@ -64,7 +64,7 @@
          */
         this.intersects = function(bitSet) {
             for (var i = Math.min(_wordsInUse, bitSet.wordsInUse) - 1; i >= 0; i--)
-                if ((_words[i] & bitSet.words[i]) != 0)
+                if ((_words[i] & bitSet.words[i]) !== 0)
                     return true;
             return false;
         };
@@ -82,9 +82,9 @@
             var word = _words[u] & (WORD_MASK << fromIndex);
 
             while (true) {
-                if (word != 0)
+                if (word !== 0)
                     return (u * BITS_PER_WORD) + Number.numberOfTrailingZeros(word);
-                if (++u == _wordsInUse)
+                if (++u === _wordsInUse)
                     return -1;
                 word = _words[u];
             }

@@ -18,7 +18,7 @@
      */
     function World() {
 
-        console.info("Welcome to ArtemiJS, component oriented framework!")
+        console.info("Welcome to ArtemiJS, component oriented framework!");
         
         /**
          * @private

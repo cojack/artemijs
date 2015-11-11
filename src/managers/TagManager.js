@@ -38,7 +38,7 @@
             }
         };
 
-        this.initialize = function() {}
+        this.initialize = function() {};
     }; 
 
     TagManager.prototype = Object.create(Manager.prototype);

@@ -36,7 +36,7 @@
         });
 
         if(!self.crcTable) {
-            self.crcTable = makeCRCTable()
+            self.crcTable = makeCRCTable();
         }
 
         /**

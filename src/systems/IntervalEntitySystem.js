@@ -29,7 +29,7 @@
                 return true;
             }
             return false;
-        }
+        };
     };
     
     IntervalEntitySystem.prototype = Object.create(EntitySystem.prototype);

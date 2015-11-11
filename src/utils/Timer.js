@@ -138,7 +138,7 @@
          */
         this.getDelay = function() {
             return delay;
-        }
+        };
 
     };
 

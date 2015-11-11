@@ -26,7 +26,7 @@
             while(i--) {
                 this.innerProcess(entities.get(i));
             }
-        }
+        };
     };
     
     IntervalEntityProcessingSystem.prototype = Object.create(EntitySystem.prototype);
