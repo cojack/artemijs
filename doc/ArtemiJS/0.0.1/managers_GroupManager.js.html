@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: managers/GroupManager.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: managers/GroupManager.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+var Bag = require('./../utils/Bag'),
+    Manager = require('./../Manager');
+
+/**
+ * If you need to group your entities together, e.g. tanks going into
+ * "units" group or explosions into "effects",
+ * then use this manager. You must retrieve it using world instance.
+ *
+ * A entity can be assigned to more than one group.
+ *
+ * @class GroupManager
+ * @extends Manager
+ * @constructor
+ * @memberof Managers
+ */
+function GroupManager() {
+    Manager.call(this);
+
+    /**
+     * @private
+     * @member {Map}
+     */
+    var entitiesByGroup = new Map(),
+
+    /**
+     * @private
+     * @member {WeakMap}
+     */
+    groupsByEntity = new WeakMap();
+
+    /**
+     * Set the group of the entity.
+     *
+     * @param {Entity} entity to add into the group
+     * @param {string} group to add the entity into
+     */
+    this.add = function (entity, group) {
+        console.assert(!!entity, "Entity is null or undefined");
+        console.assert(group.length > 0, "Group is empty");
+
+        var entities = entitiesByGroup.get(group);
+        if (!entities) {
+            entities = new Bag();
+            entitiesByGroup.set(group, entities);
+        }
+        entities.add(entity);
+
+        var groups = groupsByEntity.get(entity);
+        if (!groups) {
+            groups = new Bag();
+            groupsByEntity.set(entity, groups);
+        }
+        groups.add(group);
+    };
+
+    /**
+     * Remove the entity from the group.
+     *
+     * @param {Entity} entity to remove from the group
+     * @param {string} group to remove from them entity
+     */
+    this.remove = function (entity, group) {
+        console.assert(!!entity, "Entity is null or undefined");
+        console.assert(group.length > 0, "Group is empty");
+        var entities = entitiesByGroup.get(group);
+        if (entities) {
+            entities.delete(entity);
+        }
+
+        var groups = groupsByEntity.get(entity);
+        if (groups) {
+            groups.delete(group);
+        }
+    };
+
+    /**
+     * Remove the entity from the all groups.
+     *
+     * @param {Entity} entity to remove from the group
+     */
+    this.removeFromAllGroups = function (entity) {
+        console.assert(!!entity, "Entity is null or undefined");
+        var groups = groupsByEntity.get(entity);
+        if (!groups) {
+            return this;
+        }
+        var i = groups.size();
+        while (i--) {
+            var entities = entitiesByGroup.get(groups.get(i));
+            if (entities) {
+                entities.remove(entity);
+            }
+        }
+        groups.clear();
+    };
+
+    /**
+     * Get all entities that belong to the provided group.
+     *
+     * @param {string} group name of the group
+     * @return {Bag} entities
+     */
+    this.getEntities = function (group) {
+        console.assert(group.length > 0, "Group is empty");
+        var entities = entitiesByGroup.get(group);
+        if (!entities) {
+            entities = new Bag();
+            entitiesByGroup.put(group, entities);
+        }
+        return entities;
+    };
+
+    /**
+     * Get all entities from the group
+     *
+     * @param {Entity} entity
+     * @return {Bag} entities
+     */
+    this.getGroups = function (entity) {
+        console.assert(!!entity, "Entity is null or undefined");
+        return groupsByEntity.get(entity);
+    };
+
+    /**
+     * Check is Entity in any group
+     *
+     * @param {Entity} entity
+     * @returns {boolean}
+     */
+    this.isInAnyGroup = function (entity) {
+        console.assert(!!entity, "Entity is null or undefined");
+        return groupsByEntity.has(entity);
+    };
+
+    /**
+     * Check if entity is in group
+     *
+     * @param {Entity} entity
+     * @param {string} group
+     * @returns {boolean}
+     */
+    this.isInGroup = function (entity, group) {
+        console.assert(!!entity, "Entity is null or undefined");
+        if (!group) {
+            return false;
+        }
+        var groups = groupsByEntity.get(entity);
+        var i = groups.size();
+        while (i--) {
+            if (group === groups.get(i)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    /**
+     * Remove entity from all groups related to
+     *
+     * @param {Entity} entity
+     */
+    this.deleted = function (entity) {
+        this.removeFromAllGroups(entity);
+    };
+}
+
+GroupManager.prototype = Object.create(Manager.prototype);
+GroupManager.prototype.constructor = GroupManager;
+module.exports = GroupManager;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArtemiJS.html">ArtemiJS</a></li><li><a href="global.html#ComponentType">ComponentType</a></li><li><a href="IntervalEntitySystem.html">IntervalEntitySystem</a></li><li><a href="Managers.GroupManager.html">GroupManager</a></li><li><a href="Managers.PlayerManager.html">PlayerManager</a></li><li><a href="Managers.TagManager.html">TagManager</a></li><li><a href="Systems.DelayedEntityProcessingSystem.html">DelayedEntityProcessingSystem</a></li><li><a href="Systems.EntityProcessingSystem.html">EntityProcessingSystem</a></li><li><a href="Systems.IntervalEntityProcessingSystem.html">IntervalEntityProcessingSystem</a></li><li><a href="Systems.VoidEntitySystem.html">VoidEntitySystem</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="Systems.html">Systems</a></li></ul><h3>Global</h3><ul><li><a href="global.html#added">added</a></li><li><a href="global.html#all">all</a></li><li><a href="global.html#begin">begin</a></li><li><a href="global.html#changed">changed</a></li><li><a href="global.html#check">check</a></li><li><a href="global.html#checkProcessing">checkProcessing</a></li><li><a href="global.html#deleted">deleted</a></li><li><a href="global.html#disabled">disabled</a></li><li><a href="global.html#enabled">enabled</a></li><li><a href="global.html#end">end</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#getActives">getActives</a></li><li><a href="global.html#getAllSet">getAllSet</a></li><li><a href="global.html#getExclusionSet">getExclusionSet</a></li><li><a href="global.html#getOneSet">getOneSet</a></li><li><a href="global.html#getWorld">getWorld</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#inserted">inserted</a></li><li><a href="global.html#isPassive">isPassive</a></li><li><a href="global.html#one">one</a></li><li><a href="global.html#process">process</a></li><li><a href="global.html#processEntities">processEntities</a></li><li><a href="global.html#removed">removed</a></li><li><a href="global.html#setPassive">setPassive</a></li><li><a href="global.html#setWorld">setWorld</a></li><li><a href="global.html#world">world</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 12 2015 01:14:27 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

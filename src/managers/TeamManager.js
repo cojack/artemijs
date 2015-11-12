@@ -12,13 +12,10 @@
      * some players are team mates.
      * 
      * A player can only belong to a single team.
-     * 
-     * @module ArtemiJS
-     * @submodule Managers
+     *
      * @class TeamManager
-     * @namespace Managers
-     * @constructor
      * @extends Manager
+     * @constructor
      */
     var TeamManager = function TeamManager() {
         Manager.call(this);
@@ -38,12 +35,10 @@
         teamByPlayer = new HashMap();
         
         /**
-         * @method initialize
          */
         this.initialize = function() {};
         
         /**
-         * @method getTeam
          * @param {String} player Name of the player
          * @return {String}
          */
@@ -54,7 +49,6 @@
         /**
          * Set team to a player
          * 
-         * @method setTeam
          * @param {String} player Name of the player
          * @param {String} team Name of the team
          */
@@ -72,7 +66,6 @@
         };
         
         /**
-         * @method getPlayers
          * @param {String} team Name of the team
          * @return {Utils.Bag} Bag of players
          */
@@ -81,7 +74,6 @@
         };
         
         /**
-         * @method removeFromTeam
          * @param {String} player Name of the player
          */
         this.removeFromTeam = function(player) {

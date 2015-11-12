@@ -1,57 +1,91 @@
-(function() {
-    'use strict';
-    
-    var HashMap = require('./../utils/HashMap'),
-        Bag = require('./../utils/Bag'),
-        Manager = require("./../Manager");
-    
-    var PlayerManager = function PlayerManager() {
-        Manager.call(this);
-        
-        var playerByEntity = new HashMap(),
-            entitiesByPlayer = new HashMap();
-            
-        this.setPlayer = function(entity, player) {
-            playerByEntity.put(entity, player);
-            var entities = entitiesByPlayer.get(player);
-            if(entities === null) {
-                entities = new Bag();
-                entitiesByPlayer.put(player, entities);
-            }
-            entities.add(entity);
-        };
-        
-        this.getEntitiesOfPlayer = function(player) {
-            var entities = entitiesByPlayer.get(player);
-            if(entities === null) {
-                entities = new Bag();
-            }
-            return entities;
-        };
-        
-        this.removeFromPlayer = function(entity) {
-            var player = playerByEntity.get(entity);
-            if(player !== null) {
-                var entities = entitiesByPlayer.get(player);
-                if(entities !== null) {
-                    entities.remove(entity);
-                }
-            }
-        };
-        
-        this.getPlayer = function(entity) {
-            return playerByEntity.get(entity);
-        };
+'use strict';
 
-        this.initialize = function() {};
+var Bag = require('./../utils/Bag'),
+    Manager = require("./../Manager");
 
-        this.deleted = function(entity) {
-            this.removeFromPlayer(entity);
-        };
+/**
+ * You may sometimes want to specify to which player an entity belongs to.
+ *
+ * An entity can only belong to a single player at a time.
+ *
+ * @class PlayerManager
+ * @extends Manager
+ * @constructor
+ * @memberof Managers
+ */
+function PlayerManager() {
+    Manager.call(this);
 
+    /**
+     * @private
+     * @member {WeakMap}
+     */
+    var playerByEntity = new WeakMap(),
+
+    /**
+     * @private
+     * @member {Map}
+     */
+    entitiesByPlayer = new Map();
+
+    /**
+     * @param {Entity} entity
+     * @param {string} player
+     */
+    this.setPlayer = function(entity, player) {
+        playerByEntity.put(entity, player);
+        var entities = entitiesByPlayer.get(player);
+        if(entities === null) {
+            entities = new Bag();
+            entitiesByPlayer.put(player, entities);
+        }
+        entities.add(entity);
     };
-    
-    PlayerManager.prototype = Object.create(Manager.prototype);
-    PlayerManager.prototype.constructor = PlayerManager;
-    module.exports = PlayerManager;
-})();
+
+    /**
+     *
+     * @param {string} player
+     * @returns {Bag}
+     */
+    this.getEntitiesOfPlayer = function(player) {
+        var entities = entitiesByPlayer.get(player);
+        if(entities === null) {
+            entities = new Bag();
+        }
+        return entities;
+    };
+
+    /**
+     * @param {Entity} entity
+     */
+    this.removeFromPlayer = function(entity) {
+        var player = playerByEntity.get(entity);
+        if(player !== null) {
+            var entities = entitiesByPlayer.get(player);
+            if(entities !== null) {
+                entities.remove(entity);
+            }
+        }
+    };
+
+    /**
+     * @param {Entity} entity
+     * @returns {string}
+     */
+    this.getPlayer = function(entity) {
+        return playerByEntity.get(entity);
+    };
+
+    /**
+     * Remove entity from all players related to
+     *
+     * @param {Entity} entity
+     */
+    this.deleted = function(entity) {
+        this.removeFromPlayer(entity);
+    };
+}
+
+PlayerManager.prototype = Object.create(Manager.prototype);
+PlayerManager.prototype.constructor = PlayerManager;
+module.exports = PlayerManager;

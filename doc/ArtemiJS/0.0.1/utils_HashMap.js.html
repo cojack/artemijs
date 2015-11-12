@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/HashMap.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/HashMap.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function(){
+    'use strict';
+
+    /**
+     * HashMap
+     *
+     * @module ArtemiJS
+     * @submodule Utils
+     * @class HashMap
+     * @namespace Utils
+     * @constructor
+     *
+     * @see http://stackoverflow.com/questions/18638900/javascript-crc32/18639999#18639999
+     */
+    function HashMap() {
+
+        var data = [],
+            _length = 0;
+
+        Object.defineProperty(this, "length", {
+            get: function() { return _length; }
+        });
+
+        function crcTable(){
+            var c;
+            var crc = [];
+            for(var n =0; n &lt; 256; n++){
+                c = n;
+                for(var k =0; k &lt; 8; k++){
+                    c = ((c&amp;1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
+                }
+                crc[n] = c;
+            }
+            return crc;
+        }
+
+        /**
+         * This method generate crc32 exactly from string
+         *
+         * @param key
+         * @returns {number}
+         */
+        function hash(key) {
+            var str = JSON.stringify(key);
+            var crc = 0 ^ (-1);
+
+            for (var i = 0; i &lt; str.length; i++ ) {
+                crc = (crc >>> 8) ^ crcTable[(crc ^ str.charCodeAt(i)) &amp; 0xFF];
+            }
+
+            return (crc ^ (-1)) >>> 0;
+        }
+
+        /**
+         * Get value for a key
+         *
+         * @param key
+         * @returns {*|null} For false returns null
+         */
+        this.get = function(key) {
+            return data[hash(key)] || null;
+        };
+
+        /**
+         * Set value for a specific key
+         *
+         * @param {*} key
+         * @param {*} value
+         * @returns {HashMap}
+         */
+        this.put = function(key, value) {
+            console.assert(!!key, "key is null or undefined");
+            data[hash(key)] = value;
+            ++_length;
+            return this;
+        };
+
+
+        /**
+         * Check that key exist
+         *
+         * @param {*} key
+         * @returns {boolean}
+         */
+        this.containsKey = function(key) {
+            return data.indexOf(hash(key)) !== -1;
+        };
+
+        /**
+         * Remove value from specific key
+         *
+         * @param {*} key
+         * @returns {HashMap}
+         */
+        this.remove = function(key) {
+            var idx = data.indexOf(hash(key));
+            if(idx !== -1) {
+                data.splice(idx, 1);
+                --_length;
+            }
+            return this;
+        };
+
+        /**
+         * Get size
+         *
+         * @returns {number}
+         */
+        this.count = function() {
+            return _length;
+        };
+
+        /**
+         * Remove all data
+         *
+         * @returns {HashMap}
+         */
+        this.clear = function() {
+            data.length = 0;
+            data = [];
+            _length = 0;
+            return this;
+        };
+	}
+
+	module.exports = HashMap;
+})();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArtemiJS.html">ArtemiJS</a></li><li><a href="global.html#ComponentType">ComponentType</a></li><li><a href="IntervalEntitySystem.html">IntervalEntitySystem</a></li><li><a href="Managers.GroupManager.html">GroupManager</a></li><li><a href="Managers.PlayerManager.html">PlayerManager</a></li><li><a href="Managers.TagManager.html">TagManager</a></li><li><a href="Systems.DelayedEntityProcessingSystem.html">DelayedEntityProcessingSystem</a></li><li><a href="Systems.EntityProcessingSystem.html">EntityProcessingSystem</a></li><li><a href="Systems.IntervalEntityProcessingSystem.html">IntervalEntityProcessingSystem</a></li><li><a href="Systems.VoidEntitySystem.html">VoidEntitySystem</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="Systems.html">Systems</a></li></ul><h3>Global</h3><ul><li><a href="global.html#added">added</a></li><li><a href="global.html#all">all</a></li><li><a href="global.html#begin">begin</a></li><li><a href="global.html#changed">changed</a></li><li><a href="global.html#check">check</a></li><li><a href="global.html#checkProcessing">checkProcessing</a></li><li><a href="global.html#deleted">deleted</a></li><li><a href="global.html#disabled">disabled</a></li><li><a href="global.html#enabled">enabled</a></li><li><a href="global.html#end">end</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#getActives">getActives</a></li><li><a href="global.html#getAllSet">getAllSet</a></li><li><a href="global.html#getExclusionSet">getExclusionSet</a></li><li><a href="global.html#getOneSet">getOneSet</a></li><li><a href="global.html#getWorld">getWorld</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#inserted">inserted</a></li><li><a href="global.html#isPassive">isPassive</a></li><li><a href="global.html#one">one</a></li><li><a href="global.html#process">process</a></li><li><a href="global.html#processEntities">processEntities</a></li><li><a href="global.html#removed">removed</a></li><li><a href="global.html#setPassive">setPassive</a></li><li><a href="global.html#setWorld">setWorld</a></li><li><a href="global.html#world">world</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 12 2015 01:14:27 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

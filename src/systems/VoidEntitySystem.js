@@ -1,33 +1,39 @@
-(function() {
-    'use strict';
-    
-    var Aspect = require('./../Aspect'),
-        EntitySystem = require('./../EntitySystem');
-    
+'use strict';
+
+var Aspect = require('./../Aspect'),
+    EntitySystem = require('./../EntitySystem');
+
+/**
+ * Object to manage components
+ *
+ * @class VoidEntitySystem
+ * @extemds EntitySystem
+ * @constructor
+ * @memberof Systems
+ */
+var VoidEntitySystem = function VoidEntitySystem() {
+    EntitySystem.call(this, Aspect.getEmpty());
+
     /**
-     * Object to manage components
-     * 
-     * @module ArtemiJS
-     * @class VoidEntitySystem
-     * @constructor
-     * @param {Aspect} _aspect Creates an entity system that uses the specified 
-     *      aspect as a matcher against entities.
+     * @param entities
      */
-    var VoidEntitySystem = function VoidEntitySystem(_aspect) {
-        EntitySystem.call(this, Aspect.getEmpty());
-        
-        this.processEntities = function(entities) {
-            this.processSystem();
-        };
-        
-        this.processSystem = function() {};
-        
-        this.checkProcessing = function() {
-            return true;
-        };
+    this.processEntities = function(entities) {
+        this.processSystem();
     };
-    
-    VoidEntitySystem.prototype = Object.create(EntitySystem.prototype);
-    VoidEntitySystem.prototype.constructor = VoidEntitySystem;
-    module.exports = VoidEntitySystem;
-})();
+
+    /**
+     *
+     */
+    this.processSystem = function() {};
+
+    /**
+     * @returns {boolean}
+     */
+    this.checkProcessing = function() {
+        return true;
+    };
+};
+
+VoidEntitySystem.prototype = Object.create(EntitySystem.prototype);
+VoidEntitySystem.prototype.constructor = VoidEntitySystem;
+module.exports = VoidEntitySystem;

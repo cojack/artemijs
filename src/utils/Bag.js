@@ -26,7 +26,6 @@
          * Removes the element at the specified position in this Bag. does this by
          * overwriting it was last element then removing last element
          * 
-         * @method remove
          * @param  {*} index the index of element to be removed
          * @return {*} element that was removed from the Bag
          */
@@ -47,7 +46,6 @@
         /**
          * Remove and return the last object in the bag.
          * 
-         * @method removeLast
          * @return {*|null} the last object in the bag, null if empty.
          */
         this.removeLast = function() {
@@ -60,7 +58,6 @@
         /**
          * Check if bag contains this element.
          *
-         * @method contains
          * @param {*} obj
          * @return {boolean}
          */
@@ -72,7 +69,6 @@
          * Removes from this Bag all of its elements that are contained in the
          * specified Bag.
          * 
-         * @method removeAll
          * @param {Bag} bag containing elements to be removed from this Bag
          * @return {boolean} true if this Bag changed as a result of the call, else false
          */
@@ -92,8 +88,7 @@
         /**
          * Returns the element at the specified position in Bag.
          * 
-         * @method get
-         * @param {Number} index index of the element to return
+         * @param {number|string|object} index index of the element to return
          * @return {*|null} the element at the specified position in bag or null
          */
         this.get = function(index) {
@@ -103,7 +98,6 @@
         /**
          * Returns the number of elements in this bag.
          * 
-         * @method size
          * @return {Number} the number of elements in this bag
          */
         this.size = function() {
@@ -113,7 +107,6 @@
         /**
          * Returns the number of elements the bag can hold without growing.
          * 
-         * @method capacity
          * @return {Number} the number of elements the bag can hold without growing.
          */
         this.getCapacity = function() {
@@ -123,7 +116,6 @@
         /**
          * Checks if the internal storage supports this index.
          * 
-         * @method isIndexWithinBounds
          * @param {Number} index
          * @return {Boolean}
          */
@@ -134,7 +126,6 @@
         /**
          * Returns true if this list contains no elements.
          * 
-         * @method isEmpty
          * @return {Boolean} true if is empty, else false
          */
         this.isEmpty = function() {
@@ -145,7 +136,6 @@
          * Adds the specified element to the end of this bag. if needed also
          * increases the capacity of the bag.
          * 
-         * @method add
          * @param {*} obj element to be added to this list
          */
         this.add = function(obj) {
@@ -155,7 +145,6 @@
         /**
          * Set element at specified index in the bag. New index will destroy size
          * 
-         * @method set
          * @param {Number} index index position of element
          * @param {*} obj the element
          */
@@ -166,7 +155,6 @@
         /**
          * Method verify the capacity of the bag
          * 
-         * @method ensureCapacity
          */
         this.ensureCapacity = function() {
             // just for compatibility with oryginal idee
@@ -176,7 +164,6 @@
          * Removes all of the elements from this bag. The bag will be empty after
          * this call returns.
          * 
-         * @method clear
          */
         this.clear = function() {
             data.length = 0;
@@ -186,7 +173,6 @@
         /**
          * Add all items into this bag. 
          * 
-         * @method addAll
          * @param {Bag} bag added
          */
         this.addAll = function(bag) {

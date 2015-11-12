@@ -72,7 +72,6 @@
          * will have the same ID, but ID's are however reused so another entity may
          * acquire this ID if the previous entity was deleted.
          * 
-         * @method getId
          * @return {Number}
          */
         this.getId = function() {
@@ -82,7 +81,6 @@
         /**
          * Returns a BitSet instance containing bits of the components the entity possesses.
          * 
-         * @method getComponentBits
          * @return {Utils.BitSet}
          */
         this.getComponentBits = function() {
@@ -92,7 +90,6 @@
         /**
          * Returns a BitSet instance containing bits of the components the entity possesses.
          * 
-         * @method getSystemBits
          * @return {Utils.BitSet}
          */
         this.getSystemBits = function() {
@@ -103,7 +100,6 @@
          * Get systems BitSet
          * 
          * @private
-         * @method reset
          */
         function reset() {
             systemBits.clear();
@@ -115,7 +111,6 @@
          * Make entity ready for re-use.
          * Will generate a new uuid for the entity.
          * 
-         * @method toString
          * @return {String}
          */
         this.toString = function() {
@@ -125,7 +120,6 @@
         /**
          * Add a component to this entity.
          * 
-         * @method addComponent
          * @chainable
          * @param {Component} component
          * @param {ComponentType} [type]
@@ -141,7 +135,6 @@
         /**
          * Remove component by its type.
          * 
-         * @method removeComponent
          * @param {Component} [component]
          */
         this.removeComponent = function(component) {
@@ -158,7 +151,6 @@
          * Checks if the entity has been added to the world and has not been deleted from it.
          * If the entity has been disabled this will still return true.
          * 
-         * @method isActive
          * @return {Boolean}
          */
         this.isActive = function() {
@@ -166,7 +158,6 @@
         };
         
         /**
-         * @method isEnabled
          * @return {Boolean}
          */
         this.isEnabled = function() {
@@ -179,7 +170,6 @@
          * But the recommended way to retrieve components from an entity is using
          * the ComponentMapper.
          * 
-         * @method getComponent
          * @param {ComponentType} [type]
          *      in order to retrieve the component fast you must provide a
          *      ComponentType instance for the expected component.
@@ -199,7 +189,6 @@
          * Returns a bag of all components this entity has.
          * You need to reset the bag yourself if you intend to fill it more than once.
          * 
-         * @method getComponents
          * @param {Utils.Bag} fillBag the bag to put the components into.
          * @return {Utils.Bag} the fillBag with the components in.
          */
@@ -213,7 +202,6 @@
          * relevant systems. It is typical to call this after adding components to a
          * newly created entity.
          * 
-         * @method addToWorld
          */
         this.addToWorld = function() {
             world.addEntity(this);
@@ -222,7 +210,6 @@
         /**
          * This entity has changed, a component added or deleted.
          * 
-         * @method changedInWorld
          */
         this.changedInWorld = function() {
             world.changedEntity(this);
@@ -231,7 +218,6 @@
         /**
          * Delete this entity from the world.
          * 
-         * @method deleteFromWorld
          */
         this.deleteFromWorld = function() {
             world.deleteEntity(this);
@@ -241,7 +227,6 @@
          * (Re)enable the entity in the world, after it having being disabled.
          * Won't do anything unless it was already disabled.
          * 
-         * @method enable
          */
         this.enable = function() {
             world.enableEntity(this);
@@ -251,7 +236,6 @@
          * Disable the entity from being processed. Won't delete it, it will
          * continue to exist but won't get processed.
          * 
-         * @method disable
          */
         this.disable = function() {
             world.disableEntity(this);
@@ -261,7 +245,6 @@
          * Get the UUID for this entity.
          * This UUID is unique per entity (re-used entities get a new UUID).
          * 
-         * @method getUuid
          * @return {String} uuid instance for this entity.
          */
         this.getUuid = function() {
@@ -271,7 +254,6 @@
         /**
          * Returns the world this entity belongs to.
          * 
-         * @method getWorld
          * @return {World} world of entities.
          */
         this.getWorld = function() {

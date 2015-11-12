@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Aspect.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Aspect.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var BitSet = require('./utils/BitSet'),
+    ComponentType = require('./ComponentType');
+
+/**
+ * An Aspects is used by systems as a matcher against entities, to check if a system is
+ * interested in an entity. Aspects define what sort of component types an entity must
+ * possess, or not possess.
+ *
+ * This creates an aspect where an entity must possess A and B and C:
+ * Aspect.getAspectForAll(A.klass, B.klass, C.klass)
+ *
+ * This creates an aspect where an entity must possess A and B and C, but must not possess U or V.
+ * Aspect.getAspectForAll(A.klass, B.klass, C.klass).exclude(U.klass, V.klass)
+ *
+ * This creates an aspect where an entity must possess A and B and C, but must not possess U or V, but must possess one of X or Y or Z.
+ * Aspect.getAspectForAll(A.klass, B.klass, C.klass).exclude(U.klass, V.klass).one(X.klass, Y.klass, Z.klass)
+ *
+ * You can create and compose aspects in many ways:
+ * Aspect.getEmpty().one(X.klass, Y.klass, Z.klass).all(A.klass, B.klass, C.klass).exclude(U.klass, V.klass)
+ * is the same as:
+ * Aspect.getAspectForAll(A.klass, B.klass, C.klass).exclude(U.klass, V.klass).one(X.klass, Y.klass, Z.klass)
+ *
+ * @module ArtemiJS
+ * @class Aspect
+ * @constructor
+ */
+var Aspect = function Aspect() {
+
+    /**
+     * @private
+     * @property allSet
+     * @type {BitSet}
+     */
+    var allSet = new BitSet(),
+
+    /**
+     * @private
+     * @property exclusionSet
+     * @type {BitSet}
+     */
+    exclusionSet = new BitSet(),
+
+    /**
+     * @private
+     * @property exclusionSet
+     * @type {BitSet}
+     */
+    oneSet = new BitSet();
+
+    /**
+     * @return {BitSet}
+     */
+    this.getAllSet = function() {
+        return allSet;
+    };
+
+    /**
+     * @return {BitSet}
+     */
+    this.getExclusionSet = function() {
+        return exclusionSet;
+    };
+
+    /**
+     * @return {BitSet}
+     */
+    this.getOneSet = function() {
+        return oneSet;
+    };
+
+    /**
+     * Returns an aspect where an entity must possess all of the specified component types.
+     *
+     * @param {...string} type - a required component type
+     * @return {Aspect}
+     */
+    this.all = function(type) {
+        var len = arguments.length;
+        while(len--) {
+            allSet.set(ComponentType.getIndexFor(arguments[len]));
+        }
+        return this;
+    };
+
+    /**
+     * Excludes all of the specified component types from the aspect. A system will not be
+     * interested in an entity that possesses one of the specified exclusion component types.
+     *
+     * @param {...string} type - component type to exclude
+     * @return {Aspect}
+     */
+    this.exclude = function(type) {
+        var len = arguments.length;
+        while(len--) {
+            exclusionSet.set(ComponentType.getIndexFor(arguments[len]));
+        }
+        return this;
+    };
+
+    /**
+     * Returns an aspect where an entity must possess one of the specified component types.
+     *
+     * @param {...string} type - one of the types the entity must possess
+     * @return {Aspect}
+     */
+    this.one = function(type) {
+        var len = arguments.length;
+        while(len--) {
+            oneSet.set(ComponentType.getIndexFor(arguments[len]));
+        }
+        return this;
+    };
+};
+
+/**
+ * Creates an aspect where an entity must possess all of the specified component types.
+ *
+ * @param {...string} type - a required component type
+ * @return {Aspect} an aspect that can be matched against entities
+ */
+Aspect.getAspectForAll = function(type) {
+    var aspect = new Aspect();
+    aspect.all(arguments);
+    return aspect;
+};
+
+
+/**
+ * Creates an aspect where an entity must possess one of the specified component types.
+ *
+ * @param {...string} type - one of the types the entity must possess
+ * @return {Aspect} an aspect that can be matched against entities
+ */
+Aspect.getAspectForOne = function(type) {
+    var aspect = new Aspect();
+    aspect.one(arguments);
+    return aspect;
+};
+
+/**
+ * Creates and returns an empty aspect. This can be used if you want a system that processes no entities, but
+ * still gets invoked. Typical usages is when you need to create special purpose systems for debug rendering,
+ * like rendering FPS, how many entities are active in the world, etc.
+ *
+ * You can also use the all, one and exclude methods on this aspect, so if you wanted to create a system that
+ * processes only entities possessing just one of the components A or B or C, then you can do:
+ * Aspect.getEmpty().one(A,B,C);
+ *
+ * @return {Aspect} an empty Aspect that will reject all entities.
+ */
+Aspect.getEmpty = function() {
+    return new Aspect();
+};
+
+module.exports = Aspect;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArtemiJS.html">ArtemiJS</a></li><li><a href="global.html#ComponentType">ComponentType</a></li><li><a href="IntervalEntitySystem.html">IntervalEntitySystem</a></li><li><a href="Managers.GroupManager.html">GroupManager</a></li><li><a href="Managers.PlayerManager.html">PlayerManager</a></li><li><a href="Managers.TagManager.html">TagManager</a></li><li><a href="Systems.DelayedEntityProcessingSystem.html">DelayedEntityProcessingSystem</a></li><li><a href="Systems.EntityProcessingSystem.html">EntityProcessingSystem</a></li><li><a href="Systems.IntervalEntityProcessingSystem.html">IntervalEntityProcessingSystem</a></li><li><a href="Systems.VoidEntitySystem.html">VoidEntitySystem</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="Systems.html">Systems</a></li></ul><h3>Global</h3><ul><li><a href="global.html#added">added</a></li><li><a href="global.html#all">all</a></li><li><a href="global.html#begin">begin</a></li><li><a href="global.html#changed">changed</a></li><li><a href="global.html#check">check</a></li><li><a href="global.html#checkProcessing">checkProcessing</a></li><li><a href="global.html#deleted">deleted</a></li><li><a href="global.html#disabled">disabled</a></li><li><a href="global.html#enabled">enabled</a></li><li><a href="global.html#end">end</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#getActives">getActives</a></li><li><a href="global.html#getAllSet">getAllSet</a></li><li><a href="global.html#getExclusionSet">getExclusionSet</a></li><li><a href="global.html#getOneSet">getOneSet</a></li><li><a href="global.html#getWorld">getWorld</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#inserted">inserted</a></li><li><a href="global.html#isPassive">isPassive</a></li><li><a href="global.html#one">one</a></li><li><a href="global.html#process">process</a></li><li><a href="global.html#processEntities">processEntities</a></li><li><a href="global.html#removed">removed</a></li><li><a href="global.html#setPassive">setPassive</a></li><li><a href="global.html#setWorld">setWorld</a></li><li><a href="global.html#world">world</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 12 2015 01:14:27 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

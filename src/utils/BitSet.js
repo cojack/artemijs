@@ -41,34 +41,78 @@
         return this._words[whichWord(pos)] |= mask(pos);
     };
 
+    /**
+     * This method sets the bit specified by the index to false.
+     *
+     * @param pos
+     * @returns {number}
+     */
     BitSet.prototype.clear = function(pos) {
+        if(!pos) {
+            return this.reset();
+        }
         return this._words[whichWord(pos)] &= ~mask(pos);
     };
 
+    /**
+     * This method returns the value of the bit with the specified index.
+     *
+     * @param pos {number} bit index
+     * @returns {number}
+     */
     BitSet.prototype.get = function(pos) {
         return this._words[whichWord(pos)] & mask(pos);
     };
 
+    /**
+     * This method returns the "logical size" of this BitSet: the index of the highest set bit in the BitSet plus one.
+     *
+     * @returns {Number}
+     */
     BitSet.prototype.words = function() {
         return this._words.length;
     };
 
     /**
-     * count all set bits
-     * @return {Number}
+     * This method returns true if this BitSet contains no bits that are set to true.
      *
-     * this is much faster than BitSet lib of CoffeeScript, it fast skips 0 value words
+     * @returns {boolean}
+     */
+    BitSet.prototype.isEmpty = function () {
+        return !this._words.length;
+    };
+
+    /**
+     * This method returns the number of bits set to true in this BitSet.
+     * Is much faster than BitSet lib of CoffeeScript, it fast skips 0 value words.
+     *
+     * @return {Number}
      */
     BitSet.prototype.cardinality = function() {
         var next, sum = 0, arrOfWords = this._words, maxWords = this.words();
-        for(next = 0; next < maxWords; ++next){
+        for(next = 0; next < maxWords; next++){
             var nextWord = arrOfWords[next] || 0;
             //this loops only the number of set bits, not 32 constant all the time!
             for(var bits = nextWord; bits !== 0; bits &= (bits - 1)){
-                ++sum;
+                sum++;
             }
         }
         return sum;
+    };
+
+    /**
+     * This method returns boolean indicating whether this BitSet intersects the specified BitSet.
+     *
+     * @param {BitSet} bitSet
+     * @returns {boolean}
+     */
+    BitSet.prototype.intersects = function(bitSet) {
+        for (var i = Math.min(this._words, bitSet._words) - 1; i >= 0; --i) {
+            if ((this._words[i] & bitSet._words[i]) !== 0) {
+                return true;
+            }
+        }
+        return false;
     };
 
     BitSet.prototype.reset = function() {
@@ -141,6 +185,9 @@
      * @return {number}
      */
     BitSet.prototype.nextSetBit = function(pos){
+
+        console.assert(pos >= 0, "position must be non-negative");
+
         var next = whichWord(pos),
             words = this._words;
         //beyond max words
@@ -166,6 +213,7 @@
                         return (next << SHIFTS_OF_A_WORD) + bit;
                     }
                 }
+                console.assert(-1, "it should have found some bit in this word: " + nextWord);
             }
         }
         return -1;
@@ -177,6 +225,9 @@
      * @returns {number}
      */
     BitSet.prototype.prevSetBit = function(pos){
+
+        console.assert(pos >= 0, "position must be non-negative");
+
         var prev = whichWord(pos),
             words = this._words;
         //beyond max words
@@ -201,6 +252,7 @@
                         return (prev << SHIFTS_OF_A_WORD) + bit;
                     }
                 }
+                console.assert(-1, "it should have found some bit in this word: " + prevWord);
             }
         }
         return -1;

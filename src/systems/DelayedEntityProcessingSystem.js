@@ -1,22 +1,21 @@
-(function() {
-    'use strict';
-    
-    var EntitySystem = require('./../EntitySystem');
-    
-    /**
-     * Object to manage components
-     * 
-     * @module ArtemiJS
-     * @class DelayedEntityProcessingSystem
-     * @constructor
-     * @param {Aspect} _aspect Creates an entity system that uses the specified 
-     *      aspect as a matcher against entities.
-     */
-    var DelayedEntityProcessingSystem = function DelayedEntityProcessingSystem(_aspect) {
-        EntitySystem.call(this, _aspect);
-    };
-    
-    DelayedEntityProcessingSystem.prototype = Object.create(EntitySystem.prototype);
-    DelayedEntityProcessingSystem.prototype.constructor = DelayedEntityProcessingSystem;
-    module.exports = DelayedEntityProcessingSystem;
-})();
+'use strict';
+
+var EntitySystem = require('./../EntitySystem');
+
+/**
+ * Object to manage components
+ *
+ * @class DelayedEntityProcessingSystem
+ * @extends EntitySystem
+ * @constructor
+ * @memberof Systems
+ * @param {Aspect} aspect Creates an entity system that uses the specified
+ *      aspect as a matcher against entities.
+ */
+function DelayedEntityProcessingSystem(aspect) {
+    EntitySystem.call(this, aspect);
+}
+
+DelayedEntityProcessingSystem.prototype = Object.create(EntitySystem.prototype);
+DelayedEntityProcessingSystem.prototype.constructor = DelayedEntityProcessingSystem;
+module.exports = DelayedEntityProcessingSystem;

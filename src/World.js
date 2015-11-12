@@ -108,7 +108,6 @@
          * Makes sure all managers systems are initialized in the order 
          * they were added
          * 
-         * @method initialize
          */
         this.initialize = function() {
             console.timeStamp("Managers initialization");
@@ -129,7 +128,6 @@
          * Returns a manager that takes care of all the entities in the world.
          * entities of this world
          * 
-         * @method getEntityManager
          * @return {EntityManager} entityManager
          */
         this.getEntityManager = function() {
@@ -139,7 +137,6 @@
         /**
          * Returns a manager that takes care of all the components in the world.
          * 
-         * @method getComponentManager
          * @return {ComponentManager} componentManager
          */
         this.getComponentManager = function() {
@@ -150,7 +147,6 @@
          * Add a manager into this world. It can be retrieved later.
          * World will notify this manager of changes to entity.
          * 
-         * @method setManager
          * @param {Manager} manager manager to be added
          * @return {Manager} manager
          */
@@ -177,7 +173,6 @@
         /**
          * Deletes the manager from this world.
          * 
-         * @method deleteManager
          * @param {Manager} manager manager to delete.
          */
         this.deleteManager = function(manager) {
@@ -188,7 +183,6 @@
         /**
          * You must specify the delta for the game here.
          * 
-         * @method setDelta
          * @param {Number} d time since last game loop.
          */
         this.setDelta = function(d) {
@@ -197,7 +191,6 @@
         
         /**
          * 
-         * @method getDelta
          * @return {Number} delta time since last game loop.
          */
         this.getDelta = function() {
@@ -207,7 +200,6 @@
         /**
          * Adds a entity to this world.
          * 
-         * @method addEntity
          * @param {Entity} entity
          */
         this.addEntity = function(entity) {
@@ -219,7 +211,6 @@
          * If you're adding a component to an entity after it's been
          * added to the world, then you need to invoke this method.
          * 
-         * @method changedEntity
          * @param {Entity} entity
          */
         this.changedEntity = function(entity) {
@@ -229,7 +220,6 @@
         /**
          * Delete the entity from the world.
          * 
-         * @method deleteEntity
          * @param {Entity} entity
          */
         this.deleteEntity = function(entity) {
@@ -240,7 +230,6 @@
          * (Re)enable the entity in the world, after it having being disabled.
          * Won't do anything unless it was already disabled.
          * 
-         * @method enableEntity
          * @param {Entity} entity
          */
         this.enableEntity = function(entity) {
@@ -251,7 +240,6 @@
          * Disable the entity from being processed. Won't delete it, it will
          * continue to exist but won't get processed.
          * 
-         * @method disableEntity
          * @param {Entity} entity
          */
         this.disableEntity = function(entity) {
@@ -262,7 +250,6 @@
          * Create and return a new or reused entity instance.
          * Will NOT add the entity to the world, use World.addEntity(Entity) for that.
          * 
-         * @method createEntity
          * @return {Entity} entity
          */
         this.createEntity = function() {
@@ -273,7 +260,6 @@
         /**
          * Get a entity having the specified id.
          * 
-         * @method getEntity
          * @param {Number} id entity id
          * @return {Entity} entity
          */
@@ -284,7 +270,6 @@
         /**
          * Gives you all the systems in this world for possible iteration.
          * 
-         * @method getSystems
          * @return {*} all entity systems in world, other false
          */
         this.getSystems = function() {
@@ -294,7 +279,6 @@
         /**
          * Adds a system to this world that will be processed by World.process()
          * 
-         * @method setSystem
          * @param {EntitySystem} system the system to add.
          * @param {Boolean} [passive] whether or not this system will be processed by World.process()
          * @return {EntitySystem} the added system.
@@ -315,7 +299,6 @@
         /**
          * Retrieve a system for specified system type.
          * 
-         * @method getSystem
          * @param {String} systemType type of system.
          * @return {EntitySystem} instance of the system in this world.
          */
@@ -326,7 +309,6 @@
         /**
          * Removed the specified system from the world.
          * 
-         * @method deleteSystem
          * @param system to be deleted from world.
          */
         this.deleteSystem = function(system) {
@@ -338,7 +320,6 @@
          * Notify all the systems
          * 
          * @private
-         * @method notifySystems
          * @param {Object} performer Object with callback perform
          * @param {Entity} entity
          */
@@ -354,7 +335,6 @@
          * Notify all the managers
          * 
          * @private
-         * @method notifySystems
          * @param {Object} performer Object with callback perform
          * @param {Entity} entity
          */
@@ -370,7 +350,6 @@
          * Performs an action on each entity.
          * 
          * @private
-         * @method check
          * @param {Bag} entities
          * @param {Object} performer
          */
@@ -391,7 +370,6 @@
         /**
          * Process all non-passive systems.
          * 
-         * @method process
          */
         this.process = function() {
             console.timeStamp("process everything");
@@ -440,7 +418,6 @@
          * Retrieves a ComponentMapper instance for fast retrieval 
          * of components from entities.
          * 
-         * @method getMapper
          * @param {Object} type of component to get mapper for.
          * @return {ComponentMapper} mapper for specified component type.
          */

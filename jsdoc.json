@@ -1,0 +1,16 @@
+{
+  "source": {
+    "include": [
+      "./src",
+      "./src/managers",
+      "./src/native",
+      "./src/systems",
+      "./src/utils"
+    ],
+    "includePattern": ".+\\.js$"
+  },
+  "opts": {
+    "destination": "./doc",
+    "recurse": false
+  }
+}

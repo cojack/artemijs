@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/BitSet.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/BitSet.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function() {
+    'use strict';
+
+    /**
+     * @author inexplicable
+     * @see https://github.com/inexplicable/bitset
+     */
+
+    //constructor
+    var BitSet = function BitSet() {
+
+        //_words property is an array of 32bits integers, javascript doesn't really have integers separated from Number type
+        //it's less performant because of that, number (by default float) would be internally converted to 32bits integer then accepts the bit operations
+        //checked Buffer type, but needs to handle expansion/downsize by application, compromised to use number array for now.
+        this._words = [];
+    };
+
+    var BITS_OF_A_WORD = 32,
+        SHIFTS_OF_A_WORD = 5;
+
+    /**
+     *
+     * @param pos
+     * @return {Number} the index at the words array
+     */
+    var whichWord = function(pos){
+        //assumed pos is non-negative, guarded by #set, #clear, #get etc.
+        return pos >> SHIFTS_OF_A_WORD;
+    };
+
+    /**
+     *
+     * @param pos
+     * @return {Number} a bit mask of 32 bits, 1 bit set at pos % 32, the rest being 0
+     */
+    var mask = function(pos){
+        return 1 &lt;&lt; (pos &amp; 31);
+    };
+
+    BitSet.prototype.set = function(pos) {
+        return this._words[whichWord(pos)] |= mask(pos);
+    };
+
+    /**
+     * This method sets the bit specified by the index to false.
+     *
+     * @param pos
+     * @returns {number}
+     */
+    BitSet.prototype.clear = function(pos) {
+        if(!pos) {
+            return this.reset();
+        }
+        return this._words[whichWord(pos)] &amp;= ~mask(pos);
+    };
+
+    /**
+     * This method returns the value of the bit with the specified index.
+     *
+     * @param pos {number} bit index
+     * @returns {number}
+     */
+    BitSet.prototype.get = function(pos) {
+        return this._words[whichWord(pos)] &amp; mask(pos);
+    };
+
+    /**
+     * This method returns the "logical size" of this BitSet: the index of the highest set bit in the BitSet plus one.
+     *
+     * @returns {Number}
+     */
+    BitSet.prototype.words = function() {
+        return this._words.length;
+    };
+
+    /**
+     * This method returns true if this BitSet contains no bits that are set to true.
+     *
+     * @returns {boolean}
+     */
+    BitSet.prototype.isEmpty = function () {
+        return !this._words.length;
+    };
+
+    /**
+     * This method returns the number of bits set to true in this BitSet.
+     * Is much faster than BitSet lib of CoffeeScript, it fast skips 0 value words.
+     *
+     * @return {Number}
+     */
+    BitSet.prototype.cardinality = function() {
+        var next, sum = 0, arrOfWords = this._words, maxWords = this.words();
+        for(next = 0; next &lt; maxWords; next++){
+            var nextWord = arrOfWords[next] || 0;
+            //this loops only the number of set bits, not 32 constant all the time!
+            for(var bits = nextWord; bits !== 0; bits &amp;= (bits - 1)){
+                sum++;
+            }
+        }
+        return sum;
+    };
+
+    /**
+     * This method returns boolean indicating whether this BitSet intersects the specified BitSet.
+     *
+     * @param {BitSet} bitSet
+     * @returns {boolean}
+     */
+    BitSet.prototype.intersects = function(bitSet) {
+        for (var i = Math.min(this._words, bitSet._words) - 1; i >= 0; --i) {
+            if ((this._words[i] &amp; bitSet._words[i]) !== 0) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    BitSet.prototype.reset = function() {
+        this._words = [];
+    };
+
+    BitSet.prototype.or = function(set) {
+        if (this === set){
+            return this;
+        }
+
+        var next, commons = Math.min(this.words(), set.words());
+        for (next = 0; next &lt; commons; next++) {
+            this._words[next] |= set._words[next];
+        }
+        if (commons &lt; set.words()) {
+            this._words = this._words.concat(set._words.slice(commons, set.words()));
+        }
+        return this;
+    };
+
+    /**
+     *
+     * @param set
+     * @return {BitSet} this BitSet after and operation
+     *
+     * this is much more performant than CoffeeScript's BitSet#and operation because we'll chop the zero value words at tail.
+     */
+    BitSet.prototype.and = function(set) {
+        if (this === set) {
+            return this;
+        }
+
+        var next,
+            commons = Math.min(this.words(), set.words()),
+            words = this._words;
+
+        for (next = 0; next &lt; commons; next++) {
+            words[next] &amp;= set._words[next];
+        }
+        if(commons > set.words()){
+            var len = commons - set.words();
+            while(len--) {
+                words.pop();//using pop instead of assign zero to reduce the length of the array, and fasten the subsequent #and operations.
+            }
+        }
+        return this;
+    };
+
+    BitSet.prototype.xor = function(set) {
+        if (this === set){
+            return this;
+        }
+
+        var next, commons = Math.min(this.words(), set.words());
+        for (next = 0; next &lt; commons; next++) {
+            this._words[next] ^= set._words[next];
+        }
+        if (commons &lt; set.words()) {
+            this._words = this._words.concat(set._words.slice(commons, set.words()));
+        }
+        return this;
+    };
+
+    /**
+     * this is the critical piece missing from CoffeeScript's BitSet lib, we usually just need to know the next set bit if any.
+     * it fast skips 0 value word as #cardinality does, this is esp. important because of our usage, after series of #and operations
+     * it's highly likely that most of the words left are zero valued, and by skipping all of such, we could locate the actual bit set much faster.
+     * @param pos
+     * @return {number}
+     */
+    BitSet.prototype.nextSetBit = function(pos){
+
+        console.assert(pos >= 0, "position must be non-negative");
+
+        var next = whichWord(pos),
+            words = this._words;
+        //beyond max words
+        if(next >= words.length){
+            return -1;
+        }
+        //the very first word
+        var firstWord = words[next],
+            maxWords = this.words(),
+            bit;
+        if(firstWord){
+            for(bit = pos &amp; 31; bit &lt; BITS_OF_A_WORD; bit += 1){
+                if((firstWord &amp; mask(bit))){
+                    return (next &lt;&lt; SHIFTS_OF_A_WORD) + bit;
+                }
+            }
+        }
+        for(next = next + 1; next &lt; maxWords; next += 1){
+            var nextWord = words[next];
+            if(nextWord){
+                for(bit = 0; bit &lt; BITS_OF_A_WORD; bit += 1){
+                    if((nextWord &amp; mask(bit)) !== 0){
+                        return (next &lt;&lt; SHIFTS_OF_A_WORD) + bit;
+                    }
+                }
+                console.assert(-1, "it should have found some bit in this word: " + nextWord);
+            }
+        }
+        return -1;
+    };
+
+    /**
+     * An reversed lookup compared with #nextSetBit
+     * @param pos
+     * @returns {number}
+     */
+    BitSet.prototype.prevSetBit = function(pos){
+
+        console.assert(pos >= 0, "position must be non-negative");
+
+        var prev = whichWord(pos),
+            words = this._words;
+        //beyond max words
+        if(prev >= words.length){
+            return -1;
+        }
+        //the very last word
+        var lastWord = words[prev],
+            bit;
+        if(lastWord){
+            for(bit = pos &amp; 31; bit >=0; bit--){
+                if((lastWord &amp; mask(bit))){
+                    return (prev &lt;&lt; SHIFTS_OF_A_WORD) + bit;
+                }
+            }
+        }
+        for(prev = prev - 1; prev >= 0; prev--){
+            var prevWord = words[prev];
+            if(prevWord){
+                for(bit = BITS_OF_A_WORD - 1; bit >= 0; bit--){
+                    if((prevWord &amp; mask(bit)) !== 0){
+                        return (prev &lt;&lt; SHIFTS_OF_A_WORD) + bit;
+                    }
+                }
+                console.assert(-1, "it should have found some bit in this word: " + prevWord);
+            }
+        }
+        return -1;
+    };
+
+    BitSet.prototype.toString = function(radix){
+        radix = radix || 10;
+        return '[' +this._words.toString() + ']';
+    };
+
+    module.exports = BitSet;
+})();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArtemiJS.html">ArtemiJS</a></li><li><a href="global.html#ComponentType">ComponentType</a></li><li><a href="IntervalEntitySystem.html">IntervalEntitySystem</a></li><li><a href="Managers.GroupManager.html">GroupManager</a></li><li><a href="Managers.PlayerManager.html">PlayerManager</a></li><li><a href="Managers.TagManager.html">TagManager</a></li><li><a href="Systems.DelayedEntityProcessingSystem.html">DelayedEntityProcessingSystem</a></li><li><a href="Systems.EntityProcessingSystem.html">EntityProcessingSystem</a></li><li><a href="Systems.IntervalEntityProcessingSystem.html">IntervalEntityProcessingSystem</a></li><li><a href="Systems.VoidEntitySystem.html">VoidEntitySystem</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="Systems.html">Systems</a></li></ul><h3>Global</h3><ul><li><a href="global.html#added">added</a></li><li><a href="global.html#all">all</a></li><li><a href="global.html#begin">begin</a></li><li><a href="global.html#changed">changed</a></li><li><a href="global.html#check">check</a></li><li><a href="global.html#checkProcessing">checkProcessing</a></li><li><a href="global.html#deleted">deleted</a></li><li><a href="global.html#disabled">disabled</a></li><li><a href="global.html#enabled">enabled</a></li><li><a href="global.html#end">end</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#getActives">getActives</a></li><li><a href="global.html#getAllSet">getAllSet</a></li><li><a href="global.html#getExclusionSet">getExclusionSet</a></li><li><a href="global.html#getOneSet">getOneSet</a></li><li><a href="global.html#getWorld">getWorld</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#inserted">inserted</a></li><li><a href="global.html#isPassive">isPassive</a></li><li><a href="global.html#one">one</a></li><li><a href="global.html#process">process</a></li><li><a href="global.html#processEntities">processEntities</a></li><li><a href="global.html#removed">removed</a></li><li><a href="global.html#setPassive">setPassive</a></li><li><a href="global.html#setWorld">setWorld</a></li><li><a href="global.html#world">world</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 12 2015 01:14:27 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

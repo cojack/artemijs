@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/Timer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/Timer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function() {
+    'use strict';
+
+    /**
+     * @property delay
+     * @private
+     * @type {Number}
+     */
+    var delay;
+
+    /**
+     * @property repeat
+     * @private
+     * @type {boolean}
+     */
+    var repeat;
+
+    /**
+     * @property acc
+     * @private
+     * @type {Number}
+     */
+    var acc;
+
+    /**
+     * @property done
+     * @private
+     * @type {boolean}
+     */
+    var done;
+
+    /**
+     * @property stopped
+     * @private
+     * @type {boolean}
+     */
+    var stopped;
+
+
+    /**
+     * Timer
+     *
+     * @class Timer
+     * @namespace Utils
+     * @module ArtemiJS
+     * @submodule Utils
+     * @param {Number} _delay
+     * @param {boolean} _repeat
+     * @constructor
+     */
+    var Timer = function Timer(_delay, _repeat) {
+        delay = _delay;
+        repeat = _repeat || false;
+        acc = 0;
+
+        /**
+         * Update timer
+         *
+         * @param delta
+         */
+        this.update = function(delta) {
+            if(!done &amp;&amp; !stoped) {
+                acc += delta;
+                if (acc >= delay) {
+                    acc -= delay;
+
+                    if (repeat) {
+                        this.reset();
+                    } else {
+                        done = true;
+                    }
+
+                    this.execute();
+                }
+            }
+        };
+
+        /**
+         * Reset timer
+         */
+        this.reset = function() {
+            stopped = false;
+            done = false;
+            acc = 0;
+        };
+
+        /**
+         * Returns true if is done otherwise false
+         *
+         * @returns {boolean}
+         */
+        this.isDone = function() {
+            return done;
+        };
+
+        /**
+         * Returns true if is running otherwise false
+         *
+         * @returns {boolean}
+         */
+        this.isRunning = function() {
+            return !done &amp;&amp; acc &lt; delay &amp;&amp; !stopped;
+        };
+
+        /**
+         * Stop timer
+         */
+        this.stop = function() {
+            stopped = true;
+        };
+
+        /**
+         *
+         * @param _delay
+         */
+        this.setDelay = function(_delay) {
+            delay = _delay;
+        };
+
+        this.execute = function() {};
+
+        /**
+         *
+         * @returns {number}
+         */
+        this.getPercentageRemaining = function() {
+            if (done)
+                return 100;
+            else if (stopped)
+                return 0;
+            else
+                return 1 - (delay - acc) / delay;
+        };
+
+        /**
+         *
+         * @returns {Number}
+         */
+        this.getDelay = function() {
+            return delay;
+        };
+
+    };
+
+    module.exports = Timer;
+})();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArtemiJS.html">ArtemiJS</a></li><li><a href="global.html#ComponentType">ComponentType</a></li><li><a href="IntervalEntitySystem.html">IntervalEntitySystem</a></li><li><a href="Managers.GroupManager.html">GroupManager</a></li><li><a href="Managers.PlayerManager.html">PlayerManager</a></li><li><a href="Managers.TagManager.html">TagManager</a></li><li><a href="Systems.DelayedEntityProcessingSystem.html">DelayedEntityProcessingSystem</a></li><li><a href="Systems.EntityProcessingSystem.html">EntityProcessingSystem</a></li><li><a href="Systems.IntervalEntityProcessingSystem.html">IntervalEntityProcessingSystem</a></li><li><a href="Systems.VoidEntitySystem.html">VoidEntitySystem</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="Systems.html">Systems</a></li></ul><h3>Global</h3><ul><li><a href="global.html#added">added</a></li><li><a href="global.html#all">all</a></li><li><a href="global.html#begin">begin</a></li><li><a href="global.html#changed">changed</a></li><li><a href="global.html#check">check</a></li><li><a href="global.html#checkProcessing">checkProcessing</a></li><li><a href="global.html#deleted">deleted</a></li><li><a href="global.html#disabled">disabled</a></li><li><a href="global.html#enabled">enabled</a></li><li><a href="global.html#end">end</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#getActives">getActives</a></li><li><a href="global.html#getAllSet">getAllSet</a></li><li><a href="global.html#getExclusionSet">getExclusionSet</a></li><li><a href="global.html#getOneSet">getOneSet</a></li><li><a href="global.html#getWorld">getWorld</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#inserted">inserted</a></li><li><a href="global.html#isPassive">isPassive</a></li><li><a href="global.html#one">one</a></li><li><a href="global.html#process">process</a></li><li><a href="global.html#processEntities">processEntities</a></li><li><a href="global.html#removed">removed</a></li><li><a href="global.html#setPassive">setPassive</a></li><li><a href="global.html#setWorld">setWorld</a></li><li><a href="global.html#world">world</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 12 2015 01:14:27 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

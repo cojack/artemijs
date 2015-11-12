@@ -29,13 +29,11 @@
         deleted = new Bag();
             
         /**
-         * @method initialize
          */
         this.initialize = function() {};
         
         /**
          * @private
-         * @method removeComponentsOfEntity
          * @param {Entity} entity
          */
         var removeComponentsOfEntity = function (entity) {
@@ -49,7 +47,6 @@
         /**
          * Add component by type
          * 
-         * @method addComponent
          * @param {Entity} entity
          * @param {ComponentType} type
          * @param {Component} component
@@ -69,7 +66,6 @@
         /**
          * Remove component by type
          * 
-         * @method removeComponent
          * @param {Entity} entity
          * @param {ComponentType} type
          */
@@ -83,7 +79,6 @@
         /**
          * Get component by type
          * 
-         * @method getComponentsByType
          * @param {ComponentType} type
          * @return {Utils.Bag} Bag of components
          */        
@@ -99,7 +94,6 @@
         /**
          * Get component
          * 
-         * @method getComponent
          * @param {Entity} entity
          * @param {ComponentType} type
          * @return Mixed Component on success, null on false
@@ -115,7 +109,6 @@
         /**
          * Get component for
          * 
-         * @method getComponentsFor
          * @param {Entity} entity
          * @param {Bag} fillBag Bag of components
          * @return {Bag} Bag of components
@@ -133,7 +126,6 @@
         /**
          * Add entity to delete componenets of them
          * 
-         * @method deleted
          * @param {Entity} entity
          */
         this.deleted = function(entity) {
@@ -141,9 +133,8 @@
         };
         
         /**
-         * Clean deleted componenets of entities
+         * Clean deleted components of entities
          * 
-         * @method clean
          */
         this.clean = function() {
             if(deleted.size() > 0) {

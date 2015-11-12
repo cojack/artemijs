@@ -68,14 +68,12 @@
         /**
          * Initialize
          * 
-         * @method initialize
          */
         this.initialize = function() {};
         
         /**
          * Create new entity instance
          * 
-         * @method createEntityInstance
          * @return {Entity}
          */
         this.createEntityInstance = function() {
@@ -87,7 +85,6 @@
         /**
          * Set entity as added for future process
          * 
-         * @method added
          * @param {Entity} entity
          */
         this.added = function(entity) {
@@ -99,7 +96,6 @@
         /**
          * Set entity as enabled for future process
          * 
-         * @method enabled
          * @param {Entity} entity
          */
         this.enabled = function(entity) {
@@ -109,7 +105,6 @@
         /**
          * Set entity as disabled for future process
          * 
-         * @method disabled
          * @param {Entity} entity
          */
         this.disabled = function(entity) {
@@ -119,7 +114,6 @@
         /**
          * Set entity as deleted for future process
          * 
-         * @method deleted
          * @param {Entity} entity
          */
         this.deleted = function(entity) {
@@ -137,7 +131,6 @@
          * Check if this entity is active.
          * Active means the entity is being actively processed.
          * 
-         * @method isActive
          * @param {Number} entityId
          * @return {Boolean} true if active, false if not
          */
@@ -148,7 +141,6 @@
         /**
          * Check if the specified entityId is enabled.
          * 
-         * @method isEnabled
          * @param {Number} entityId
          * @return {Boolean} true if enabled, false if it is disabled
          */
@@ -159,7 +151,6 @@
         /**
          * Get a entity with this id.
          * 
-         * @method getEntity
          * @param {Number} entityId
          * @return {Entity}
          */
@@ -170,7 +161,6 @@
         /**
          * Get how many entities are active in this world.
          * 
-         * @method getActiveEntityCount
          * @return {Number} how many entities are currently active.
          */
         this.getActiveEntityCount = function() {
@@ -182,7 +172,6 @@
          * Note: A created entity may not have been added to the world, thus
          * created count is always equal or larger than added count.
          * 
-         * @method getTotalCreated
          * @return {Number} how many entities have been created since start.
          */
         this.getTotalCreated = function() {
@@ -192,7 +181,6 @@
         /**
          * Get how many entities have been added to the world since start.
          * 
-         * @method getTotalAdded
          * @return {Number} how many entities have been added.
          */
         this.getTotalAdded = function() {
@@ -202,7 +190,6 @@
         /**
          * Get how many entities have been deleted from the world since start.
          * 
-         * @method getTotalDeleted
          * @return {Number} how many entities have been deleted since start.
          */
         this.getTotalDeleted = function() {
@@ -236,7 +223,6 @@
             /**
              * Check an available id
              * 
-             * @method checkOut
              * @return {Number} next available id
              */
             this.checkOut = function() {
@@ -249,7 +235,6 @@
             /**
              * Add new id in ids {Bag}
              * 
-             * @method checkIn
              * @param {Number} id
              */
             this.checkIn = function(id) {

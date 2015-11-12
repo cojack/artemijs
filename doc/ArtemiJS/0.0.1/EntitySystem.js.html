@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: EntitySystem.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: EntitySystem.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+var Bag = require('./utils/Bag'),
+    EntityObserver = require('./EntityObserver');
+
+/**
+ * Used to generate a unique bit for each system.
+ * Only used internally in EntitySystem.
+ *
+ * @module ArtemiJS
+ * @class SystemIndexManager
+ * @for EntitySystem
+ * @final
+ * @constructor
+ */
+var SystemIndexManager = {
+
+    /**
+     * @property INDEX
+     * @type {Number}
+     */
+    INDEX: 0,
+
+    /**
+     * @property indices
+     * @type {Array}
+     */
+    indices: {},
+
+    /**
+     * @param {EntitySystem} entitySystem
+     * @return {Number} index
+     */
+    getIndexFor: function(entitySystem) {
+        var index = this.indices[entitySystem];
+        if(!index) {
+            index = this.INDEX++;
+            this.indices[entitySystem] = index;
+        }
+        return index;
+    }
+};
+
+/**
+ * The most raw entity system. It should not typically be used, but you can
+ * create your own entity system handling by extending this. It is
+ * recommended that you use the other provided entity system implementations
+ *
+ * @module ArtemiJS
+ * @class EntitySystem
+ * @constructor
+ * @param {Aspect} aspect Creates an entity system that uses the specified
+ *      aspect as a matcher against entities.
+ */
+var EntitySystem = function EntitySystem(aspect) {
+    EntityObserver.call(this);
+
+    /**
+     * @property world
+     * @type {World}
+     */
+    this.world = null;
+
+    /**
+     * @private
+     * @final
+     * @property systemIndex
+     * @type {Number}
+     */
+    var systemIndex = SystemIndexManager.getIndexFor(this.getClass());
+
+    /**
+     * @private
+     * @property actives
+     * @type {Bag}
+     */
+    var actives = new Bag();
+
+    /**
+     * @private
+     * @property allSet
+     * @type {BitSet}
+     */
+    var allSet = aspect.getAllSet();
+
+    /**
+     * @private
+     * @property exclusionSet
+     * @type {BitSet}
+     */
+    var exclusionSet = aspect.getExclusionSet();
+
+    /**
+     * @private
+     * @property oneSet
+     * @type {BitSet}
+     */
+    var oneSet = aspect.getOneSet();
+
+    /**
+     * @private
+     * @property passive
+     * @type {Boolean}
+     */
+    var passive;
+
+    /**
+     * @private
+     * @property dummy
+     * @type {Boolean}
+     */
+    var dummy = allSet.isEmpty() &amp;&amp; oneSet.isEmpty();
+
+    var me = this;
+
+    /**
+     * @private
+     * @param {Entity} entity
+     */
+    function removeFromSystem(entity) {
+        actives.remove(entity);
+        entity.getSystemBits().clear(systemIndex);
+        me.removed(entity);
+    }
+
+    /**
+     * @private
+     * @param {Entity} entity
+     */
+    function insertToSystem(entity) {
+        actives.add(entity);
+        entity.getSystemBits().set(systemIndex);
+        me.inserted(entity);
+    }
+
+    /**
+     * Called before processing of entities begins
+     *
+     */
+    this.begin = function() {};
+
+    /**
+     * Process the entities
+     *
+     */
+    this.process = function() {
+        if(this.checkProcessing()) {
+            this.begin();
+            this.processEntities(actives);
+            this.end();
+        }
+    };
+
+    /**
+     * Called after the processing of entities ends
+     *
+     */
+    this.end = function() {};
+
+    /**
+     * Any implementing entity system must implement this method and the
+     * logic to process the given entities of the system.
+     *
+     * @param {Bag} entities athe entities this system contains
+     */
+    this.processEntities = function(entities) {};
+
+    /**
+     * Check the system should processing
+     *
+     * @return {Boolean} true if the system should be processed, false if not
+     */
+    this.checkProcessing = function() {};
+
+    /**
+     * Override to implement code that gets executed when systems are
+     * initialized.
+     *
+     */
+    this.initialize = function() {};
+
+    /**
+     * Called if the system has received a entity it is interested in,
+     * e.g. created or a component was added to it.
+     *
+     * @param {Entity} entity the entity that was added to this system
+     */
+    this.inserted = function(entity) {};
+
+    /**
+     * Called if a entity was removed from this system, e.g. deleted
+     * or had one of it's components removed.
+     *
+     * @param {Entity} entity the entity that was removed from this system.
+     */
+    this.removed = function(entity) {};
+
+    /**
+     * Will check if the entity is of interest to this system.
+     *
+     * @param {Entity} entity the entity to check
+     */
+    this.check = function(entity) {
+        if(dummy) {
+            return;
+        }
+        var contains = entity.getSystemBits().get(systemIndex);
+        var interested = true;
+        var componentBits = entity.getComponentBits();
+
+        if(!allSet.isEmpty()) {
+            for (var i = allSet.nextSetBit(0); i >= 0; i = allSet.nextSetBit(i+1)) {
+                if(!componentBits.get(i)) {
+                    interested = false;
+                    break;
+                }
+            }
+        }
+        if(!exclusionSet.isEmpty() &amp;&amp; interested) {
+            interested = !exclusionSet.intersects(componentBits);
+        }
+
+        // Check if the entity possesses ANY of the components in the oneSet. If so, the system is interested.
+        if(!oneSet.isEmpty()) {
+            interested = oneSet.intersects(componentBits);
+        }
+
+        if (interested &amp;&amp; !contains) {
+            insertToSystem(entity);
+        } else if (!interested &amp;&amp; contains) {
+            removeFromSystem(entity);
+        }
+    };
+
+    /**
+     * @param {Entity} entity
+     */
+    this.added = function(entity) {
+        this.check(entity);
+    };
+
+    /**
+     * @param {Entity} entity
+     */
+    this.changed = function(entity) {
+        this.check(entity);
+    };
+
+    /**
+     * @param {Entity} entity
+     */
+    this.deleted = function(entity) {
+        if(entity.getSystemBits().get(systemIndex)) {
+            removeFromSystem(entity);
+        }
+    };
+
+    /**
+     * @param {Entity} entity
+     */
+    this.disabled = function(entity) {
+        if(entity.getSystemBits().get(systemIndex)) {
+            removeFromSystem(entity);
+        }
+    };
+
+    /**
+     * @param {Entity} entity
+     */
+    this.enabled = function(entity) {
+        this.check(entity);
+    };
+
+    /**
+     * @param {World} world
+     */
+    this.setWorld = function(world) {
+        this.world = world;
+    };
+
+    /**
+     * @return {Boolean}
+     */
+    this.isPassive = function() {
+        return passive;
+    };
+
+    /**
+     * @param {Boolean} _passive
+     */
+    this.setPassive = function(_passive) {
+        passive = _passive;
+    };
+
+    /**
+     * @return {Bag} actives
+     */
+    this.getActives = function() {
+        return actives;
+    };
+};
+
+EntitySystem.prototype = Object.create(EntityObserver.prototype);
+EntitySystem.prototype.constructor = EntitySystem;
+module.exports = EntitySystem;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArtemiJS.html">ArtemiJS</a></li><li><a href="global.html#ComponentType">ComponentType</a></li><li><a href="IntervalEntitySystem.html">IntervalEntitySystem</a></li><li><a href="Managers.GroupManager.html">GroupManager</a></li><li><a href="Managers.PlayerManager.html">PlayerManager</a></li><li><a href="Managers.TagManager.html">TagManager</a></li><li><a href="Systems.DelayedEntityProcessingSystem.html">DelayedEntityProcessingSystem</a></li><li><a href="Systems.EntityProcessingSystem.html">EntityProcessingSystem</a></li><li><a href="Systems.IntervalEntityProcessingSystem.html">IntervalEntityProcessingSystem</a></li><li><a href="Systems.VoidEntitySystem.html">VoidEntitySystem</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="Systems.html">Systems</a></li></ul><h3>Global</h3><ul><li><a href="global.html#added">added</a></li><li><a href="global.html#all">all</a></li><li><a href="global.html#begin">begin</a></li><li><a href="global.html#changed">changed</a></li><li><a href="global.html#check">check</a></li><li><a href="global.html#checkProcessing">checkProcessing</a></li><li><a href="global.html#deleted">deleted</a></li><li><a href="global.html#disabled">disabled</a></li><li><a href="global.html#enabled">enabled</a></li><li><a href="global.html#end">end</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#getActives">getActives</a></li><li><a href="global.html#getAllSet">getAllSet</a></li><li><a href="global.html#getExclusionSet">getExclusionSet</a></li><li><a href="global.html#getOneSet">getOneSet</a></li><li><a href="global.html#getWorld">getWorld</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#inserted">inserted</a></li><li><a href="global.html#isPassive">isPassive</a></li><li><a href="global.html#one">one</a></li><li><a href="global.html#process">process</a></li><li><a href="global.html#processEntities">processEntities</a></li><li><a href="global.html#removed">removed</a></li><li><a href="global.html#setPassive">setPassive</a></li><li><a href="global.html#setWorld">setWorld</a></li><li><a href="global.html#world">world</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 12 2015 01:14:27 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -38,7 +38,6 @@
          * No bounding checks, so this could return null,
          * however in most scenarios you already know the entity possesses this component.
          * 
-         * @method get
          * @param entity Entity
          * @return {ArtemiJS.Component}|null
          */
@@ -50,7 +49,6 @@
          * Fast and safe retrieval of a component for this entity.
          * If the entity does not have this component then null is returned.
          * 
-         * @method getSafe
          * @param entity Entity
          * @return {ArtemiJS.Component}|null
          */
@@ -64,7 +62,6 @@
         /**
          * Checks if the entity has this type of component.
          * 
-         * @method has
          * @param {ArtemiJS.Entity} entity
          * @return boolean true if the entity has this component type, false if it doesn't.
          */
@@ -76,7 +73,6 @@
     /**
      * Returns a component mapper for this type of components.
      * 
-     * @method getFor
      * @static
      * @param {Object} type the type of components this mapper uses
      * @param {World} world the world that this component mapper should use
