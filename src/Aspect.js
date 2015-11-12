@@ -20,49 +20,49 @@ var BitSet = require('./utils/BitSet'),
  * is the same as:
  * Aspect.getAspectForAll(A.klass, B.klass, C.klass).exclude(U.klass, V.klass).one(X.klass, Y.klass, Z.klass)
  *
- * @module ArtemiJS
  * @class Aspect
  * @constructor
+ * @memberof ArtemiJS
  */
 var Aspect = function Aspect() {
 
     /**
      * @private
      * @property allSet
-     * @type {BitSet}
+     * @type {Utils.BitSet}
      */
     var allSet = new BitSet(),
 
     /**
      * @private
      * @property exclusionSet
-     * @type {BitSet}
+     * @type {Utils.BitSet}
      */
     exclusionSet = new BitSet(),
 
     /**
      * @private
      * @property exclusionSet
-     * @type {BitSet}
+     * @type {Utils.BitSet}
      */
     oneSet = new BitSet();
 
     /**
-     * @return {BitSet}
+     * @return {Utils.BitSet}
      */
     this.getAllSet = function() {
         return allSet;
     };
 
     /**
-     * @return {BitSet}
+     * @return {Utils.BitSet}
      */
     this.getExclusionSet = function() {
         return exclusionSet;
     };
 
     /**
-     * @return {BitSet}
+     * @return {Utils.BitSet}
      */
     this.getOneSet = function() {
         return oneSet;
@@ -72,9 +72,9 @@ var Aspect = function Aspect() {
      * Returns an aspect where an entity must possess all of the specified component types.
      *
      * @param {...string} type - a required component type
-     * @return {Aspect}
+     * @return {ArtemiJS.Aspect}
      */
-    this.all = function(type) {
+    this.all = function() {
         var len = arguments.length;
         while(len--) {
             allSet.set(ComponentType.getIndexFor(arguments[len]));
@@ -89,7 +89,7 @@ var Aspect = function Aspect() {
      * @param {...string} type - component type to exclude
      * @return {Aspect}
      */
-    this.exclude = function(type) {
+    this.exclude = function() {
         var len = arguments.length;
         while(len--) {
             exclusionSet.set(ComponentType.getIndexFor(arguments[len]));
@@ -103,7 +103,7 @@ var Aspect = function Aspect() {
      * @param {...string} type - one of the types the entity must possess
      * @return {Aspect}
      */
-    this.one = function(type) {
+    this.one = function() {
         var len = arguments.length;
         while(len--) {
             oneSet.set(ComponentType.getIndexFor(arguments[len]));

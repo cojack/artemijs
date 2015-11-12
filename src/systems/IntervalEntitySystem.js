@@ -23,7 +23,7 @@ var IntervalEntitySystem = function IntervalEntitySystem(aspect, interval) {
 
     /**
      * @private
-     * @type {number}
+     * @member {number}
      */
     var acc = 0;
 

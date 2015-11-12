@@ -15,7 +15,7 @@ var VoidEntitySystem = function VoidEntitySystem() {
     EntitySystem.call(this, Aspect.getEmpty());
 
     /**
-     * @param entities
+     * @param {Bag} entities
      */
     this.processEntities = function(entities) {
         this.processSystem();

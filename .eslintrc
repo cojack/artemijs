@@ -1,0 +1,10 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "no-unused-vars": [2, {"vars": "all", "args": "all"}],
+    "func-style": [2, "declaration"]
+  }
+}

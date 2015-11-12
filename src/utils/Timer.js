@@ -1,146 +1,134 @@
-(function() {
-    'use strict';
+'use strict';
+
+/**
+ * Timer
+ *
+ * @class Timer
+ * @param {Number} delay
+ * @param {boolean} repeat
+ * @constructor
+ * @memberof Utils
+ */
+var Timer = function Timer(delay, repeat) {
 
     /**
-     * @property delay
      * @private
-     * @type {Number}
+     * @member {Number}
      */
-    var delay;
+    var delay = delay || 0,
 
     /**
-     * @property repeat
      * @private
-     * @type {boolean}
+     * @member {boolean}
      */
-    var repeat;
+    repeat = repeat || false,
 
     /**
-     * @property acc
      * @private
-     * @type {Number}
+     * @member {Number}
      */
-    var acc;
+    acc = 0,
 
     /**
-     * @property done
      * @private
-     * @type {boolean}
+     * @member {boolean}
      */
-    var done;
+    done,
 
     /**
-     * @property stopped
      * @private
-     * @type {boolean}
+     * @member {boolean}
      */
-    var stopped;
-
+    stopped;
 
     /**
-     * Timer
+     * Update timer
      *
-     * @class Timer
-     * @namespace Utils
-     * @module ArtemiJS
-     * @submodule Utils
-     * @param {Number} _delay
-     * @param {boolean} _repeat
-     * @constructor
+     * @param delta
      */
-    var Timer = function Timer(_delay, _repeat) {
-        delay = _delay;
-        repeat = _repeat || false;
-        acc = 0;
+    this.update = function(delta) {
+        if(!done && !stopped) {
+            acc += delta;
+            if (acc >= delay) {
+                acc -= delay;
 
-        /**
-         * Update timer
-         *
-         * @param delta
-         */
-        this.update = function(delta) {
-            if(!done && !stoped) {
-                acc += delta;
-                if (acc >= delay) {
-                    acc -= delay;
-
-                    if (repeat) {
-                        this.reset();
-                    } else {
-                        done = true;
-                    }
-
-                    this.execute();
+                if (repeat) {
+                    this.reset();
+                } else {
+                    done = true;
                 }
+
+                this.execute();
             }
-        };
-
-        /**
-         * Reset timer
-         */
-        this.reset = function() {
-            stopped = false;
-            done = false;
-            acc = 0;
-        };
-
-        /**
-         * Returns true if is done otherwise false
-         *
-         * @returns {boolean}
-         */
-        this.isDone = function() {
-            return done;
-        };
-
-        /**
-         * Returns true if is running otherwise false
-         *
-         * @returns {boolean}
-         */
-        this.isRunning = function() {
-            return !done && acc < delay && !stopped;
-        };
-
-        /**
-         * Stop timer
-         */
-        this.stop = function() {
-            stopped = true;
-        };
-
-        /**
-         *
-         * @param _delay
-         */
-        this.setDelay = function(_delay) {
-            delay = _delay;
-        };
-
-        this.execute = function() {};
-
-        /**
-         *
-         * @returns {number}
-         */
-        this.getPercentageRemaining = function() {
-            if (done)
-                return 100;
-            else if (stopped)
-                return 0;
-            else
-                return 1 - (delay - acc) / delay;
-        };
-
-        /**
-         *
-         * @returns {Number}
-         */
-        this.getDelay = function() {
-            return delay;
-        };
-
+        }
     };
 
-    module.exports = Timer;
-})();
+    /**
+     * Reset timer
+     */
+    this.reset = function() {
+        stopped = false;
+        done = false;
+        acc = 0;
+    };
+
+    /**
+     * Returns true if is done otherwise false
+     *
+     * @returns {boolean}
+     */
+    this.isDone = function() {
+        return done;
+    };
+
+    /**
+     * Returns true if is running otherwise false
+     *
+     * @returns {boolean}
+     */
+    this.isRunning = function() {
+        return !done && acc < delay && !stopped;
+    };
+
+    /**
+     * Stop timer
+     */
+    this.stop = function() {
+        stopped = true;
+    };
+
+    /**
+     * Set delay
+     *
+     * @param delay
+     */
+    this.setDelay = function(delay) {
+        delay = delay || 0;
+    };
+
+    this.execute = function() {};
+
+    /**
+     *
+     * @returns {Number}
+     */
+    this.getPercentageRemaining = function() {
+        if (done)
+            return 100;
+        else if (stopped)
+            return 0;
+        else
+            return 1 - (delay - acc) / delay;
+    };
+
+    /**
+     *
+     * @returns {Number}
+     */
+    this.getDelay = function() {
+        return delay;
+    };
+
+};
+
+module.exports = Timer;

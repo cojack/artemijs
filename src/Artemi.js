@@ -8,12 +8,9 @@ require('./native/Number');
 /**
  * Entity Framework
  *
- * @module ArtemiJS
- * @namespace
- * @class ArtemiJS
- * @main ArtemiJS
+ * @class Artemi
  */
-var ArtemiJS = {
+var Artemi = {
 
     /**
      * @property {Number} version
@@ -21,12 +18,12 @@ var ArtemiJS = {
     version: 0.1,
 
     /**
-     * @property {String} source
+     * @property {string} source
      */
     source: 'https://github.com/cojack/artemijs',
 
     /**
-     * @property {String} license
+     * @property {string} license
      */
     license: 'AGPL-3.0',
 
@@ -35,6 +32,13 @@ var ArtemiJS = {
      */
     env: 1 // 1 - dev, 2 - test, 4 - prod
 };
+
+
+/**
+ * @module ArtemiJS
+ * @namespace
+ */
+var ArtemiJS = {};
 
 /**
  * @inner
@@ -71,10 +75,10 @@ ArtemiJS.Systems = {
 ArtemiJS.Utils = {
     Bag: require('./utils/Bag'),
     BitSet: require('./utils/BitSet'),
-    HashMap: require('./utils/HashMap'),
     Timer: require('./utils/Timer')
 };
 
+ArtemiJS.Artemi = Artemi;
 ArtemiJS.Aspect = require('./Aspect');
 ArtemiJS.Component = require('./Component');
 ArtemiJS.ComponentManager = require('./ComponentManager');

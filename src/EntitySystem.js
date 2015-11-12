@@ -7,11 +7,9 @@ var Bag = require('./utils/Bag'),
  * Used to generate a unique bit for each system.
  * Only used internally in EntitySystem.
  *
- * @module ArtemiJS
  * @class SystemIndexManager
- * @for EntitySystem
- * @final
  * @constructor
+ * @memberof EntitySystem
  */
 var SystemIndexManager = {
 
@@ -46,91 +44,56 @@ var SystemIndexManager = {
  * create your own entity system handling by extending this. It is
  * recommended that you use the other provided entity system implementations
  *
- * @module ArtemiJS
  * @class EntitySystem
+ * @extends EntityObserver
  * @constructor
- * @param {Aspect} aspect Creates an entity system that uses the specified
+ * @param {ArtemiJS.Aspect} aspect Creates an entity system that uses the specified
  *      aspect as a matcher against entities.
+ * @memberof ArtemiJS
  */
-var EntitySystem = function EntitySystem(aspect) {
+function EntitySystem(aspect) {
     EntityObserver.call(this);
 
     /**
-     * @property world
-     * @type {World}
+     * @property {ArtemiJS.World} world
+     * @property {Number} systemIndex
+     * @property {Utils.Bag} actives
+     * @property {Utils.BitSet} allSet
+     * @property {Utils.BitSet} exclusionSet
+     * @property {Utils.BitSet} oneSet
+     * @property {boolean} passive
+     * @property {boolean} dummy
      */
+
     this.world = null;
 
-    /**
-     * @private
-     * @final
-     * @property systemIndex
-     * @type {Number}
-     */
-    var systemIndex = SystemIndexManager.getIndexFor(this.getClass());
+    var systemIndex = SystemIndexManager.getIndexFor(this.getClass()),
+        actives = new Bag(),
+        allSet = aspect.getAllSet(),
+        exclusionSet = aspect.getExclusionSet(),
+        oneSet = aspect.getOneSet(),
+        passive,
+        dummy = allSet.isEmpty() && oneSet.isEmpty(),
+        self = this;
 
     /**
      * @private
-     * @property actives
-     * @type {Bag}
-     */
-    var actives = new Bag();
-
-    /**
-     * @private
-     * @property allSet
-     * @type {BitSet}
-     */
-    var allSet = aspect.getAllSet();
-
-    /**
-     * @private
-     * @property exclusionSet
-     * @type {BitSet}
-     */
-    var exclusionSet = aspect.getExclusionSet();
-
-    /**
-     * @private
-     * @property oneSet
-     * @type {BitSet}
-     */
-    var oneSet = aspect.getOneSet();
-
-    /**
-     * @private
-     * @property passive
-     * @type {Boolean}
-     */
-    var passive;
-
-    /**
-     * @private
-     * @property dummy
-     * @type {Boolean}
-     */
-    var dummy = allSet.isEmpty() && oneSet.isEmpty();
-
-    var me = this;
-
-    /**
-     * @private
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     function removeFromSystem(entity) {
         actives.remove(entity);
         entity.getSystemBits().clear(systemIndex);
-        me.removed(entity);
+        self.removed(entity);
     }
 
     /**
      * @private
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     function insertToSystem(entity) {
         actives.add(entity);
         entity.getSystemBits().set(systemIndex);
-        me.inserted(entity);
+        self.inserted(entity);
     }
 
     /**
@@ -161,9 +124,9 @@ var EntitySystem = function EntitySystem(aspect) {
      * Any implementing entity system must implement this method and the
      * logic to process the given entities of the system.
      *
-     * @param {Bag} entities athe entities this system contains
+     * @param {Utils.Bag} entities - other entities this system contains
      */
-    this.processEntities = function(entities) {};
+    this.processEntities = function() {};
 
     /**
      * Check the system should processing
@@ -183,22 +146,22 @@ var EntitySystem = function EntitySystem(aspect) {
      * Called if the system has received a entity it is interested in,
      * e.g. created or a component was added to it.
      *
-     * @param {Entity} entity the entity that was added to this system
+     * @param {ArtemiJS.Entity} entity - the entity that was added to this system
      */
-    this.inserted = function(entity) {};
+    this.inserted = function() {};
 
     /**
      * Called if a entity was removed from this system, e.g. deleted
      * or had one of it's components removed.
      *
-     * @param {Entity} entity the entity that was removed from this system.
+     * @param {ArtemiJS.Entity} entity - the entity that was removed from this system.
      */
-    this.removed = function(entity) {};
+    this.removed = function() {};
 
     /**
      * Will check if the entity is of interest to this system.
      *
-     * @param {Entity} entity the entity to check
+     * @param {ArtemiJS.Entity} entity the entity to check
      */
     this.check = function(entity) {
         if(dummy) {
@@ -233,21 +196,21 @@ var EntitySystem = function EntitySystem(aspect) {
     };
 
     /**
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.added = function(entity) {
         this.check(entity);
     };
 
     /**
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.changed = function(entity) {
         this.check(entity);
     };
 
     /**
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.deleted = function(entity) {
         if(entity.getSystemBits().get(systemIndex)) {
@@ -256,7 +219,7 @@ var EntitySystem = function EntitySystem(aspect) {
     };
 
     /**
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.disabled = function(entity) {
         if(entity.getSystemBits().get(systemIndex)) {
@@ -265,40 +228,40 @@ var EntitySystem = function EntitySystem(aspect) {
     };
 
     /**
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.enabled = function(entity) {
         this.check(entity);
     };
 
     /**
-     * @param {World} world
+     * @param {ArtemiJS.World} world
      */
     this.setWorld = function(world) {
         this.world = world;
     };
 
     /**
-     * @return {Boolean}
+     * @return {boolean}
      */
     this.isPassive = function() {
         return passive;
     };
 
     /**
-     * @param {Boolean} _passive
+     * @param {boolean} _passive
      */
     this.setPassive = function(_passive) {
         passive = _passive;
     };
 
     /**
-     * @return {Bag} actives
+     * @return {Utils.Bag} actives
      */
     this.getActives = function() {
         return actives;
     };
-};
+}
 
 EntitySystem.prototype = Object.create(EntityObserver.prototype);
 EntitySystem.prototype.constructor = EntitySystem;

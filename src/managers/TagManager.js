@@ -1,7 +1,6 @@
 'use strict';
 
-var HashMap = require('./../utils/HashMap'),
-    Manager = require('./../Manager');
+var Manager = require('./../Manager');
 
 /**
  * If you need to tag any entity, use this. A typical usage would be to tag

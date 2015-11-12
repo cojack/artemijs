@@ -4,16 +4,17 @@ var EntityObserver = require('./EntityObserver');
  * The entity class. Cannot be instantiated outside the framework, you must
  * create new entities using World.
  *
- * @module ArtemiJS
  * @class Manager
+ * @extends EntityObserver
  * @constructor
+ * @memberof ArtemiJS
  */
 function Manager() {
     EntityObserver.call(this);
 
     /**
      * @property world
-     * @type {World}
+     * @type {ArtemiJS.World}
      */
     this.world = null;
 
@@ -25,14 +26,14 @@ function Manager() {
     this.initialize = function() {};
 
     /**
-     * @param {World} world
+     * @param {ArtemiJS.World} world
      */
     this.setWorld = function(world) {
         this.world = world;
     };
 
     /**
-     * @return {World} world
+     * @return {ArtemiJS.World} world
      */
     this.getWorld = function() {
         return this.world;
@@ -42,7 +43,7 @@ function Manager() {
      * Abstract method added
      *
      * @abstract
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.added = function(entity) {};
 
@@ -50,7 +51,7 @@ function Manager() {
      * Abstract method changed
      *
      * @abstract
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.changed = function(entity)  {};
 
@@ -58,7 +59,7 @@ function Manager() {
      * Abstract method deleted
      *
      * @abstract
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.deleted = function(entity)  {};
 
@@ -66,7 +67,7 @@ function Manager() {
      * Abstract method enabled
      *
      * @abstract
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.enabled = function(entity)  {};
 
@@ -74,7 +75,7 @@ function Manager() {
      * Abstract method disabled
      *
      * @abstract
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.disabled = function(entity)  {};
 }

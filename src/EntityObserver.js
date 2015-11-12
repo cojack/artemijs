@@ -13,7 +13,7 @@ function EntityObserver() {
      * Abstract method added
      *
      * @abstract
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.added = function(entity) {
         throw new Error('EntityObserver function added not implemented');
@@ -23,7 +23,7 @@ function EntityObserver() {
      * Abstract method changed
      *
      * @abstract
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.changed = function(entity)  {
         throw new Error('EntityObserver function changed not implemented');
@@ -33,7 +33,7 @@ function EntityObserver() {
      * Abstract method deleted
      *
      * @abstract
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.deleted = function(entity)  {
         throw new Error('EntityObserver function deleted not implemented');
@@ -43,7 +43,7 @@ function EntityObserver() {
      * Abstract method enabled
      *
      * @abstract
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.enabled = function(entity)  {
         throw new Error('EntityObserver function enabled not implemented');
@@ -53,7 +53,7 @@ function EntityObserver() {
      * Abstract method disabled
      *
      * @abstract
-     * @param {Entity} entity
+     * @param {ArtemiJS.Entity} entity
      */
     this.disabled = function(entity)  {
         throw new Error('EntityObserver function disabled not implemented');

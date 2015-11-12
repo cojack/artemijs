@@ -26,158 +26,148 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>(function() {
-    'use strict';
-    
-    var Bag = require('./utils/Bag'),
-        Manager = require('./Manager');
-    
+            <pre class="prettyprint source linenums"><code>var Bag = require('./utils/Bag'),
+    Manager = require('./Manager');
+
+/**
+ * Object to manage components
+ *
+ * @class ComponentManager
+ * @extends ArtemiJS.Manager
+ * @constructor
+ * @memberof ArtemiJS
+ */
+function ComponentManager() {
+    Manager.call(this);
+
     /**
-     * Object to manage components
-     * 
-     * @module ArtemiJS
-     * @class ComponentManager
-     * @constructor
+     * @private
+     * @property {Utils.Bag} componentsByType
      */
-    var ComponentManager = function ComponentManager() {
-        Manager.call(this);
-        
-        /**
-         * @private
-         * @property componentsByType
-         * @type {Bag}
-         */
-        var componentsByType = new Bag(),
-        
-        /**
-         * @private
-         * @property deleted
-         * @type {Bag}
-         */
-        deleted = new Bag();
-            
-        /**
-         */
-        this.initialize = function() {};
-        
-        /**
-         * @private
-         * @param {Entity} entity
-         */
-        var removeComponentsOfEntity = function (entity) {
-            var componentBits = entity.getComponentBits();
-            for (var i = componentBits.nextSetBit(0); i >= 0; i = componentBits.nextSetBit(i+1)) {
-                componentsByType.get(i).set(entity.getId(), null);
-            }
-            componentBits.clear();
-        };
-        
-        /**
-         * Add component by type
-         * 
-         * @param {Entity} entity
-         * @param {ComponentType} type
-         * @param {Component} component
-         */
-        this.addComponent = function(entity, type, component) {        
-            var components = componentsByType.get(type.getIndex());
-            if(components === null) {
-                components = [];
-                componentsByType.set(type.getIndex(), components);
-            }
-            
-            components.set(entity.getId(), component);
-    
-            entity.getComponentBits().set(type.getIndex());
-        };
-        
-        /**
-         * Remove component by type
-         * 
-         * @param {Entity} entity
-         * @param {ComponentType} type
-         */
-        this.removeComponent = function(entity, type) {
-            if(entity.getComponentBits().get(type.getIndex())) {
-                componentsByType.get(type.getIndex()).set(entity.getId(), null);
-                entity.getComponentBits().clear(type.getIndex());
-            }
-        };
-        
-        /**
-         * Get component by type
-         * 
-         * @param {ComponentType} type
-         * @return {Utils.Bag} Bag of components
-         */        
-        this.getComponentsByType = function(type) {
-            var components = componentsByType.get(type.getIndex());
-            if(components === null) {
-                components = new Bag();
-                componentsByType.set(type.getIndex(), components);
-            }
-            return components;
-        };
-        
-        /**
-         * Get component
-         * 
-         * @param {Entity} entity
-         * @param {ComponentType} type
-         * @return Mixed Component on success, null on false
-         */
-        this.getComponent = function(entity, type) {
-            var components = componentsByType.get(type.getIndex());
-            if(components !== null) {
-                return components.get(entity.getId());
-            }
-            return null;
-        };
-        
-        /**
-         * Get component for
-         * 
-         * @param {Entity} entity
-         * @param {Bag} fillBag Bag of components
-         * @return {Bag} Bag of components
-         */
-        this.getComponentsFor = function(entity, fillBag) {
-            var componentBits = entity.getComponentBits();
-    
-            for (var i = componentBits.nextSetBit(0); i >= 0; i = componentBits.nextSetBit(i+1)) {
-                fillBag.add(componentsByType.get(i).get(entity.getId()));
-            }
-            
-            return fillBag;
-        };
-        
-        /**
-         * Add entity to delete componenets of them
-         * 
-         * @param {Entity} entity
-         */
-        this.deleted = function(entity) {
-            deleted.add(entity);
-        };
-        
-        /**
-         * Clean deleted components of entities
-         * 
-         */
-        this.clean = function() {
-            if(deleted.size() > 0) {
-                for(var i = 0; deleted.size() > i; i++) {
-                    removeComponentsOfEntity(deleted.get(i));
-                }
-                deleted.clear();
-            }
-        };
+    var componentsByType = new Bag(),
+
+    /**
+     * @private
+     * @property {Utils.Bag} deleted
+     */
+    deleted = new Bag();
+
+    /**
+     * @private
+     * @param {ArtemiJS.Entity} entity
+     */
+    function removeComponentsOfEntity(entity) {
+        var componentBits = entity.getComponentBits();
+        for (var i = componentBits.nextSetBit(0); i >= 0; i = componentBits.nextSetBit(i+1)) {
+            componentsByType.get(i).set(entity.getId(), null);
+        }
+        componentBits.clear();
+    }
+
+    /**
+     * Add component by type
+     *
+     * @param {ArtemiJS.Entity} entity
+     * @param {ArtemiJS.ComponentType} type
+     * @param {ArtemiJS.Component} component
+     */
+    this.addComponent = function(entity, type, component) {
+        var components = componentsByType.get(type.getIndex());
+        if(components === null) {
+            components = [];
+            componentsByType.set(type.getIndex(), components);
+        }
+
+        components.set(entity.getId(), component);
+
+        entity.getComponentBits().set(type.getIndex());
     };
-    
-    ComponentManager.prototype = Object.create(Manager.prototype);
-    ComponentManager.prototype.constructor = ComponentManager;
-    module.exports = ComponentManager;
-})();</code></pre>
+
+    /**
+     * Remove component by type
+     *
+     * @param {ArtemiJS.Entity} entity
+     * @param {ArtemiJS.ComponentType} type
+     */
+    this.removeComponent = function(entity, type) {
+        if(entity.getComponentBits().get(type.getIndex())) {
+            componentsByType.get(type.getIndex()).set(entity.getId(), null);
+            entity.getComponentBits().clear(type.getIndex());
+        }
+    };
+
+    /**
+     * Get component by type
+     *
+     * @param {ArtemiJS.ComponentType} type
+     * @return {Utils.Bag} Bag of components
+     */
+    this.getComponentsByType = function(type) {
+        var components = componentsByType.get(type.getIndex());
+        if(components === null) {
+            components = new Bag();
+            componentsByType.set(type.getIndex(), components);
+        }
+        return components;
+    };
+
+    /**
+     * Get component
+     *
+     * @param {ArtemiJS.Entity} entity
+     * @param {ArtemiJS.ComponentType} type
+     * @return {ArtemiJS.Component|null} Mixed Component on success, null on false
+     */
+    this.getComponent = function(entity, type) {
+        var components = componentsByType.get(type.getIndex());
+        if(components !== null) {
+            return components.get(entity.getId());
+        }
+        return null;
+    };
+
+    /**
+     * Get component for
+     *
+     * @param {ArtemiJS.Entity} entity
+     * @param {Utils.Bag} fillBag Bag of components
+     * @return {Utils.Bag} Bag of components
+     */
+    this.getComponentsFor = function(entity, fillBag) {
+        var componentBits = entity.getComponentBits();
+
+        for (var i = componentBits.nextSetBit(0); i >= 0; i = componentBits.nextSetBit(i+1)) {
+            fillBag.add(componentsByType.get(i).get(entity.getId()));
+        }
+
+        return fillBag;
+    };
+
+    /**
+     * Add entity to delete componenets of them
+     *
+     * @param {ArtemiJS.Entity} entity
+     */
+    this.deleted = function(entity) {
+        deleted.add(entity);
+    };
+
+    /**
+     * Clean deleted components of entities
+     */
+    this.clean = function() {
+        if(deleted.size() > 0) {
+            for(var i = 0; deleted.size() > i; i++) {
+                removeComponentsOfEntity(deleted.get(i));
+            }
+            deleted.clear();
+        }
+    };
+}
+
+ComponentManager.prototype = Object.create(Manager.prototype);
+ComponentManager.prototype.constructor = ComponentManager;
+module.exports = ComponentManager;</code></pre>
         </article>
     </section>
 
@@ -187,13 +177,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArtemiJS.html">ArtemiJS</a></li><li><a href="global.html#ComponentType">ComponentType</a></li><li><a href="IntervalEntitySystem.html">IntervalEntitySystem</a></li><li><a href="Managers.GroupManager.html">GroupManager</a></li><li><a href="Managers.PlayerManager.html">PlayerManager</a></li><li><a href="Managers.TagManager.html">TagManager</a></li><li><a href="Systems.DelayedEntityProcessingSystem.html">DelayedEntityProcessingSystem</a></li><li><a href="Systems.EntityProcessingSystem.html">EntityProcessingSystem</a></li><li><a href="Systems.IntervalEntityProcessingSystem.html">IntervalEntityProcessingSystem</a></li><li><a href="Systems.VoidEntitySystem.html">VoidEntitySystem</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="Systems.html">Systems</a></li></ul><h3>Global</h3><ul><li><a href="global.html#added">added</a></li><li><a href="global.html#all">all</a></li><li><a href="global.html#begin">begin</a></li><li><a href="global.html#changed">changed</a></li><li><a href="global.html#check">check</a></li><li><a href="global.html#checkProcessing">checkProcessing</a></li><li><a href="global.html#deleted">deleted</a></li><li><a href="global.html#disabled">disabled</a></li><li><a href="global.html#enabled">enabled</a></li><li><a href="global.html#end">end</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#getActives">getActives</a></li><li><a href="global.html#getAllSet">getAllSet</a></li><li><a href="global.html#getExclusionSet">getExclusionSet</a></li><li><a href="global.html#getOneSet">getOneSet</a></li><li><a href="global.html#getWorld">getWorld</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#inserted">inserted</a></li><li><a href="global.html#isPassive">isPassive</a></li><li><a href="global.html#one">one</a></li><li><a href="global.html#process">process</a></li><li><a href="global.html#processEntities">processEntities</a></li><li><a href="global.html#removed">removed</a></li><li><a href="global.html#setPassive">setPassive</a></li><li><a href="global.html#setWorld">setWorld</a></li><li><a href="global.html#world">world</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Artemi.html">Artemi</a></li><li><a href="ArtemiJS.html">ArtemiJS</a></li><li><a href="ArtemiJS.Aspect.html">Aspect</a></li><li><a href="ArtemiJS.ComponentManager.html">ComponentManager</a></li><li><a href="ArtemiJS.ComponentMapper.html">ComponentMapper</a></li><li><a href="ArtemiJS.ComponentType.html">ComponentType</a></li><li><a href="ArtemiJS.Entity.html">Entity</a></li><li><a href="ArtemiJS.EntityManager.html">EntityManager</a></li><li><a href="ArtemiJS.EntityManager-IdentifierPool.html">IdentifierPool</a></li><li><a href="ArtemiJS.EntitySystem.html">EntitySystem</a></li><li><a href="ArtemiJS.Manager.html">Manager</a></li><li><a href="ArtemiJS.World.html">World</a></li><li><a href="EntitySystem.SystemIndexManager.html">SystemIndexManager</a></li><li><a href="IntervalEntitySystem.html">IntervalEntitySystem</a></li><li><a href="Managers.GroupManager.html">GroupManager</a></li><li><a href="Managers.PlayerManager.html">PlayerManager</a></li><li><a href="Managers.TagManager.html">TagManager</a></li><li><a href="Managers.TeamManager.html">TeamManager</a></li><li><a href="Systems.DelayedEntityProcessingSystem.html">DelayedEntityProcessingSystem</a></li><li><a href="Systems.EntityProcessingSystem.html">EntityProcessingSystem</a></li><li><a href="Systems.IntervalEntityProcessingSystem.html">IntervalEntityProcessingSystem</a></li><li><a href="Systems.VoidEntitySystem.html">VoidEntitySystem</a></li><li><a href="Utils.Bag.html">Bag</a></li><li><a href="Utils.BitSet.html">BitSet</a></li><li><a href="Utils.Timer.html">Timer</a></li></ul><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="Systems.html">Systems</a></li><li><a href="Utils.html">Utils</a></li></ul><h3>Interfaces</h3><ul><li><a href="ArtemiJS.Component.html">Component</a></li></ul><h3>Global</h3><ul><li><a href="global.html#added">added</a></li><li><a href="global.html#changed">changed</a></li><li><a href="global.html#deleted">deleted</a></li><li><a href="global.html#disabled">disabled</a></li><li><a href="global.html#enabled">enabled</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 12 2015 01:14:27 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Nov 12 2015 17:44:50 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
