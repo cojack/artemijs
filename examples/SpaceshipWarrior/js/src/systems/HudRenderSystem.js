@@ -18,13 +18,13 @@
             healthText.style.top = 200 + 'px';
             healthText.style.left = 200 + 'px';
             document.body.appendChild(healthText);
-        };dw
+        };
 
         this.processSystem = function() {
             healthText.innerHTML = "Active entities: " + this.world.getEntityManager().getActiveEntityCount();
             healthText.style.top = -(SpaceshipWarrior.FRAME_WIDTH / 2) + 20;
             healthText.style.left =  SpaceshipWarrior.FRAME_HEIGHT / 2 - 40;
-        }
+        };
     };
 
     HudRenderSystem.prototype = Object.create(VoidEntitySystem.prototype);

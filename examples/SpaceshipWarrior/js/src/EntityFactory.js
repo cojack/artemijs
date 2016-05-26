@@ -1,4 +1,4 @@
-(function() {
+(function(ArtemiJS, THREE) {
    'use strict';
 
     var GroupManager = ArtemiJS.Managers.GroupManager,
@@ -10,6 +10,7 @@
         Health = require('./components/Health'),
         ParallaxStar = require('./components/ParallaxStar'),
         Player = require('./components/Player'),
+        Bullet = require('./components/Bullet'),
         Position = require('./components/Position'),
         ScaleAnimation = require('./components/ScaleAnimation'),
         Sprite = require('./components/Sprite'),
@@ -73,7 +74,7 @@
             var material = new THREE.SpriteMaterial( { map: map } );
             var _sprite = new THREE.Sprite( material );
             _sprite.position.set( x, y, 0 );
-            _sprite.scale.set( 30, 40, 1 )
+            _sprite.scale.set( 30, 40, 1 );
 
             sprite.source = _sprite;
             e.addComponent(sprite);
@@ -89,6 +90,8 @@
             var expires = new Expires();
             expires.delay = 5;
             e.addComponent(expires);
+            
+            e.addComponent(new Bullet());
 
             world.getManager(GroupManager.klass).add(e, Constants.Groups.PLAYER_BULLETS);
 
@@ -167,8 +170,8 @@
             var e = world.createEntity();
 
             var position = new Position();
-            position.x = MathUtils.random(-SpaceshipWarrior.FRAME_WIDTH/2, SpaceshipWarrior.FRAME_WIDTH/2);
-            position.y = MathUtils.random(-SpaceshipWarrior.FRAME_HEIGHT/2, SpaceshipWarrior.FRAME_HEIGHT/2);
+            position.x = MathUtils.random(-window.SpaceshipWarrior.FRAME_WIDTH/2, window.SpaceshipWarrior.FRAME_WIDTH/2);
+            position.y = MathUtils.random(-window.SpaceshipWarrior.FRAME_HEIGHT/2, window.SpaceshipWarrior.FRAME_HEIGHT/2);
             e.addComponent(position);
 
             var sprite = new Sprite();
@@ -235,4 +238,4 @@
     };
 
     module.exports = EntityFactory;
-})();
+}(window.ArtemiJS, window.THREE));

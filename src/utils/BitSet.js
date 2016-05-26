@@ -242,6 +242,7 @@ function BitSet() {
                 }
                 console.assert(-1, "it should have found some bit in this word: " + nextWord);
             }
+<<<<<<< Updated upstream
         }
         return -1;
     };
@@ -287,6 +288,11 @@ function BitSet() {
 
     this.toString = function (radix) {
         return '[' + this._words.toString() + ']';
+=======
+        };
+        
+        Object.freeze(this);
+>>>>>>> Stashed changes
     };
 }
 

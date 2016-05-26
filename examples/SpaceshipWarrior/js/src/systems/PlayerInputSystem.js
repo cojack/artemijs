@@ -1,4 +1,4 @@
-(function() {
+(function(ArtemiJS, THREE, THREEx) {
     'use strict';
 
     var EntityProcessingSystem = ArtemiJS.Systems.EntityProcessingSystem,
@@ -8,27 +8,18 @@
         Velocity = require('./../components/Velocity'),
         Player = require('./../components/Player');
 
-    function PlayerInputSystem(_webgl) {
+    function PlayerInputSystem(webgl) {
         EntityProcessingSystem.call(this, Aspect.getAspectForAll(Position.klass, Velocity.klass, Player.klass));
 
-        var up, down, left, right;
-
-        var webgl = _webgl;
-
-        var mouse3d;
-
-        var canvas;
-
-        var keyboard;
-
-        var projector;
-
-        var fire = false;
-
-        var pos = {
-            x: 0,
-            y: 0
-        };
+        var mouse3d,
+            canvas. 
+            keyboard,
+            projector,
+            fire = false,
+            pos = {
+                x: 0,
+                y: 0
+            };
 
         /**
          * @property pm
@@ -83,7 +74,7 @@
 
         function checkPress() {
             if(keyboard.pressed("W")) {
-                pos.y = 2.1
+                pos.y = 2.1;
             }
             if(keyboard.pressed("A")) {
                 pos.x = -2.1;
@@ -92,7 +83,7 @@
                 pos.y = -2.1;
             }
             if(keyboard.pressed("D")) {
-                pos.x = 2.1
+                pos.x = 2.1;
             }
         }
 
@@ -123,12 +114,12 @@
             position.vector = mouse3d;
             if(fire) {
                 fire = false;
-                EntityFactory.createPlayerBullet(this.world, position.x, position.y).addToWorld();
+                EntityFactory.createPlayerBullet(world, position.x, position.y).addToWorld();
             }
-        }
+        };
     }
 
     PlayerInputSystem.prototype = Object.create(EntityProcessingSystem.prototype);
     PlayerInputSystem.prototype.constructor = PlayerInputSystem;
     module.exports = PlayerInputSystem;
-})();
+}(window.ArtemiJS));

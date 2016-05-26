@@ -1,4 +1,4 @@
-(function() {
+(function(ArtemiJS) {
     'use strict';
 
     var EntitySystem = ArtemiJS.EntitySystem,
@@ -66,4 +66,4 @@
     SpriteRenderSystem.prototype = Object.create(EntitySystem.prototype);
     SpriteRenderSystem.prototype.constructor = SpriteRenderSystem;
     module.exports = SpriteRenderSystem;
-})();
+}(window.ArtemiJS));
