@@ -1,7 +1,9 @@
+import BitSet from 'fast-bitset';
 import {Entity} from './entity';
 import {IdentifierPool} from './identifier-pool';
 import {Manager} from './manager';
-import {Bag, BitSet} from './utils';
+import {Bag, BITS_PER_WORD} from './utils';
+
 
 export class EntityManager extends Manager {
 
@@ -10,7 +12,7 @@ export class EntityManager extends Manager {
 	private readonly identifierPool = new IdentifierPool();
 
 	private readonly stats = {
-		disabled: new BitSet(),
+		disabled: new BitSet(BITS_PER_WORD),
 		active: 0,
 		added: 0,
 		created: 0,
@@ -47,15 +49,8 @@ export class EntityManager extends Manager {
 	 * Set entity as enabled for future process
 	 */
 	public enabled(entity: Entity) {
-		this.stats.disabled.clear(entity.getId());
+		this.stats.disabled.unset(entity.getId());
 	};
-
-	/**
-	 * Just increment changed counter
-	 */
-	public changed(entity: Entity) {
-		this.stats.changed++;
-	}
 
 	/**
 	 * Set entity as disabled for future process
@@ -70,7 +65,7 @@ export class EntityManager extends Manager {
 	public deleted(entity: Entity) {
 		this.entities.remove(entity.getId());
 
-		this.stats.disabled.clear(entity.getId());
+		this.stats.disabled.unset(entity.getId());
 
 		this.identifierPool.checkIn(entity.getId());
 
@@ -89,7 +84,7 @@ export class EntityManager extends Manager {
 	/**
 	 * Check if the specified entityId is enabled.
 	 */
-	public isEnabled(entityId: number) {
+	public isEnabled(entityId: number): boolean {
 		return !this.stats.disabled.get(entityId);
 	};
 
