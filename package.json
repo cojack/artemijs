@@ -1,28 +1,31 @@
 {
-    "name": "ArtemiJS",
-    "version": "0.0.1",
-    "license": "GPLv2",
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:cojack/artemijs.git"
-    },
-    "dependencies": {
-        "fast-bitset": "^1.3.2",
-        "iterare": "^1.2.1"
-    },
-    "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^3.3.0",
-        "@typescript-eslint/parser": "^3.3.0",
-        "eslint": "^7.3.0",
-        "eslint-config-airbnb-base": "^14.2.0",
-        "eslint-plugin-import": "^2.21.2",
-        "tslib": "^2.0.0",
-        "typescript": "^3.9.5",
-        "mocha": "^8.0.1"
-    },
-    "scripts": {
-        "build": "tsc",
-        "lint": "eslint --ext .ts --fix src/**",
-        "test": "mocha --recursive"
-    }
+  "name": "artemijs",
+  "version": "0.0.1",
+  "license": "GPLv2",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cojack/artemijs.git"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "fast-bitset": "^1.3.2",
+    "iterare": "^1.2.1"
+  },
+  "devDependencies": {
+    "@compodoc/compodoc": "^1.1.11",
+    "@typescript-eslint/eslint-plugin": "^3.3.0",
+    "@typescript-eslint/parser": "^3.3.0",
+    "eslint": "^7.3.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.21.2",
+    "mocha": "^8.0.1",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint --ext .ts --fix src/**",
+    "test": "mocha --recursive"
+  }
 }
