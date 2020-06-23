@@ -111,7 +111,7 @@ export class Aspect {
 	 * processes only entities possessing just one of the components A or B or C, then you can do:
 	 * Aspect.getEmpty().one(A,B,C);
 	 */
-	public getEmpty(): Aspect {
+	public static getEmpty(): Aspect {
 		return new Aspect();
 	}
 }
