@@ -22,11 +22,11 @@ export abstract class Manager implements EntityObserver {
 
 	public setWorld(world: World) {
 		this.world = world;
-	};
+	}
 
 	protected getWorld(): World | undefined {
 		return this.world;
-	};
+	}
 
 	public setAdded(entity: Entity): void {
 

@@ -28,7 +28,7 @@ export class ComponentType {
 			ComponentType.componentTypes.set(component, type);
 		}
 		return type;
-  }
+	}
 
 	public static getIndexFor<T extends Component>(component: Constructor<T>): number {
 		return ComponentType.getTypeFor(component).getIndex();

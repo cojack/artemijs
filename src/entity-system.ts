@@ -63,7 +63,7 @@ export abstract class EntitySystem implements EntityObserver {
 	 * Called before processing of entities begins
 	 */
 	protected begin(): void {
-	};
+	}
 
 	/**
 	 * Process the entities
@@ -74,7 +74,7 @@ export abstract class EntitySystem implements EntityObserver {
 			this.processEntities(this.actives);
 			this.end();
 		}
-	};
+	}
 
 	/**
 	 * Called after the processing of entities ends
@@ -82,7 +82,7 @@ export abstract class EntitySystem implements EntityObserver {
 	 * @method end
 	 */
 	protected end(): void {
-	};
+	}
 
 	/**
 	 * Any implementing entity system must implement this method and the
@@ -105,21 +105,21 @@ export abstract class EntitySystem implements EntityObserver {
 	 * @method initialize
 	 */
 	public initialize(): void {
-	};
+	}
 
 	/**
 	 * Called if the system has received a entity it is interested in,
 	 * e.g. created or a component was added to it.
 	 */
 	protected inserted(entity: Entity): void {
-	};
+	}
 
 	/**
 	 * Called if a entity was removed from this system, e.g. deleted
 	 * or had one of it's components removed.
 	 */
 	protected removed(entity: Entity): void {
-	};
+	}
 
 	/**
 	 * Will check if the entity is of interest to this system.
@@ -154,47 +154,47 @@ export abstract class EntitySystem implements EntityObserver {
 		} else if (!interested && contains) {
 			this.removeFromSystem(entity);
 		}
-	};
+	}
 
 	public setAdded(entity: Entity): void {
 		this.check(entity);
-	};
+	}
 
 	public setChanged(entity: Entity): void {
 		this.check(entity);
-	};
+	}
 
 	public setDeleted(entity: Entity): void {
 		if (entity.getSystemBits().get(this.systemIndex)) {
 			this.removeFromSystem(entity);
 		}
-	};
+	}
 
 	public setDisabled(entity: Entity): void {
 		if (entity.getSystemBits().get(this.systemIndex)) {
 			this.removeFromSystem(entity);
 		}
-	};
+	}
 
 	public setEnabled(entity: Entity): void {
 		this.check(entity);
-	};
+	}
 
 	public setWorld(world: World): void {
 		this.world = world;
-	};
+	}
 
 	public isPassive(): boolean {
 		return !!this.passive;
-	};
+	}
 
 	public setPassive(passive: boolean): void {
 		this.passive = passive;
-	};
+	}
 
 	public getActives(): Bag<Entity> {
 		return this.actives;
-	};
+	}
 
 	public getClass(): Constructor<EntitySystem> {
 		return this.constructor as FunctionConstructor;

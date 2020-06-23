@@ -35,21 +35,21 @@ export class Entity {
 	 */
 	public getId() {
 		return this.id;
-	};
+	}
 
 	/**
 	 * Returns a BitSet instance containing bits of the components the entity possesses.
 	 */
 	public getComponentBits() {
 		return this.componentBits;
-	};
+	}
 
 	/**
 	 * Returns a BitSet instance containing bits of the components the entity possesses.
 	 */
 	public getSystemBits() {
 		return this.systemBits;
-	};
+	}
 
 	/**
 	 * Make entity ready for re-use.
@@ -57,7 +57,7 @@ export class Entity {
 	 */
 	public toString() {
 		return 'Entity [' + this.id + ']';
-	};
+	}
 
 	/**
 	 * Add a component to this entity.
@@ -68,7 +68,7 @@ export class Entity {
 		}
 		this.componentManager.addComponent(this, type, component);
 		return this;
-	};
+	}
 
 	/**
 	 * Remove component by its type.
@@ -82,7 +82,7 @@ export class Entity {
 		}
 		this.componentManager.removeComponent(this, componentType);
 		return this;
-	};
+	}
 
 	/**
 	 * Checks if the entity has been added to the world and has not been deleted from it.
@@ -90,11 +90,11 @@ export class Entity {
 	 */
 	public isActive() {
 		return this.entityManager.isActive(this.id);
-	};
+	}
 
 	public isEnabled() {
 		return this.entityManager.isEnabled(this.id);
-	};
+	}
 
 	/**
 	 * This is the preferred method to use when retrieving a component from a
@@ -112,7 +112,7 @@ export class Entity {
 			componentType = type;
 		}
 		return this.componentManager.getComponent(this, componentType);
-	};
+	}
 
 	/**
 	 * Returns a bag of all components this entity has.
@@ -120,7 +120,7 @@ export class Entity {
 	 */
 	public getComponents(fillBag: Bag<Component>) {
 		return this.componentManager.getComponentsFor(this, fillBag);
-	};
+	}
 
 	/**
 	 * Refresh all changes to components for this entity. After adding or
@@ -130,7 +130,7 @@ export class Entity {
 	 */
 	public addToWorld() {
 		this.world.addEntity(this);
-	};
+	}
 
 	/**
 	 * This entity has changed, a component added or deleted.
@@ -139,7 +139,7 @@ export class Entity {
 	 */
 	public changedInWorld() {
 		this.world.changedEntity(this);
-	};
+	}
 
 	/**
 	 * Delete this entity from the world.
@@ -148,7 +148,7 @@ export class Entity {
 	 */
 	public deleteFromWorld() {
 		this.world.deleteEntity(this);
-	};
+	}
 
 	/**
 	 * (Re)enable the entity in the world, after it having being disabled.
@@ -158,7 +158,7 @@ export class Entity {
 	 */
 	public enable() {
 		this.world.enableEntity(this);
-	};
+	}
 
 	/**
 	 * Disable the entity from being processed. Won't delete it, it will
@@ -168,7 +168,7 @@ export class Entity {
 	 */
 	public disable() {
 		this.world.disableEntity(this);
-	};
+	}
 
 	/**
 	 * Get the UUID for this entity.
@@ -176,14 +176,14 @@ export class Entity {
 	 */
 	public getUuid(): string | undefined {
 		return this.uuid;
-	};
+	}
 
 	/**
 	 * Returns the world this entity belongs to.
 	 */
 	public getWorld(): World {
 		return this.world;
-	};
+	}
 
 	/**
 	 * Reset

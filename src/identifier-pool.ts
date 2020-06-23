@@ -14,16 +14,16 @@ export class IdentifierPool {
 	 * Check an available id
 	 */
 	public checkOut(): number | null {
-		if(this.ids.size()) {
+		if (this.ids.size()) {
 			return this.ids.removeLast();
 		}
 		return this.nextAvailableId++;
-	};
+	}
 
 	/**
 	 * Add new id in ids {Bag}
 	 */
 	public checkIn(id: number): void {
 		this.ids.add(id);
-	};
+	}
 }

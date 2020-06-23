@@ -7,6 +7,8 @@ export abstract class Component {
 	public getClass(): Constructor<Component> {
 		return this.constructor as FunctionConstructor;
 	}
+
 	public abstract getSimpleName(): string;
+
 	public abstract getIndex(): number;
 }

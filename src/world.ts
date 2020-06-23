@@ -51,7 +51,7 @@ export class World {
 	public initialize(): void {
 		iterate(this.managersBag).forEach(manager => manager.initialize());
 		iterate(this.systemsBag).forEach(system => system.initialize());
-	};
+	}
 
 	/**
 	 * Returns a manager that takes care of all the entities in the world.
@@ -59,14 +59,14 @@ export class World {
 	 */
 	public getEntityManager(): EntityManager {
 		return this.entityManager;
-	};
+	}
 
 	/**
 	 * Returns a manager that takes care of all the components in the world.
 	 */
 	public getComponentManager(): ComponentManager {
 		return this.componentManager;
-	};
+	}
 
 	/**
 	 * Add a manager into this world. It can be retrieved later.
@@ -78,14 +78,14 @@ export class World {
 		this.managersBag.add(manager);
 
 		return manager;
-	};
+	}
 
 	/**
 	 * Returns a manager of the specified type.
 	 */
 	public getManager(manager: Constructor<Manager>): Manager | undefined {
 		return this.managers.get(manager);
-	};
+	}
 
 	/**
 	 * Deletes the manager from this world.
@@ -93,25 +93,25 @@ export class World {
 	public deleteManager(manager: Manager): void {
 		this.managers.delete(manager.getClass());
 		this.managersBag.remove(manager);
-	};
+	}
 
 	/**
 	 * You must specify the delta for the game here.
 	 */
 	public setDelta(d: number): void {
 		this.delta = d;
-	};
+	}
 
 	public getDelta(): number {
 		return this.delta;
-	};
+	}
 
 	/**
 	 * Adds a entity to this world.
 	 */
 	public addEntity(entity: Entity): void {
 		this.added.add(entity);
-	};
+	}
 
 	/**
 	 * Ensure all systems are notified of changes to this entity.
@@ -120,14 +120,14 @@ export class World {
 	 */
 	public changedEntity(entity: Entity): void {
 		this.changed.add(entity);
-	};
+	}
 
 	/**
 	 * Delete the entity from the world.
 	 */
 	public deleteEntity(entity: Entity): void {
 		this.added.remove(entity);
-	};
+	}
 
 	/**
 	 * (Re)enable the entity in the world, after it having being disabled.
@@ -135,7 +135,7 @@ export class World {
 	 */
 	public enableEntity(entity: Entity) {
 		this.enable.add(entity);
-	};
+	}
 
 	/**
 	 * Disable the entity from being processed. Won't delete it, it will
@@ -143,7 +143,7 @@ export class World {
 	 */
 	public disableEntity(entity: Entity) {
 		this.disable.add(entity);
-	};
+	}
 
 	/**
 	 * Create and return a new or reused entity instance.
@@ -151,21 +151,21 @@ export class World {
 	 */
 	public createEntity(): Entity {
 		return this.entityManager.createEntityInstance();
-	};
+	}
 
 	/**
 	 * Get a entity having the specified id.
 	 */
 	public getEntity(id: number): Entity | null {
 		return this.entityManager.getEntity(id);
-	};
+	}
 
 	/**
 	 * Gives you all the systems in this world for possible iteration.
 	 */
 	public getSystems(): Bag<EntitySystem> {
 		return this.systemsBag;
-	};
+	}
 
 	/**
 	 * Adds a system to this world that will be processed by World.process()
@@ -183,14 +183,14 @@ export class World {
 		this.systemsBag.add(system);
 
 		return system;
-	};
+	}
 
 	/**
 	 * Retrieve a system for specified system type.
 	 */
 	public getSystem(systemType: Constructor<EntitySystem>): EntitySystem | undefined {
 		return this.systems.get(systemType);
-	};
+	}
 
 	/**
 	 * Removed the specified system from the world.
@@ -198,7 +198,7 @@ export class World {
 	public deleteSystem(system: EntitySystem): void {
 		this.systems.delete(system.getClass());
 		this.systemsBag.remove(system);
-	};
+	}
 
 	/**
 	 * Notify all the systems
@@ -257,7 +257,7 @@ export class World {
 		iterate(this.systemsBag)
 			.filter(system => !system.isPassive())
 			.forEach(system => system.process());
-	};
+	}
 
 	/**
 	 * Retrieves a ComponentMapper instance for fast retrieval
@@ -265,5 +265,5 @@ export class World {
 	 */
 	public getMapper(type: Constructor<Component>): ComponentMapper {
 		return ComponentMapper.getFor(type, this);
-	};
+	}
 }

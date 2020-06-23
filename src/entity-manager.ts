@@ -19,14 +19,14 @@ export class EntityManager extends Manager {
 		created: 0,
 		changed: 0,
 		deleted: 0
-	};
+	}
 
 	/**
 	 * Initialize
 	 */
 	public initialize() {
 
-	};
+	}
 
 	/**
 	 * Create new entity instance
@@ -35,7 +35,7 @@ export class EntityManager extends Manager {
 		const entity = new Entity(this.world as World, this.identifierPool.checkOut() as number);
 		this.stats.created++;
 		return entity;
-	};
+	}
 
 	/**
 	 * Set entity as added for future process
@@ -44,21 +44,21 @@ export class EntityManager extends Manager {
 		this.stats.active++;
 		this.stats.added++;
 		this.entities.set(entity.getId(), entity);
-	};
+	}
 
 	/**
 	 * Set entity as enabled for future process
 	 */
 	public setEnabled(entity: Entity) {
 		this.disabled.unset(entity.getId());
-	};
+	}
 
 	/**
 	 * Set entity as disabled for future process
 	 */
 	public setDisabled(entity: Entity): void {
 		this.disabled.set(entity.getId());
-	};
+	}
 
 	/**
 	 * Set entity as deleted for future process
@@ -72,7 +72,7 @@ export class EntityManager extends Manager {
 
 		this.stats.active--;
 		this.stats.deleted++;
-	};
+	}
 
 	/**
 	 * Check if this entity is active.
@@ -80,28 +80,28 @@ export class EntityManager extends Manager {
 	 */
 	public isActive(entityId: number) {
 		return this.entities.get(entityId) !== null;
-	};
+	}
 
 	/**
 	 * Check if the specified entityId is enabled.
 	 */
 	public isEnabled(entityId: number): boolean {
 		return !this.disabled.get(entityId);
-	};
+	}
 
 	/**
 	 * Get a entity with this id.
 	 */
 	public getEntity(entityId: number) {
 		return this.entities.get(entityId);
-	};
+	}
 
 	/**
 	 * Get how many entities are active in this world.
 	 */
 	public getActiveEntityCount() {
 		return this.stats.active;
-	};
+	}
 
 	/**
 	 * Get how many entities have been created in the world since start.
@@ -110,19 +110,19 @@ export class EntityManager extends Manager {
 	 */
 	public getTotalCreated() {
 		return this.stats.created;
-	};
+	}
 
 	/**
 	 * Get how many entities have been added to the world since start.
 	 */
 	public getTotalAdded() {
 		return this.stats.added;
-	};
+	}
 
 	/**
 	 * Get how many entities have been deleted from the world since start.
 	 */
 	public getTotalDeleted() {
 		return this.stats.deleted;
-	};
+	}
 }
