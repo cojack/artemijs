@@ -141,12 +141,12 @@ export abstract class EntitySystem implements EntityObserver {
 			}
 		}
 		if (!this.exclusionSet.isEmpty() && interested) {
-			interested = !this.exclusionSet.intersects(componentBits);
+			interested = !this.exclusionSet.isSubsetOf(componentBits);
 		}
 
 		// Check if the entity possesses ANY of the components in the oneSet. If so, the system is interested.
 		if (!this.oneSet.isEmpty()) {
-			interested = this.oneSet.intersects(componentBits);
+			interested = this.oneSet.isSubsetOf(componentBits);
 		}
 
 		if (interested && !contains) {
