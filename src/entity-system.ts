@@ -1,371 +1,202 @@
+import {Aspect} from './aspect';
 import {Entity} from './entity';
 import {EntityObserver} from './entity-observer';
-import {Constructor} from './utils';
+import {Bag, Constructor} from './utils';
+import {World} from './world';
 
-export class EntitySystem implements EntityObserver {
-    public initialize() {
+class SystemIndexManager {
 
-    }
+	private static INDEX = 0;
 
-    public getClass(): Constructor<EntitySystem> {
-        return this.constructor as FunctionConstructor;
-    }
+	private static indices = new Map<Constructor<EntitySystem>, number>();
 
-    public setAdded(entity: Entity): void {
-    }
-
-    public setChanged(entity: Entity): void {
-    }
-
-    public setDeleted(entity: Entity): void {
-    }
-
-    public setDisabled(entity: Entity): void {
-    }
-
-    public setEnabled(entity: Entity): void {
-    }
-
-    public isPassive(): boolean {
-        return true;
-    }
-
-    public process() {
-
-    }
+	public static getIndexFor(entitySystem: Constructor<EntitySystem>) {
+		let index = this.indices.get(entitySystem);
+		if (!index) {
+			index = this.INDEX++;
+			this.indices.set(entitySystem, index);
+		}
+		return index;
+	}
 }
 
-(function() {
-    'use strict';
+/**
+ * The most raw entity system. It should not typically be used, but you can
+ * create your own entity system handling by extending this. It is
+ * recommended that you use the other provided entity system implementations
+ */
+export abstract class EntitySystem implements EntityObserver {
 
-    var Bag = require('./utils/Bag'),
-        EntityObserver = require('./EntityObserver');
+	protected world: World | undefined;
 
-    /**
-     * Used to generate a unique bit for each system.
-     * Only used internally in EntitySystem.
-     *
-     * @module ArtemiJS
-     * @class SystemIndexManager
-     * @for EntitySystem
-     * @final
-     * @constructor
-     */
-    var SystemIndexManager = {
+	private readonly systemIndex: number;
 
-        /**
-         * @property INDEX
-         * @type {Number}
-         */
-        INDEX: 0,
+	private readonly actives = new Bag<Entity>();
 
-        /**
-         * @property indices
-         * @type {Array}
-         */
-        indices: {},
+	private readonly allSet = this.aspect.getAllSet();
 
-        /**
-         * @method getIndexFor
-         * @param {EntitySystem} entitySystem
-         * @return {Number} index
-         */
-        getIndexFor: function(entitySystem) {
-            var index = this.indices[entitySystem];
-            if(!index) {
-                index = this.INDEX++;
-                this.indices[entitySystem] = index;
-            }
-            return index;
-        }
-    };
+	private readonly exclusionSet = this.aspect.getExclusionSet();
 
-    /**
-     * The most raw entity system. It should not typically be used, but you can
-     * create your own entity system handling by extending this. It is
-     * recommended that you use the other provided entity system implementations
-     *
-     * @module ArtemiJS
-     * @class EntitySystem
-     * @constructor
-     * @param {Aspect} _aspect Creates an entity system that uses the specified
-     *      aspect as a matcher against entities.
-     */
-    var EntitySystem = function EntitySystem(_aspect) {
-        EntityObserver.call(this);
+	private readonly oneSet = this.aspect.getOneSet();
 
-        /**
-         * @property world
-         * @type {World}
-         */
-        this.world = null;
+	private passive: boolean | undefined;
 
-        /**
-         * @private
-         * @final
-         * @property systemIndex
-         * @type {Number}
-         */
-        var systemIndex = SystemIndexManager.getIndexFor(this.getClass()),
+	private readonly dummy = this.allSet.isEmpty() && this.oneSet.isEmpty();
 
-        /**
-         * @private
-         * @property actives
-         * @type {Utils.Bag}
-         */
-        actives = new Bag(),
+	constructor(private readonly aspect: Aspect) {
+		this.systemIndex = SystemIndexManager.getIndexFor(this.getClass());
+	}
 
-        /**
-         * @private
-         * @property aspect
-         * @type {Aspect}
-         */
-        aspect = _aspect,
+	private removeFromSystem(entity: Entity): void {
+		this.actives.remove(entity);
+		entity.getSystemBits().unset(this.systemIndex);
+		this.removed(entity);
+	}
 
-        /**
-         * @private
-         * @property allSet
-         * @type {Utils.BitSet}
-         */
-        allSet = aspect.getAllSet(),
+	private insertToSystem(entity: Entity): void {
+		this.actives.add(entity);
+		entity.getSystemBits().set(this.systemIndex);
+		this.inserted(entity);
+	}
 
-        /**
-         * @private
-         * @property exclusionSet
-         * @type {Utils.BitSet}
-         */
-        exclusionSet = aspect.getExclusionSet(),
+	/**
+	 * Called before processing of entities begins
+	 */
+	protected begin(): void {
+	};
 
-        /**
-         * @private
-         * @property oneSet
-         * @type {Utils.BitSet}
-         */
-        oneSet = aspect.getOneSet(),
+	/**
+	 * Process the entities
+	 */
+	public process() {
+		if (this.checkProcessing()) {
+			this.begin();
+			this.processEntities(this.actives);
+			this.end();
+		}
+	};
 
-        /**
-         * @private
-         * @property passive
-         * @type {Boolean}
-         */
-        passive,
+	/**
+	 * Called after the processing of entities ends
+	 *
+	 * @method end
+	 */
+	protected end(): void {
+	};
 
-        /**
-         * @private
-         * @property dummy
-         * @type {Boolean}
-         */
-        dummy = allSet.isEmpty() && oneSet.isEmpty(),
+	/**
+	 * Any implementing entity system must implement this method and the
+	 * logic to process the given entities of the system.
+	 */
+	protected abstract processEntities(entities: Bag<Entity>): void;
 
-        me = this;
+	/**
+	 * Check the system should processing
+	 *
+	 * @method checkProcessing
+	 * @return {Boolean} true if the system should be processed, false if not
+	 */
+	protected abstract checkProcessing(): boolean;
 
-        /**
-         * @private
-         * @method removeFromSystem
-         * @param {Entity} entity
-         */
-        function removeFromSystem(entity) {
-            actives.remove(entity);
-            entity.getSystemBits().clear(systemIndex);
-            me.removed(entity);
-        }
+	/**
+	 * Override to implement code that gets executed when systems are
+	 * initialized.
+	 *
+	 * @method initialize
+	 */
+	public initialize(): void {
+	};
 
-        /**
-         * @private
-         * @method insertToSystem
-         * @param {Entity} entity
-         */
-        function insertToSystem(entity) {
-            actives.add(entity);
-            entity.getSystemBits().set(systemIndex);
-            me.inserted(entity);
-        }
+	/**
+	 * Called if the system has received a entity it is interested in,
+	 * e.g. created or a component was added to it.
+	 */
+	protected inserted(entity: Entity): void {
+	};
 
-        /**
-         * Called before processing of entities begins
-         *
-         * @method begin
-         */
-        this.begin = function() {};
+	/**
+	 * Called if a entity was removed from this system, e.g. deleted
+	 * or had one of it's components removed.
+	 */
+	protected removed(entity: Entity): void {
+	};
 
-        /**
-         * Process the entities
-         *
-         * @method process
-         */
-        this.process = function() {
-            if(this.checkProcessing()) {
-                this.begin();
-                this.processEntities(actives);
-                this.end();
-            }
-        };
+	/**
+	 * Will check if the entity is of interest to this system.
+	 */
+	public check(entity: Entity): void {
+		if (this.dummy) {
+			return;
+		}
+		const contains = entity.getSystemBits().get(this.systemIndex);
+		let interested = true;
+		const componentBits = entity.getComponentBits();
 
-        /**
-         * Called after the processing of entities ends
-         *
-         * @method end
-         */
-        this.end = function() {};
+		if (!this.allSet.isEmpty()) {
+			for (let i = this.allSet.nextSetBit(0); i >= 0; i = this.allSet.nextSetBit(i + 1)) {
+				if (!componentBits.get(i)) {
+					interested = false;
+					break;
+				}
+			}
+		}
+		if (!this.exclusionSet.isEmpty() && interested) {
+			interested = !this.exclusionSet.intersects(componentBits);
+		}
 
-        /**
-         * Any implementing entity system must implement this method and the
-         * logic to process the given entities of the system.
-         *
-         * @method processEntities
-         * @param {Bag} entities athe entities this system contains
-         */
-        this.processEntities = function(entities) {};
+		// Check if the entity possesses ANY of the components in the oneSet. If so, the system is interested.
+		if (!this.oneSet.isEmpty()) {
+			interested = this.oneSet.intersects(componentBits);
+		}
 
-        /**
-         * Check the system should processing
-         *
-         * @method checkProcessing
-         * @return {Boolean} true if the system should be processed, false if not
-         */
-        this.checkProcessing = function() {};
+		if (interested && !contains) {
+			this.insertToSystem(entity);
+		} else if (!interested && contains) {
+			this.removeFromSystem(entity);
+		}
+	};
 
-        /**
-         * Override to implement code that gets executed when systems are
-         * initialized.
-         *
-         * @method initialize
-         */
-        this.initialize = function() {};
+	public setAdded(entity: Entity): void {
+		this.check(entity);
+	};
 
-        /**
-         * Called if the system has received a entity it is interested in,
-         * e.g. created or a component was added to it.
-         *
-         * @method inserted
-         * @param {Entity} entity the entity that was added to this system
-         */
-        this.inserted = function(entity) {};
+	public setChanged(entity: Entity): void {
+		this.check(entity);
+	};
 
-        /**
-         * Called if a entity was removed from this system, e.g. deleted
-         * or had one of it's components removed.
-         *
-         * @method removed
-         * @param {Entity} entity the entity that was removed from this system.
-         */
-        this.removed = function(entity) {};
+	public setDeleted(entity: Entity): void {
+		if (entity.getSystemBits().get(this.systemIndex)) {
+			this.removeFromSystem(entity);
+		}
+	};
 
-        /**
-         * Will check if the entity is of interest to this system.
-         *
-         * @method check
-         * @param {Entity} entity the entity to check
-         */
-        this.check = function(entity) {
-            if(dummy) {
-                return;
-            }
-            var contains = entity.getSystemBits().get(systemIndex);
-            var interested = true;
-            var componentBits = entity.getComponentBits();
+	public setDisabled(entity: Entity): void {
+		if (entity.getSystemBits().get(this.systemIndex)) {
+			this.removeFromSystem(entity);
+		}
+	};
 
-            if(!allSet.isEmpty()) {
-                for (var i = allSet.nextSetBit(0); i >= 0; i = allSet.nextSetBit(i+1)) {
-                    if(!componentBits.get(i)) {
-                        interested = false;
-                        break;
-                    }
-                }
-            }
-            if(!exclusionSet.isEmpty() && interested) {
-                    interested = !exclusionSet.intersects(componentBits);
-            }
+	public setEnabled(entity: Entity): void {
+		this.check(entity);
+	};
 
-            // Check if the entity possesses ANY of the components in the oneSet. If so, the system is interested.
-            if(!oneSet.isEmpty()) {
-                    interested = oneSet.intersects(componentBits);
-            }
+	public setWorld(world: World): void {
+		this.world = world;
+	};
 
-            if (interested && !contains) {
-                    insertToSystem(entity);
-            } else if (!interested && contains) {
-                    removeFromSystem(entity);
-            }
-        };
+	public isPassive(): boolean {
+		return !!this.passive;
+	};
 
-        /**
-         * @method added
-         * @param {Entity} entity
-         */
-        this.added = function(entity) {
-                this.check(entity);
-        };
+	public setPassive(passive: boolean): void {
+		this.passive = passive;
+	};
 
-        /**
-         * @method changed
-         * @param {Entity} entity
-         */
-        this.changed = function(entity) {
-            this.check(entity);
-        };
+	public getActives(): Bag<Entity> {
+		return this.actives;
+	};
 
-        /**
-         * @method deleted
-         * @param {Entity} entity
-         */
-        this.deleted = function(entity) {
-            if(entity.getSystemBits().get(systemIndex)) {
-                removeFromSystem(entity);
-            }
-        };
-
-        /**
-         * @method disabled
-         * @param {Entity} entity
-         */
-        this.disabled = function(entity) {
-            if(entity.getSystemBits().get(systemIndex)) {
-                removeFromSystem(entity);
-            }
-        };
-
-        /**
-         * @method enabled
-         * @param {Entity} entity
-         */
-        this.enabled = function(entity) {
-            this.check(entity);
-        };
-
-        /**
-         * @method setWorld
-         * @param {World} world
-         */
-        this.setWorld = function(world) {
-            this.world = world;
-        };
-
-        /**
-         * @method isPassive
-         * @return {Boolean}
-         */
-        this.isPassive = function() {
-            return passive;
-        };
-
-        /**
-         * @method setPassive
-         * @param {Boolean} passive
-         */
-        this.setPassive = function(passive) {
-            this.passive = passive;
-        };
-
-        /**
-         * @method getActives
-         * @return {Utils.Bag} actives
-         */
-        this.getActives = function() {
-            return actives;
-        };
-    };
-
-    EntitySystem.prototype = Object.create(EntityObserver.prototype);
-    module.exports = EntitySystem;
-})();
+	public getClass(): Constructor<EntitySystem> {
+		return this.constructor as FunctionConstructor;
+	}
+}
