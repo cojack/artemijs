@@ -10,12 +10,9 @@ export class ComponentManager extends Manager {
 
 	private readonly deletedEntities = new Bag<Entity>();
 
-	public initialize() {
-	};
+	public initialize(): void {
+	}
 
-	/**
-	 * Add component by type
-	 */
 	public addComponent(entity: Entity, type: ComponentType, component: Component): void {
 		let components = this.componentsByType.get(type.getIndex());
 		if (!components) {
@@ -28,9 +25,6 @@ export class ComponentManager extends Manager {
 		entity.getComponentBits().set(type.getIndex());
 	}
 
-	/**
-	 * Remove component by type
-	 */
 	public removeComponent(entity: Entity, type: ComponentType): void {
 		if (entity.getComponentBits().get(type.getIndex())) {
 			this.componentsByType.get(type.getIndex())?.remove(entity.getId());
@@ -38,10 +32,7 @@ export class ComponentManager extends Manager {
 		}
 	}
 
-	/**
-	 * Get component by type
-	 */
-	public getComponentsByType(type: ComponentType) {
+	public getComponentsByType(type: ComponentType): Bag<Component> {
 		let components = this.componentsByType.get(type.getIndex());
 		if (!components) {
 			components = new Bag<Component>();
@@ -50,9 +41,6 @@ export class ComponentManager extends Manager {
 		return components;
 	}
 
-	/**
-	 * Get component
-	 */
 	public getComponent(entity: Entity, type: ComponentType): Component | null {
 		const components = this.componentsByType.get(type.getIndex());
 		if (components) {
@@ -61,12 +49,7 @@ export class ComponentManager extends Manager {
 		return null;
 	}
 
-	/**
-	 * Get component for
-	 *
-	 * @method getComponentsFor
-	 */
-	public getComponentsFor(entity: Entity, fillBag: Bag<any>) {
+	public getComponentsFor(entity: Entity, fillBag: Bag<any>): Bag<Component> {
 		const componentBits = entity.getComponentBits();
 
 		for (let i = componentBits.nextSetBit(0); i >= 0; i = componentBits.nextSetBit(i + 1)) {
@@ -79,16 +62,14 @@ export class ComponentManager extends Manager {
 	/**
 	 * Add entity to delete components of them
 	 */
-	public setDeleted(entity: Entity) {
+	public setDeleted(entity: Entity): void {
 		this.deletedEntities.add(entity);
 	}
 
 	/**
 	 * Clean deleted componenets of entities
-	 *
-	 * @method clean
 	 */
-	public clean() {
+	public clean(): void {
 		const size = this.deletedEntities.size();
 		if (!size) {
 			return;
@@ -99,7 +80,7 @@ export class ComponentManager extends Manager {
 		this.deletedEntities.clear();
 	}
 
-	private removeComponentsOfEntity(entity: Entity) {
+	private removeComponentsOfEntity(entity: Entity): void {
 		const componentBits = entity.getComponentBits();
 		for (let i = componentBits.nextSetBit(0); i >= 0; i = componentBits.nextSetBit(i + 1)) {
 			this.componentsByType.get(i)?.remove(entity.getId());

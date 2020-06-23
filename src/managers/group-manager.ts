@@ -16,7 +16,7 @@ export class GroupManager extends Manager {
 
 	private groupsByEntity = new Map<Entity, Bag<string>>();
 
-	public initialize() {
+	public initialize(): void {
 	}
 
 	/**
@@ -50,7 +50,7 @@ export class GroupManager extends Manager {
 	 * Remove the entity from the all groups.
 	 */
 	public removeFromAllGroups(entity: Entity): void {
-		let groups = this.groupsByEntity.get(entity);
+		const groups = this.groupsByEntity.get(entity);
 		if (!groups) {
 			return;
 		}

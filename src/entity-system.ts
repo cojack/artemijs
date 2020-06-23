@@ -68,7 +68,7 @@ export abstract class EntitySystem implements EntityObserver {
 	/**
 	 * Process the entities
 	 */
-	public process() {
+	public process(): void {
 		if (this.checkProcessing()) {
 			this.begin();
 			this.processEntities(this.actives);

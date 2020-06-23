@@ -15,7 +15,7 @@ export class TeamManager extends Manager {
 
 	private teamByPlayer = new Map<string, string>();
 
-	public initialize() {
+	public initialize(): void {
 	}
 
 	public getTeam(player: string): string | undefined {
@@ -43,7 +43,7 @@ export class TeamManager extends Manager {
 	 * @method removeFromTeam
 	 * @param {String} player Name of the player
 	 */
-	public removeFromTeam(player: string) {
+	public removeFromTeam(player: string): void {
 		if (!this.teamByPlayer.has(player)) {
 			return;
 		}

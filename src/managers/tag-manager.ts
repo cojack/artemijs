@@ -7,15 +7,15 @@ export class TagManager extends Manager {
 	private readonly entitiesByTag = new Map<string, Entity>();
 	private readonly tagsByEntity = new Map<Entity, string>();
 
-	public initialize() {
+	public initialize(): void {
 	}
 
-	public register(tag: string, entity: Entity) {
+	public register(tag: string, entity: Entity): void {
 		this.entitiesByTag.set(tag, entity);
 		this.tagsByEntity.set(entity, tag);
 	}
 
-	public unregister(tag: string) {
+	public unregister(tag: string): void {
 		if (!this.entitiesByTag.has(tag)) {
 			return;
 		}
@@ -24,15 +24,15 @@ export class TagManager extends Manager {
 		this.tagsByEntity.delete(entity);
 	}
 
-	public isRegistered(tag: string) {
+	public isRegistered(tag: string): boolean {
 		return iterate(this.entitiesByTag.keys()).includes(tag);
 	}
 
-	public getEntity(tag: string) {
+	public getEntity(tag: string): Entity | undefined {
 		return this.entitiesByTag.get(tag);
 	}
 
-	public getRegisteredTags() {
+	public getRegisteredTags(): IterableIterator<string> {
 		return this.tagsByEntity.values();
 	}
 

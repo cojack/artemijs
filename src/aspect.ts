@@ -30,15 +30,15 @@ export class Aspect {
 
 	private readonly oneSet = new BitSet(BITS_PER_WORD);
 
-	public getAllSet() {
+	public getAllSet(): BitSet {
 		return this.allSet;
 	}
 
-	public getExclusionSet() {
+	public getExclusionSet(): BitSet {
 		return this.exclusionSet;
 	}
 
-	public getOneSet() {
+	public getOneSet(): BitSet {
 		return this.oneSet;
 	}
 
@@ -111,7 +111,7 @@ export class Aspect {
 	 * processes only entities possessing just one of the components A or B or C, then you can do:
 	 * Aspect.getEmpty().one(A,B,C);
 	 */
-	public getEmpty() {
+	public getEmpty(): Aspect {
 		return new Aspect();
 	}
 }

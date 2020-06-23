@@ -21,7 +21,7 @@ export class ComponentMapper {
 	/**
 	 * Returns a component mapper for this type of components.
 	 */
-	public static getFor(type: Constructor<Component>, world: World) {
+	public static getFor(type: Constructor<Component>, world: World): ComponentMapper {
 		return new ComponentMapper(type, world);
 	}
 

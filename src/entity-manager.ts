@@ -24,7 +24,7 @@ export class EntityManager extends Manager {
 	/**
 	 * Initialize
 	 */
-	public initialize() {
+	public initialize(): void {
 
 	}
 
@@ -40,7 +40,7 @@ export class EntityManager extends Manager {
 	/**
 	 * Set entity as added for future process
 	 */
-	public setAdded(entity: Entity) {
+	public setAdded(entity: Entity): void {
 		this.stats.active++;
 		this.stats.added++;
 		this.entities.set(entity.getId(), entity);
@@ -49,7 +49,7 @@ export class EntityManager extends Manager {
 	/**
 	 * Set entity as enabled for future process
 	 */
-	public setEnabled(entity: Entity) {
+	public setEnabled(entity: Entity): void {
 		this.disabled.unset(entity.getId());
 	}
 
@@ -63,7 +63,7 @@ export class EntityManager extends Manager {
 	/**
 	 * Set entity as deleted for future process
 	 */
-	public setDeleted(entity: Entity) {
+	public setDeleted(entity: Entity): void {
 		this.entities.remove(entity.getId());
 
 		this.disabled.unset(entity.getId());
@@ -78,7 +78,7 @@ export class EntityManager extends Manager {
 	 * Check if this entity is active.
 	 * Active means the entity is being actively processed.
 	 */
-	public isActive(entityId: number) {
+	public isActive(entityId: number): boolean {
 		return this.entities.get(entityId) !== null;
 	}
 
@@ -92,14 +92,14 @@ export class EntityManager extends Manager {
 	/**
 	 * Get a entity with this id.
 	 */
-	public getEntity(entityId: number) {
+	public getEntity(entityId: number): Entity | null {
 		return this.entities.get(entityId);
 	}
 
 	/**
 	 * Get how many entities are active in this world.
 	 */
-	public getActiveEntityCount() {
+	public getActiveEntityCount(): number {
 		return this.stats.active;
 	}
 
@@ -108,21 +108,21 @@ export class EntityManager extends Manager {
 	 * Note: A created entity may not have been added to the world, thus
 	 * created count is always equal or larger than added count.
 	 */
-	public getTotalCreated() {
+	public getTotalCreated(): number {
 		return this.stats.created;
 	}
 
 	/**
 	 * Get how many entities have been added to the world since start.
 	 */
-	public getTotalAdded() {
+	public getTotalAdded(): number {
 		return this.stats.added;
 	}
 
 	/**
 	 * Get how many entities have been deleted from the world since start.
 	 */
-	public getTotalDeleted() {
+	public getTotalDeleted(): number {
 		return this.stats.deleted;
 	}
 }

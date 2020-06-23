@@ -8,12 +8,12 @@ export class PlayerManager extends Manager {
 	private readonly playerByEntity = new Map<Entity, string>();
 	private readonly entitiesByPlayer = new Map<string, Bag<Entity>>();
 
-	public initialize() {
+	public initialize(): void {
 	}
 
 	public setPlayer(entity: Entity, player: string): void {
 		this.playerByEntity.set(entity, player);
-		let entities = this.getEntitiesOfPlayer(player);
+		const entities = this.getEntitiesOfPlayer(player);
 		entities.add(entity);
 	}
 

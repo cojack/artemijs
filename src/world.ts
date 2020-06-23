@@ -133,7 +133,7 @@ export class World {
 	 * (Re)enable the entity in the world, after it having being disabled.
 	 * Won't do anything unless it was already disabled.
 	 */
-	public enableEntity(entity: Entity) {
+	public enableEntity(entity: Entity): void {
 		this.enable.add(entity);
 	}
 
@@ -141,7 +141,7 @@ export class World {
 	 * Disable the entity from being processed. Won't delete it, it will
 	 * continue to exist but won't get processed.
 	 */
-	public disableEntity(entity: Entity) {
+	public disableEntity(entity: Entity): void {
 		this.disable.add(entity);
 	}
 
@@ -230,7 +230,7 @@ export class World {
 	/**
 	 * Process all non-passive systems.
 	 */
-	public process() {
+	public process(): void {
 
 		this.check(this.added, {
 			perform: (observer, entity) => observer.setAdded(entity)

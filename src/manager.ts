@@ -20,7 +20,7 @@ export abstract class Manager implements EntityObserver {
 		return this.constructor as FunctionConstructor;
 	}
 
-	public setWorld(world: World) {
+	public setWorld(world: World): void {
 		this.world = world;
 	}
 

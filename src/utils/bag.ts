@@ -1,3 +1,5 @@
+import iterate from 'iterare';
+
 function isNumber(x: any): x is number {
 	return !isNaN(x);
 }
@@ -44,7 +46,7 @@ export class Bag<T> {
 	/**
 	 * Check if bag contains this element.
 	 */
-	public contains(obj: T) {
+	public contains(obj: T): boolean {
 		return this.data.indexOf(obj) !== -1;
 	}
 
@@ -53,8 +55,8 @@ export class Bag<T> {
 	 * specified Bag.
 	 */
 	public removeAll(bag: Bag<T>): boolean {
-		let modified = false,
-			n = bag.size();
+		let modified = false;
+		const n = bag.size();
 		for (let i = 0; i !== n; ++i) {
 			const obj = bag.get(i);
 			let index = -1;
@@ -109,14 +111,14 @@ export class Bag<T> {
 	 * Adds the specified element to the end of this bag. if needed also
 	 * increases the capacity of the bag.
 	 */
-	public add(obj: T) {
+	public add(obj: T): void {
 		this.data.push(obj);
 	}
 
 	/**
 	 * Set element at specified index in the bag.
 	 */
-	public set(index: number, obj: T) {
+	public set(index: number, obj: T): void {
 		this.data[index] = obj;
 	}
 
@@ -126,7 +128,7 @@ export class Bag<T> {
 	 *
 	 * @method clear
 	 */
-	public clear() {
+	public clear(): void {
 		this.data.length = 0;
 		this.data = [];
 	}
@@ -137,17 +139,12 @@ export class Bag<T> {
 	 * @method addAll
 	 * @param {Bag} bag added
 	 */
-	public addAll(bag: Bag<T>) {
-		let i = bag.size();
-		while (i--) {
-			const element = bag.get(i);
-			if (element) {
-				this.add(element);
-			}
-		}
+	public addAll(bag: Bag<T>): void {
+		iterate(bag)
+			.forEach(item => this.add(item));
 	}
 
-	[Symbol.iterator]() {
+	public [Symbol.iterator]() {
 		let idx = 0;
 		return {
 			next: () => {

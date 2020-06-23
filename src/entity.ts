@@ -33,21 +33,21 @@ export class Entity {
 	 * will have the same ID, but ID's are however reused so another entity may
 	 * acquire this ID if the previous entity was deleted.
 	 */
-	public getId() {
+	public getId(): number {
 		return this.id;
 	}
 
 	/**
 	 * Returns a BitSet instance containing bits of the components the entity possesses.
 	 */
-	public getComponentBits() {
+	public getComponentBits(): BitSet {
 		return this.componentBits;
 	}
 
 	/**
 	 * Returns a BitSet instance containing bits of the components the entity possesses.
 	 */
-	public getSystemBits() {
+	public getSystemBits(): BitSet {
 		return this.systemBits;
 	}
 
@@ -55,7 +55,7 @@ export class Entity {
 	 * Make entity ready for re-use.
 	 * Will generate a new uuid for the entity.
 	 */
-	public toString() {
+	public toString(): string {
 		return 'Entity [' + this.id + ']';
 	}
 
@@ -88,11 +88,11 @@ export class Entity {
 	 * Checks if the entity has been added to the world and has not been deleted from it.
 	 * If the entity has been disabled this will still return true.
 	 */
-	public isActive() {
+	public isActive(): boolean {
 		return this.entityManager.isActive(this.id);
 	}
 
-	public isEnabled() {
+	public isEnabled(): boolean {
 		return this.entityManager.isEnabled(this.id);
 	}
 
@@ -118,7 +118,7 @@ export class Entity {
 	 * Returns a bag of all components this entity has.
 	 * You need to reset the bag yourself if you intend to fill it more than once.
 	 */
-	public getComponents(fillBag: Bag<Component>) {
+	public getComponents(fillBag: Bag<Component>): Bag<Component> {
 		return this.componentManager.getComponentsFor(this, fillBag);
 	}
 
@@ -128,7 +128,7 @@ export class Entity {
 	 * relevant systems. It is typical to call this after adding components to a
 	 * newly created entity.
 	 */
-	public addToWorld() {
+	public addToWorld(): void {
 		this.world.addEntity(this);
 	}
 
@@ -137,7 +137,7 @@ export class Entity {
 	 *
 	 * @method changedInWorld
 	 */
-	public changedInWorld() {
+	public changedInWorld(): void {
 		this.world.changedEntity(this);
 	}
 
@@ -146,7 +146,7 @@ export class Entity {
 	 *
 	 * @method deleteFromWorl
 	 */
-	public deleteFromWorld() {
+	public deleteFromWorld(): void {
 		this.world.deleteEntity(this);
 	}
 
@@ -156,7 +156,7 @@ export class Entity {
 	 *
 	 * @method enable
 	 */
-	public enable() {
+	public enable(): void {
 		this.world.enableEntity(this);
 	}
 
@@ -166,7 +166,7 @@ export class Entity {
 	 *
 	 * @method disable
 	 */
-	public disable() {
+	public disable(): void {
 		this.world.disableEntity(this);
 	}
 
@@ -188,7 +188,7 @@ export class Entity {
 	/**
 	 * Reset
 	 */
-	private reset() {
+	private reset(): void {
 		this.systemBits.clear();
 		this.componentBits.clear();
 		this.uuid = uuid();
