@@ -3,7 +3,7 @@ import {Entity} from './entity';
 import {IdentifierPool} from './identifier-pool';
 import {Manager} from './manager';
 import {Bag, BITS_PER_WORD} from './utils';
-
+import {World} from './world';
 
 export class EntityManager extends Manager {
 
@@ -11,8 +11,9 @@ export class EntityManager extends Manager {
 
 	private readonly identifierPool = new IdentifierPool();
 
+	private readonly disabled = new BitSet(BITS_PER_WORD);
+
 	private readonly stats = {
-		disabled: new BitSet(BITS_PER_WORD),
 		active: 0,
 		added: 0,
 		created: 0,
@@ -31,7 +32,7 @@ export class EntityManager extends Manager {
 	 * Create new entity instance
 	 */
 	public createEntityInstance(): Entity {
-		const entity = new Entity(this.world, this.identifierPool.checkOut());
+		const entity = new Entity(this.world as World, this.identifierPool.checkOut() as number);
 		this.stats.created++;
 		return entity;
 	};
@@ -39,7 +40,7 @@ export class EntityManager extends Manager {
 	/**
 	 * Set entity as added for future process
 	 */
-	public added(entity: Entity) {
+	public setAdded(entity: Entity) {
 		this.stats.active++;
 		this.stats.added++;
 		this.entities.set(entity.getId(), entity);
@@ -48,24 +49,24 @@ export class EntityManager extends Manager {
 	/**
 	 * Set entity as enabled for future process
 	 */
-	public enabled(entity: Entity) {
-		this.stats.disabled.unset(entity.getId());
+	public setEnabled(entity: Entity) {
+		this.disabled.unset(entity.getId());
 	};
 
 	/**
 	 * Set entity as disabled for future process
 	 */
-	public disabled(entity: Entity): void {
-		this.stats.disabled.set(entity.getId());
+	public setDisabled(entity: Entity): void {
+		this.disabled.set(entity.getId());
 	};
 
 	/**
 	 * Set entity as deleted for future process
 	 */
-	public deleted(entity: Entity) {
+	public setDeleted(entity: Entity) {
 		this.entities.remove(entity.getId());
 
-		this.stats.disabled.unset(entity.getId());
+		this.disabled.unset(entity.getId());
 
 		this.identifierPool.checkIn(entity.getId());
 
@@ -85,7 +86,7 @@ export class EntityManager extends Manager {
 	 * Check if the specified entityId is enabled.
 	 */
 	public isEnabled(entityId: number): boolean {
-		return !this.stats.disabled.get(entityId);
+		return !this.disabled.get(entityId);
 	};
 
 	/**
