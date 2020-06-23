@@ -1,0 +1,10 @@
+.idea/
+doc/
+src/
+node_modules/
+test/
+.eslintignore
+.eslintrc.json
+.gitignore
+tsconfig.json
+
