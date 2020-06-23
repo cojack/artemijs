@@ -1,5 +1,6 @@
 import {Entity} from './entity';
 import {EntityObserver} from './entity-observer';
+import {Constructor} from './utils';
 import {World} from './world';
 
 /**
@@ -13,9 +14,13 @@ export abstract class Manager implements EntityObserver {
 	 * Override to implement code that gets executed when systems are
 	 * initialized.
 	 */
-	protected abstract initialize(): void;
+	public abstract initialize(): void;
 
-	protected setWorld(world: World) {
+	public getClass(): Constructor<Manager> {
+		return this.constructor as FunctionConstructor;
+	}
+
+	public setWorld(world: World) {
 		this.world = world;
 	};
 
@@ -23,23 +28,23 @@ export abstract class Manager implements EntityObserver {
 		return this.world;
 	};
 
-	public added(entity: Entity): void {
+	public setAdded(entity: Entity): void {
 
 	}
 
-	public changed(entity: Entity): void {
+	public setChanged(entity: Entity): void {
 
 	}
 
-	public deleted(entity: Entity): void {
+	public setDeleted(entity: Entity): void {
 
 	}
 
-	public enabled(entity: Entity): void {
+	public setEnabled(entity: Entity): void {
 
 	}
 
-	public  disabled(entity: Entity): void {
+	public  setDisabled(entity: Entity): void {
 
 	}
 }
