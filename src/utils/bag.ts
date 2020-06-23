@@ -27,7 +27,7 @@ export class Bag<T> {
 			this.data.splice(index, 1);
 		}
 		return response;
-	};
+	}
 
 	/**
 	 * Remove and return the last object in the bag.
@@ -39,14 +39,14 @@ export class Bag<T> {
 			return obj;
 		}
 		return null;
-	};
+	}
 
 	/**
 	 * Check if bag contains this element.
 	 */
 	public contains(obj: T) {
 		return this.data.indexOf(obj) !== -1;
-	};
+	}
 
 	/**
 	 * Removes from this Bag all of its elements that are contained in the
@@ -68,42 +68,42 @@ export class Bag<T> {
 			}
 		}
 		return modified;
-	};
+	}
 
 	/**
 	 * Returns the element at the specified position in Bag.
 	 */
 	public get(index: number): T | null {
 		return this.data[index] ?? null;
-	};
+	}
 
 	/**
 	 * Returns the number of elements in this bag.
 	 */
 	public size(): number {
 		return this.data.length;
-	};
+	}
 
 	/**
 	 * Returns the number of elements the bag can hold without growing.
 	 */
 	public capacity(): number {
 		return Number.MAX_VALUE; // slightly fixed ^^
-	};
+	}
 
 	/**
 	 * Checks if the internal storage supports this index.
 	 */
 	public isIndexWithinBounds(index: number): boolean {
 		return index < this.capacity();
-	};
+	}
 
 	/**
 	 * Returns true if this list contains no elements.
 	 */
 	public isEmpty(): boolean {
 		return this.data.length === 0;
-	};
+	}
 
 	/**
 	 * Adds the specified element to the end of this bag. if needed also
@@ -111,14 +111,14 @@ export class Bag<T> {
 	 */
 	public add(obj: T) {
 		this.data.push(obj);
-	};
+	}
 
 	/**
 	 * Set element at specified index in the bag.
 	 */
 	public set(index: number, obj: T) {
 		this.data[index] = obj;
-	};
+	}
 
 	/**
 	 * Removes all of the elements from this bag. The bag will be empty after
@@ -129,7 +129,7 @@ export class Bag<T> {
 	public clear() {
 		this.data.length = 0;
 		this.data = [];
-	};
+	}
 
 	/**
 	 * Add all items into this bag.
@@ -145,7 +145,7 @@ export class Bag<T> {
 				this.add(element);
 			}
 		}
-	};
+	}
 
 	[Symbol.iterator]() {
 		let idx = 0;
