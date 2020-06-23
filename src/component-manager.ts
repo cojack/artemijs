@@ -8,23 +8,10 @@ export class ComponentManager extends Manager {
 
 	private readonly componentsByType = new Bag<Bag<Component>>();
 
-	private readonly deleted1 = new Bag<Entity>();
+	private readonly deletedEntities = new Bag<Entity>();
 
 	public initialize() {
 	};
-
-	public added(entity: Entity): void {
-		throw new Error("Method not implemented.");
-	}
-	public changed(entity: Entity) {
-		throw new Error("Method not implemented.");
-	}
-	public enabled(entity: Entity) {
-		throw new Error("Method not implemented.");
-	}
-	public disabled(entity: Entity) {
-		throw new Error("Method not implemented.");
-	}
 
 	/**
 	 * Add component by type
@@ -47,7 +34,7 @@ export class ComponentManager extends Manager {
 	public removeComponent(entity: Entity, type: ComponentType): void {
 		if (entity.getComponentBits().get(type.getIndex())) {
 			this.componentsByType.get(type.getIndex())?.remove(entity.getId());
-			entity.getComponentBits().clear(type.getIndex());
+			entity.getComponentBits().unset(type.getIndex());
 		}
 	}
 
@@ -92,8 +79,8 @@ export class ComponentManager extends Manager {
 	/**
 	 * Add entity to delete components of them
 	 */
-	public deleted(entity: Entity) {
-		this.deleted1.add(entity);
+	public setDeleted(entity: Entity) {
+		this.deletedEntities.add(entity);
 	}
 
 	/**
@@ -102,14 +89,14 @@ export class ComponentManager extends Manager {
 	 * @method clean
 	 */
 	public clean() {
-		const size = this.deleted1.size();
+		const size = this.deletedEntities.size();
 		if (!size) {
-			return
+			return;
 		}
 		for (let i = 0; i < size; i++) {
-			this.removeComponentsOfEntity(this.deleted1.get(i) as Entity);
+			this.removeComponentsOfEntity(this.deletedEntities.get(i) as Entity);
 		}
-		this.deleted1.clear();
+		this.deletedEntities.clear();
 	}
 
 	private removeComponentsOfEntity(entity: Entity) {
