@@ -263,7 +263,7 @@ export class World {
 	 * Retrieves a ComponentMapper instance for fast retrieval
 	 * of components from entities.
 	 */
-	public getMapper(type: Constructor<Component>): ComponentMapper {
-		return ComponentMapper.getFor(type, this);
+	public getMapper<K extends Component>(type: Constructor<Component>): ComponentMapper<K> {
+		return ComponentMapper.getFor<K>(type, this);
 	}
 }
