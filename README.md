@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cojack/artemijs.png?branch=master)](https://travis-ci.org/cojack/artemijs)
+WIP: NOT USEFUL YET
 
 ArtemiJS
 ========
