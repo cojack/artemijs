@@ -44,6 +44,12 @@ export class World {
 
 	private delta = 0;
 
+	constructor() {
+		this.setManager(this.componentManager);
+		this.setManager(this.entityManager);
+	}
+
+
 	/**
 	 * Makes sure all managers systems are initialized in the order
 	 * they were added
@@ -74,7 +80,7 @@ export class World {
 	 */
 	public setManager(manager: Manager): Manager {
 		manager.setWorld(this);
-		this.managers.set(manager.getClass(), manager);
+		this.managers.set(manager.constructor, manager);
 		this.managersBag.add(manager);
 
 		return manager;
@@ -83,15 +89,15 @@ export class World {
 	/**
 	 * Returns a manager of the specified type.
 	 */
-	public getManager(manager: Constructor<Manager>): Manager | undefined {
-		return this.managers.get(manager);
+	public getManager<T extends Manager>(manager: Constructor<Manager>): T | undefined {
+		return this.managers.get(manager) as T;
 	}
 
 	/**
 	 * Deletes the manager from this world.
 	 */
 	public deleteManager(manager: Manager): void {
-		this.managers.delete(manager.getClass());
+		this.managers.delete(manager.constructor);
 		this.managersBag.remove(manager);
 	}
 
@@ -179,7 +185,7 @@ export class World {
 		system.setWorld(this);
 		system.setPassive(passive);
 
-		this.systems.set(system.getClass(), system);
+		this.systems.set(system.constructor, system);
 		this.systemsBag.add(system);
 
 		return system;
@@ -196,7 +202,7 @@ export class World {
 	 * Removed the specified system from the world.
 	 */
 	public deleteSystem(system: EntitySystem): void {
-		this.systems.delete(system.getClass());
+		this.systems.delete(system.constructor);
 		this.systemsBag.remove(system);
 	}
 
@@ -263,7 +269,7 @@ export class World {
 	 * Retrieves a ComponentMapper instance for fast retrieval
 	 * of components from entities.
 	 */
-	public getMapper<K extends Component>(type: Constructor<Component>): ComponentMapper<K> {
+	public getMapper<K extends Component>(type: Constructor<K>): ComponentMapper<K> {
 		return ComponentMapper.getFor<K>(type, this);
 	}
 }

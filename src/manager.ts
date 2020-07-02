@@ -1,6 +1,5 @@
 import {Entity} from './entity';
 import {EntityObserver} from './entity-observer';
-import {Constructor} from './utils';
 import {World} from './world';
 
 /**
@@ -15,10 +14,6 @@ export abstract class Manager implements EntityObserver {
 	 * initialized.
 	 */
 	public abstract initialize(): void;
-
-	public getClass(): Constructor<Manager> {
-		return this.constructor as FunctionConstructor;
-	}
 
 	public setWorld(world: World): void {
 		this.world = world;

@@ -14,7 +14,7 @@ class SystemIndexManager {
 		let index = this.indices.get(entitySystem);
 		if (!index) {
 			index = this.INDEX++;
-			this.indices.set(entitySystem, index);
+			this.indices.set(entitySystem.constructor, index);
 		}
 		return index;
 	}
@@ -44,7 +44,7 @@ export abstract class EntitySystem implements EntityObserver {
 	private readonly dummy = this.allSet.isEmpty() && this.oneSet.isEmpty();
 
 	constructor(private readonly aspect: Aspect) {
-		this.systemIndex = SystemIndexManager.getIndexFor(this.getClass());
+		this.systemIndex = SystemIndexManager.getIndexFor(this.constructor);
 	}
 
 	private removeFromSystem(entity: Entity): void {
@@ -68,7 +68,7 @@ export abstract class EntitySystem implements EntityObserver {
 	/**
 	 * Process the entities
 	 */
-	public process(entity?: Entity): void {
+	public process(): void {
 		if (this.checkProcessing()) {
 			this.begin();
 			this.processEntities(this.actives);
@@ -194,9 +194,5 @@ export abstract class EntitySystem implements EntityObserver {
 
 	public getActives(): Bag<Entity> {
 		return this.actives;
-	}
-
-	public getClass(): Constructor<EntitySystem> {
-		return this.constructor as FunctionConstructor;
 	}
 }

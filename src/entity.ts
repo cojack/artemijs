@@ -62,9 +62,9 @@ export class Entity {
 	/**
 	 * Add a component to this entity.
 	 */
-	public addComponent(component: Component, type: ComponentType | undefined): Entity {
+	public addComponent(component: Component, type?: ComponentType): Entity {
 		if (!(type instanceof ComponentType)) {
-			type = ComponentType.getTypeFor(component.getClass());
+			type = ComponentType.getTypeFor(component.constructor);
 		}
 		this.componentManager.addComponent(this, type, component);
 		return this;
@@ -76,7 +76,7 @@ export class Entity {
 	public removeComponent(component: Component | ComponentType): Entity {
 		let componentType;
 		if (!(component instanceof ComponentType)) {
-			componentType = ComponentType.getTypeFor(component.getClass());
+			componentType = ComponentType.getTypeFor(component.constructor);
 		} else {
 			componentType = component;
 		}

@@ -16,7 +16,7 @@ export class ComponentType {
 	}
 
 	public toString(): string {
-		return 'ComponentType[' + this.type.prototype.name + '] (' + this.index + ')';
+		return 'ComponentType[' + this.type.name + '] (' + this.index + ')';
 	}
 
 	private static componentTypes = new Map<Constructor<Component>, ComponentType>();

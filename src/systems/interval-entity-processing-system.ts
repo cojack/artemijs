@@ -20,11 +20,11 @@ export abstract class IntervalEntityProcessingSystem extends IntervalEntitySyste
 	/**
 	 * Process a entity this system is interested in.
 	 */
-	public abstract process(entity: Entity): void;
+	protected abstract action(entity: Entity): void;
 
 	protected processEntities(entities: Bag<Entity>): void {
 		iterate(entities)
-			.forEach(entity => this.process(entity));
+			.forEach(entity => this.action(entity));
 	}
 
 }

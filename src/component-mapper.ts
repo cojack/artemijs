@@ -14,7 +14,7 @@ export class ComponentMapper<T extends Component> {
 	private readonly classType: Constructor<T>;
 	private readonly components: Bag<Component>;
 
-	constructor(type: Constructor<Component>, private readonly world: World) {
+	constructor(type: Constructor<T>, private readonly world: World) {
 		this.type = ComponentType.getTypeFor(type);
 		this.components = this.world.getComponentManager().getComponentsByType(this.type);
 		this.classType = type;
@@ -47,7 +47,7 @@ export class ComponentMapper<T extends Component> {
 	/**
 	 * Returns a component mapper for this type of components.
 	 */
-	public static getFor<K extends Component>(type: Constructor<Component>, world: World): ComponentMapper<K> {
+	public static getFor<K extends Component>(type: Constructor<K>, world: World): ComponentMapper<K> {
 		return new ComponentMapper<K>(type, world);
 	}
 }
