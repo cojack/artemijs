@@ -104,7 +104,7 @@ export abstract class EntitySystem implements EntityObserver {
 	 *
 	 * @method initialize
 	 */
-	public initialize(): void {
+	public async initialize(): Promise<void> {
 	}
 
 	/**

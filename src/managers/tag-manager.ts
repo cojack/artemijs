@@ -7,7 +7,7 @@ export class TagManager extends Manager {
 	private readonly entitiesByTag = new Map<string, Entity>();
 	private readonly tagsByEntity = new Map<Entity, string>();
 
-	public initialize(): void {
+	public async initialize(): Promise<void> {
 	}
 
 	public register(tag: string, entity: Entity): void {

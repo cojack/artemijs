@@ -10,7 +10,7 @@ export class ComponentManager extends Manager {
 
 	private readonly deletedEntities = new Bag<Entity>();
 
-	public initialize(): void {
+	public async initialize(): Promise<void> {
 	}
 
 	public addComponent(entity: Entity, type: ComponentType, component: Component): void {

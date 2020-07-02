@@ -16,7 +16,7 @@ export class GroupManager extends Manager {
 
 	private groupsByEntity = new Map<Entity, Bag<string>>();
 
-	public initialize(): void {
+	public async initialize(): Promise<void> {
 	}
 
 	/**

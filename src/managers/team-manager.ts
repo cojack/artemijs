@@ -15,7 +15,7 @@ export class TeamManager extends Manager {
 
 	private teamByPlayer = new Map<string, string>();
 
-	public initialize(): void {
+	public async initialize(): Promise<void> {
 	}
 
 	public getTeam(player: string): string | undefined {

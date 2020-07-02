@@ -24,7 +24,7 @@ export class EntityManager extends Manager {
 	/**
 	 * Initialize
 	 */
-	public initialize(): void {
+	public async initialize(): Promise<void> {
 
 	}
 

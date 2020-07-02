@@ -8,7 +8,7 @@ export class PlayerManager extends Manager {
 	private readonly playerByEntity = new Map<Entity, string>();
 	private readonly entitiesByPlayer = new Map<string, Bag<Entity>>();
 
-	public initialize(): void {
+	public async initialize(): Promise<void> {
 	}
 
 	public setPlayer(entity: Entity, player: string): void {

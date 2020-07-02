@@ -54,9 +54,13 @@ export class World {
 	 * Makes sure all managers systems are initialized in the order
 	 * they were added
 	 */
-	public initialize(): void {
-		iterate(this.managersBag).forEach(manager => manager.initialize());
-		iterate(this.systemsBag).forEach(system => system.initialize());
+	public async initialize(): Promise<void> {
+		for(const manager of this.managersBag) {
+			await manager.initialize();
+		}
+		for (const system of this.systemsBag) {
+			await system.initialize()
+		}
 	}
 
 	/**

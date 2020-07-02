@@ -13,7 +13,7 @@ export abstract class Manager implements EntityObserver {
 	 * Override to implement code that gets executed when systems are
 	 * initialized.
 	 */
-	public abstract initialize(): void;
+	public async abstract initialize(): Promise<void>;
 
 	public setWorld(world: World): void {
 		this.world = world;
