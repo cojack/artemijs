@@ -19,7 +19,7 @@
     "eslint": "^7.3.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.21.2",
-    "mocha": "^8.0.1",
+    "mocha": "^8.4.0",
     "tslib": "^2.0.0",
     "typescript": "^3.9.5"
   },
